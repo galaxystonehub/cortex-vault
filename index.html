@@ -1,27 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-V9LSV7175B"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-V9LSV7175B');
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cortex Vault — Puzzles, Memory & Deduction</title>
 <meta name="description" content="Cortex Vault offers free brain teasers, logic puzzles, memory tests, IQ checks and detective mystery cases with instant results. No sign-up needed.">
 <meta name="robots" content="index, follow">
 <meta name="google-site-verification" content="odvFUGyM-wNP3X-UgRbwzhbqDKl5ErjRhaOSsxh5d9g" />
-  <link rel="canonical" href="https://galaxystonehub.github.io/cortex-vault/">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Cortex Vault — Puzzles, Memory & Deduction">
-<meta property="og:description" content="Free brain teasers, logic puzzles, memory tests and mystery cases with instant results.">
-<meta property="og:url" content="https://galaxystonehub.github.io/cortex-vault/">
-<meta name="twitter:card" content="summary">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap');
 
@@ -450,7 +435,7 @@
   <div class="wrap">
     <h2 style="font-size:1.6rem;">Terms of Use</h2>
     <p style="color:var(--muted);margin-top:6px;font-size:0.85rem;">Last updated: 2026</p>
-    <p style="color:var(--muted);margin-top:16px;line-height:1.7;">By using Cortex Vault, you agree to use the site for personal and commercial entertainment and educational purposes. Content is provided "as is" for fun and general interest — results from any test are not medical, psychological, or professional advice.</p>
+    <p style="color:var(--muted);margin-top:16px;line-height:1.7;">By using Cortex Vault, you agree to use the site for personal, non-commercial entertainment. Content is provided "as is" for fun and general interest — results from any test are not medical, psychological, or professional advice.</p>
     <p style="color:var(--muted);margin-top:12px;line-height:1.7;">All text, design, and puzzle content on this site belongs to Cortex Vault unless stated otherwise, and may not be copied or republished without permission.</p>
     <p style="color:var(--muted);margin-top:12px;line-height:1.7;">We aim to keep the site available and error-free, but we don't guarantee uninterrupted access and are not liable for any loss arising from use of the site.</p>
     <p style="color:var(--muted);margin-top:12px;line-height:1.7;">These terms may be updated from time to time. Continued use of the site after changes means you accept the updated terms.</p>
@@ -536,10 +521,25 @@ function showSection(id){
   navBtns.forEach(b=>b.classList.toggle('active', b.dataset.nav===id));
   window.scrollTo({top:0,behavior:'instant'});
 }
+function navigateTo(id, push){
+  showSection(id);
+  if(push !== false){
+    try{ history.pushState({section:id}, '', '#'+id); }catch(e){}
+  }
+}
+window.addEventListener('popstate', (e)=>{
+  const id = (e.state && e.state.section) ? e.state.section : (location.hash ? location.hash.slice(1) : 'home');
+  showSection(id);
+});
+(function(){
+  const initial = location.hash ? location.hash.slice(1) : 'home';
+  try{ history.replaceState({section: initial}, '', '#'+initial); }catch(e){}
+  if(initial !== 'home'){ showSection(initial); }
+})();
 document.querySelectorAll('[data-nav]').forEach(el=>{
   el.addEventListener('click', (e)=>{
     e.preventDefault();
-    showSection(el.dataset.nav);
+    navigateTo(el.dataset.nav);
     if(el.dataset.quiz){ startQuiz(el.dataset.quiz); }
   });
 });
