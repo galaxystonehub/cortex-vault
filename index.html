@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cortex Vault — Puzzles, Memory & Deduction</title>
+<meta name="description" content="Cortex Vault offers free brain teasers, logic puzzles, memory tests, IQ checks and detective mystery cases with instant results. No sign-up needed.">
+<meta name="robots" content="index, follow">
+<meta name="google-site-verification" content="JQ5n0tZgXTBP3e9lL-VLcrI_o7CtVf5k8AtqRNQiCS8" />
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap');
 
@@ -307,6 +310,14 @@
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
           <div class="body"><div class="lbl">Visual Challenge</div><div class="sub">4 rounds</div></div><div class="go">Start →</div>
         </a>
+        <a class="pick-card" data-quiz="iq" style="--card-c:var(--gold)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5c0 2 1 3 2 4v3h6v-3c1-1 2-2 2-4a5 5 0 0 0-5-5z"/><path d="M9 21h6"/></svg></div>
+          <div class="body"><div class="lbl">Quick IQ Check</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="riddles" style="--card-c:var(--pink)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 17v.01M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 4"/></svg></div>
+          <div class="body"><div class="lbl">Logic Riddles</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+        </a>
       </div>
     </div>
     <div id="quizStage" style="display:none;"></div>
@@ -399,6 +410,12 @@ document.querySelectorAll('[data-nav]').forEach(el=>{
     if(el.dataset.quiz){ startQuiz(el.dataset.quiz); }
   });
 });
+document.querySelectorAll('[data-quiz]:not([data-nav])').forEach(el=>{
+  el.addEventListener('click', (e)=>{
+    e.preventDefault();
+    startQuiz(el.dataset.quiz);
+  });
+});
 
 /* ---------------- stats ---------------- */
 let testsCompleted = 0;
@@ -476,6 +493,26 @@ const QUIZZES = {
       { grid:['▲','▲','▼','▲','▲'], oddIndex:2 },
       { grid:['◆','◇','◆','◆','◆'], oddIndex:1 },
       { grid:['■','■','■','■','▪'], oddIndex:4 }
+    ]
+  },
+  iq: {
+    title: 'Quick IQ Check',
+    questions: [
+      { q:'Book is to Reading as Fork is to:', options:['Kitchen','Eating','Metal','Spoon'], correct:1, explain:'A book is the tool used for reading; a fork is the tool used for eating.' },
+      { q:'If 3 workers build a wall in 6 days, how many days would 6 workers take (same rate)?', options:['12','6','3','9'], correct:2, explain:'Double the workers, half the time: 6 ÷ 2 = 3 days.' },
+      { q:'Which shape completes the pattern: Square, Circle, Square, Circle, ?', options:['Triangle','Circle','Square','Star'], correct:2, explain:'The pattern alternates Square/Circle, so the next one is Square.' },
+      { q:'Find the odd one out: Whale, Dolphin, Shark, Seal', options:['Whale','Dolphin','Shark','Seal'], correct:2, explain:'Whale, Dolphin and Seal are mammals; a Shark is a fish.' },
+      { q:'A clock shows 3:15. What is the angle between the hour and minute hand (approx)?', options:['0°','7.5°','15°','30°'], correct:1, explain:'At 3:15 the hour hand has moved slightly past 3, making a small ~7.5° gap with the minute hand at 3.' }
+    ]
+  },
+  riddles: {
+    title: 'Logic Riddles',
+    questions: [
+      { q:'The more you take, the more you leave behind. What am I?', options:['Time','Footsteps','Money','Memories'], correct:1, explain:'Footsteps — the more steps you take, the more footprints you leave behind.' },
+      { q:'A man is looking at a photo. Someone asks who it is. He says: "Brothers and sisters I have none, but that man\'s father is my father\'s son." Who is in the photo?', options:['His father','Himself','His son','His uncle'], correct:2, explain:'"My father\'s son" (with no siblings) is himself — so the photo is of his own son.' },
+      { q:'What has a face and two hands but no arms or legs?', options:['A clock','A doll','A robot','A statue'], correct:0, explain:'A clock has a face and two hands (the clock hands).' },
+      { q:'What gets wetter the more it dries?', options:['A sponge','A towel','Rain','Soap'], correct:1, explain:'A towel gets wetter the more things it dries.' },
+      { q:'I am not alive, but I grow; I don\'t have lungs, but I need air. What am I?', options:['A tree','Fire','A shadow','A cloud'], correct:1, explain:'Fire grows, needs air (oxygen) to burn, but is not a living thing.' }
     ]
   }
 };
