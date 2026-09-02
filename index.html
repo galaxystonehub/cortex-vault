@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cortex Vault — Puzzles, Memory & Deduction</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --bg:#100B1E;
+    --bg-2:#170F2B;
+    --panel:rgba(255,255,255,0.045);
+    --panel-2:rgba(255,255,255,0.075);
+    --line:rgba(255,255,255,0.10);
+    --text:#F3F0FA;
+    --muted:#9C93B8;
+    --gold:#FBBF62;
+    --teal:#3FDDA6;
+    --wrong:#FB7185;
+    --violet:#A78BFA;
+    --pink:#F472B6;
+    --cyan:#4DD8E8;
+    --amber:#FBBF62;
+    --radius:12px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(720px 420px at 12% -8%, rgba(167,139,250,0.20), transparent 60%),
+      radial-gradient(600px 380px at 100% 0%, rgba(244,114,182,0.14), transparent 55%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 55%, var(--bg) 100%);
+    background-attachment:fixed;
+    color:var(--text);
+    font-family:'Manrope',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+
+  /* ---------- layout shell ---------- */
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px;}
+  header{
+    border-bottom:1px solid var(--line);
+    padding:16px 0;
+    position:sticky;top:0;
+    background:rgba(16,11,30,0.82);
+    backdrop-filter:blur(10px);
+    z-index:10;
+  }
+  header .wrap{display:flex;align-items:center;justify-content:space-between;}
+  .brand{display:flex;align-items:center;gap:9px;font-family:'Fraunces',serif;font-weight:700;font-size:1.12rem;}
+  .brand-mark{
+    width:30px;height:30px;border-radius:9px;flex-shrink:0;
+    background:linear-gradient(135deg, var(--violet), var(--pink));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .brand-mark svg{width:16px;height:16px;}
+  .brand span{background:linear-gradient(135deg, var(--violet), var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  nav{display:flex;gap:2px;}
+  nav button{
+    background:none;border:none;color:var(--muted);
+    font-size:0.85rem;font-weight:600;padding:9px 14px;
+    border-radius:999px;
+  }
+  nav button.active{color:var(--text);background:var(--panel-2);}
+
+  section{display:none;padding:40px 0 64px;}
+  section.active{display:block;}
+
+  /* ---------- home ---------- */
+  .hero{position:relative;}
+  .hero-visual{position:absolute;top:-18px;right:-10px;width:190px;height:190px;opacity:0.9;pointer-events:none;}
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:7px;
+    color:var(--violet);font-size:0.8rem;font-weight:700;margin-bottom:16px;
+    letter-spacing:0.01em;
+  }
+  .hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--pink);box-shadow:0 0 0 4px rgba(244,114,182,0.18);}
+  .hero h1{font-size:2.5rem;line-height:1.14;max-width:11ch;}
+  .hero p{color:var(--muted);margin-top:16px;font-size:1.02rem;max-width:42ch;}
+  .hero-cta{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;padding:13px 22px;border-radius:999px;
+    font-weight:700;font-size:0.92rem;border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary{background:linear-gradient(135deg, var(--violet), var(--pink));color:#1A0E2E;box-shadow:0 8px 22px -8px rgba(167,139,250,0.55);}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 26px -8px rgba(167,139,250,0.7);}
+  .btn-ghost{border-color:var(--line);color:var(--text);background:rgba(255,255,255,0.03);}
+  .btn-ghost:hover{border-color:var(--violet);}
+  .stat-row{display:flex;gap:28px;margin-top:36px;padding-top:24px;border-top:1px solid var(--line);}
+  .stat-row div{font-size:0.8rem;color:var(--muted);}
+  .stat-row strong{display:block;font-family:'Fraunces',serif;font-size:1.5rem;background:linear-gradient(135deg, var(--gold), var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+  .card-list{display:flex;flex-direction:column;gap:10px;margin-top:34px;}
+  .pick-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 18px;display:flex;align-items:center;gap:14px;
+    transition:border-color .15s ease, transform .15s ease, background .15s ease;
+  }
+  .pick-card:hover{border-color:var(--card-c, var(--violet));transform:translateY(-2px);background:var(--panel-2);}
+  .pick-card .icon{
+    width:42px;height:42px;border-radius:11px;flex-shrink:0;
+    background:color-mix(in srgb, var(--card-c, var(--violet)) 18%, transparent);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .pick-card .icon svg{width:20px;height:20px;stroke:var(--card-c, var(--violet));}
+  .pick-card .body{flex:1;}
+  .pick-card .lbl{font-weight:700;font-size:0.98rem;}
+  .pick-card .sub{color:var(--muted);font-size:0.82rem;margin-top:2px;}
+  .pick-card .go{color:var(--card-c, var(--violet));font-weight:700;font-size:0.85rem;flex-shrink:0;}
+
+  /* ---------- quiz engine ---------- */
+  .quiz-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .quiz-head h2{font-size:1.5rem;}
+  .qcount{color:var(--muted);font-size:0.85rem;}
+  .progress{height:5px;background:var(--line);border-radius:3px;margin:16px 0 30px;overflow:hidden;}
+  .progress i{display:block;height:100%;background:linear-gradient(90deg, var(--violet), var(--pink));transition:width .25s ease;}
+
+  .question{font-size:1.14rem;font-weight:700;margin-bottom:18px;}
+  .options{display:flex;flex-direction:column;gap:9px;}
+  .opt{
+    display:flex;align-items:center;gap:12px;
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px 16px;text-align:left;font-size:0.95rem;color:var(--text);
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .opt .mk{
+    width:24px;height:24px;border-radius:50%;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:var(--muted);flex-shrink:0;
+    font-weight:700;
+  }
+  .opt:not([disabled]):hover{border-color:var(--violet);background:var(--panel-2);cursor:pointer;}
+  .opt.correct{border-color:var(--teal);background:rgba(63,221,166,0.12);}
+  .opt.correct .mk{background:var(--teal);border-color:var(--teal);color:#0A2318;}
+  .opt.wrong{border-color:var(--wrong);background:rgba(251,113,133,0.12);}
+  .opt.wrong .mk{background:var(--wrong);border-color:var(--wrong);color:#2E0A12;}
+  .opt[disabled]{cursor:default;}
+
+  .feedback{margin-top:16px;font-size:0.88rem;color:var(--muted);min-height:20px;}
+  .next-row{margin-top:22px;display:flex;justify-content:flex-end;}
+
+  .memorize-box{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:34px 20px;text-align:center;margin:20px 0;
+  }
+  .memorize-words{font-family:'Fraunces',serif;font-size:1.7rem;letter-spacing:0.02em;
+    background:linear-gradient(135deg, var(--text), var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .timer{color:var(--pink);font-weight:700;margin-top:16px;font-size:0.9rem;}
+
+  .symbol-row{font-size:2rem;letter-spacing:0.35em;text-align:center;padding:26px 0;color:var(--text);}
+
+  /* ---------- results ---------- */
+  .result-box{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px 24px;margin-top:6px;
+  }
+  .result-score{font-family:'Fraunces',serif;font-size:2.7rem;
+    background:linear-gradient(135deg, var(--gold), var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .result-label{color:var(--muted);font-size:0.9rem;margin-top:2px;}
+  .result-verdict{margin-top:18px;font-size:1rem;line-height:1.6;}
+  .result-actions{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap;}
+
+  /* ---------- mystery ---------- */
+  .suspect{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:17px 19px;margin-bottom:10px;
+    transition:border-color .15s ease;
+  }
+  .suspect h3{font-size:1rem;margin-bottom:6px;}
+  .suspect p{color:var(--muted);font-size:0.92rem;margin:0;}
+  .suspect button{
+    margin-top:13px;padding:9px 15px;font-size:0.82rem;font-weight:700;
+    border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--text);
+  }
+  .suspect.flagged{border-color:var(--pink);}
+  .suspect.flagged button{background:linear-gradient(135deg, var(--violet), var(--pink));color:#1A0E2E;border-color:transparent;}
+  .verdict-box{
+    margin-top:22px;padding:22px;border-radius:var(--radius);border:1px solid var(--line);background:var(--panel);
+  }
+  .verdict-box.right{border-color:var(--teal);}
+  .verdict-box.wrong{border-color:var(--wrong);}
+
+  footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:0.82rem;}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:center;}
+  .footer-links{display:flex;gap:16px;flex-wrap:wrap;}
+  .footer-links a{color:var(--muted);}
+  .footer-links a:hover{color:var(--text);}
+
+  @media(max-width:480px){
+    .hero h1{font-size:1.9rem;max-width:9ch;}
+    .hero-visual{width:120px;height:120px;top:-6px;right:-6px;opacity:0.75;}
+    nav{gap:0;}
+    nav button{padding:8px 8px;font-size:0.78rem;}
+    .pick-card{padding:14px;gap:11px;}
+    .pick-card .icon{width:36px;height:36px;}
+  }
+  @media(prefers-reduced-motion: reduce){
+    .hero-visual animate{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#1A0E2E" stroke-width="2.2"><circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="18" r="2.2"/><circle cx="12" cy="12" r="2.4"/><line x1="7.6" y1="7.6" x2="10.3" y2="10.3"/><line x1="16.4" y1="7.6" x2="13.7" y2="10.3"/><line x1="7.6" y1="16.4" x2="10.3" y2="13.7"/><line x1="16.4" y1="16.4" x2="13.7" y2="13.7"/></svg></div>
+      Cortex <span>Vault</span>
+    </div>
+    <nav>
+      <button data-nav="home" class="active">Home</button>
+      <button data-nav="tests">Tests</button>
+      <button data-nav="mystery">Mystery</button>
+      <button data-nav="about">About</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HOME ================= -->
+<section id="home" class="active">
+  <div class="wrap">
+    <svg class="hero-visual" viewBox="0 0 200 200" fill="none">
+      <g stroke="url(#hg)" stroke-width="1.4" opacity="0.55">
+        <line x1="40" y1="50" x2="100" y2="30"/><line x1="100" y1="30" x2="160" y2="55"/>
+        <line x1="40" y1="50" x2="70" y2="100"/><line x1="100" y1="30" x2="100" y2="95"/>
+        <line x1="160" y1="55" x2="135" y2="105"/><line x1="70" y1="100" x2="100" y2="95"/>
+        <line x1="100" y1="95" x2="135" y2="105"/><line x1="70" y1="100" x2="90" y2="150"/>
+        <line x1="135" y1="105" x2="115" y2="155"/><line x1="90" y1="150" x2="115" y2="155"/>
+      </g>
+      <g fill="var(--pink)"><circle cx="40" cy="50" r="4"><animate attributeName="opacity" values="1;0.4;1" dur="2.6s" repeatCount="indefinite"/></circle></g>
+      <g fill="var(--violet)"><circle cx="100" cy="30" r="3.5"/><circle cx="160" cy="55" r="3.5"/><circle cx="135" cy="105" r="3.5"/></g>
+      <g fill="var(--gold)"><circle cx="100" cy="95" r="4.5"><animate attributeName="opacity" values="0.5;1;0.5" dur="3s" repeatCount="indefinite"/></circle></g>
+      <g fill="var(--cyan)"><circle cx="70" cy="100" r="3.5"/><circle cx="90" cy="150" r="3"/><circle cx="115" cy="155" r="3"/></g>
+      <defs><linearGradient id="hg" x1="0" y1="0" x2="200" y2="200"><stop offset="0" stop-color="#A78BFA"/><stop offset="1" stop-color="#F472B6"/></linearGradient></defs>
+    </svg>
+    <div class="hero-eyebrow">Free · No sign-up · Instant results</div>
+    <h1>How sharp is your mind, really?</h1>
+    <p>Four short tests and one locked-room case. Answer honestly, get scored instantly, and see where your thinking leans.</p>
+    <div class="hero-cta">
+      <button class="btn btn-primary" data-nav="tests">Start a test</button>
+      <button class="btn btn-ghost" data-nav="mystery">Solve the case</button>
+    </div>
+    <div class="stat-row">
+      <div><strong id="statDone">0</strong>tests completed</div>
+      <div><strong id="statBest">—</strong>best score</div>
+    </div>
+
+    <div class="card-list">
+      <a class="pick-card" data-nav="tests" data-quiz="logic" style="--card-c:var(--violet)">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 12h4l2-6 4 12 2-6h4"/></svg></div>
+        <div class="body"><div class="lbl">Pattern Logic</div><div class="sub">5 questions · number and shape sequences</div></div>
+        <div class="go">Start →</div>
+      </a>
+      <a class="pick-card" data-nav="tests" data-quiz="style" style="--card-c:var(--pink)">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 3a6 6 0 0 0-1 11.9V19a1 1 0 0 0 2 0v-4.1A6 6 0 0 0 12 3z"/><path d="M9 21h6"/></svg></div>
+        <div class="body"><div class="lbl">Thinking Style</div><div class="sub">5 questions · how you approach problems</div></div>
+        <div class="go">Start →</div>
+      </a>
+      <a class="pick-card" data-nav="tests" data-quiz="memory" style="--card-c:var(--cyan)">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
+        <div class="body"><div class="lbl">Memory Test</div><div class="sub">Memorize, then recall under pressure</div></div>
+        <div class="go">Start →</div>
+      </a>
+      <a class="pick-card" data-nav="tests" data-quiz="visual" style="--card-c:var(--amber)">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div class="body"><div class="lbl">Visual Challenge</div><div class="sub">4 rounds · spot what doesn't belong</div></div>
+        <div class="go">Start →</div>
+      </a>
+      <a class="pick-card" data-nav="mystery" style="--card-c:var(--gold)">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="10" cy="10" r="6"/><line x1="15" y1="15" x2="21" y2="21"/></svg></div>
+        <div class="body"><div class="lbl">The Sealed Study</div><div class="sub">1 case · three suspects, one liar</div></div>
+        <div class="go">Investigate →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTS ================= -->
+<section id="tests">
+  <div class="wrap">
+    <div id="testsPicker">
+      <h2 style="font-size:1.6rem;margin-bottom:20px;">Pick a test</h2>
+      <div class="card-list">
+        <a class="pick-card" data-quiz="logic" style="--card-c:var(--violet)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 12h4l2-6 4 12 2-6h4"/></svg></div>
+          <div class="body"><div class="lbl">Pattern Logic</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="style" style="--card-c:var(--pink)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 3a6 6 0 0 0-1 11.9V19a1 1 0 0 0 2 0v-4.1A6 6 0 0 0 12 3z"/><path d="M9 21h6"/></svg></div>
+          <div class="body"><div class="lbl">Thinking Style</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="memory" style="--card-c:var(--cyan)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
+          <div class="body"><div class="lbl">Memory Test</div><div class="sub">Timed recall</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="visual" style="--card-c:var(--amber)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div class="body"><div class="lbl">Visual Challenge</div><div class="sub">4 rounds</div></div><div class="go">Start →</div>
+        </a>
+      </div>
+    </div>
+    <div id="quizStage" style="display:none;"></div>
+  </div>
+</section>
+
+<!-- ================= MYSTERY ================= -->
+<section id="mystery">
+  <div class="wrap">
+    <h2 style="font-size:1.6rem;">The Sealed Study</h2>
+    <p style="color:var(--muted);margin-top:8px;">A rare manuscript vanished from Professor Hale's locked study. Only three people had a key. Read each statement carefully — one of them is lying.</p>
+    <div id="suspectList" style="margin-top:22px;"></div>
+    <button class="btn btn-primary" id="mysterySubmit" style="margin-top:8px;" disabled>Accuse the liar</button>
+    <div id="mysteryResult"></div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap">
+    <h2 style="font-size:1.6rem;">About Cortex Vault</h2>
+    <p style="color:var(--muted);margin-top:12px;line-height:1.7;">Cortex Vault is a small collection of free brain teasers, logic puzzles, memory drills, and short deduction cases. Everything is instant — no account, no email, no download. Answer a few questions and see your result right away.</p>
+    <p style="color:var(--muted);margin-top:12px;line-height:1.7;">The tests here are built for fun and self-reflection, not clinical or professional assessment. They're a quick way to pass a few minutes and see how your mind tends to work — nothing more, nothing less.</p>
+    <p style="color:var(--muted);margin-top:12px;line-height:1.7;">New tests and mystery cases are added over time. If you have an idea for one, get in touch on the <a href="#" data-nav="contact" style="color:var(--violet);text-decoration:underline;">contact page</a>.</p>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact">
+  <div class="wrap">
+    <h2 style="font-size:1.6rem;">Contact</h2>
+    <p style="color:var(--muted);margin-top:12px;line-height:1.7;">Questions, feedback, or a puzzle idea you'd like to see here? Reach out any time.</p>
+    <div class="result-box" style="margin-top:20px;">
+      <div class="result-label">Email</div>
+      <div style="font-family:'Fraunces',serif;font-size:1.3rem;margin-top:4px;"><a href="mailto:starzone861@gmail.com" style="color:var(--text);">starzone861@gmail.com</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRIVACY ================= -->
+<section id="privacy">
+  <div class="wrap">
+    <h2 style="font-size:1.6rem;">Privacy Policy</h2>
+    <p style="color:var(--muted);margin-top:6px;font-size:0.85rem;">Last updated: 2026</p>
+    <p style="color:var(--muted);margin-top:16px;line-height:1.7;">Cortex Vault does not require an account and does not collect personal information to let you take a test. Quiz answers and scores are kept only in your browser for the current visit and are not sent to or stored on our servers.</p>
+    <p style="color:var(--muted);margin-top:12px;line-height:1.7;">Like most websites, this site may use cookies and similar technologies from third-party services (for example, analytics or advertising partners) to understand traffic and, where applicable, show ads. These partners may collect information such as your IP address and browsing activity in accordance with their own privacy policies.</p>
+    <p style="color:var(--muted);margin-top:12px;line-height:1.7;">You can control or delete cookies through your browser settings at any time. If we ever add optional sign-up features, this policy will be updated to explain what is collected and why.</p>
+    <p style="color:var(--muted);margin-top:12px;line-height:1.7;">If you have questions about this policy, contact us on the <a href="#" data-nav="contact" style="color:var(--violet);text-decoration:underline;">contact page</a>.</p>
+  </div>
+</section>
+
+<!-- ================= TERMS ================= -->
+<section id="terms">
+  <div class="wrap">
+    <h2 style="font-size:1.6rem;">Terms of Use</h2>
+    <p style="color:var(--muted);margin-top:6px;font-size:0.85rem;">Last updated: 2026</p>
+    <p style="color:var(--muted);margin-top:16px;line-height:1.7;">By using Cortex Vault, you agree to use the site for personal, non-commercial entertainment. Content is provided "as is" for fun and general interest — results from any test are not medical, psychological, or professional advice.</p>
+    <p style="color:var(--muted);margin-top:12px;line-height:1.7;">All text, design, and puzzle content on this site belongs to Cortex Vault unless stated otherwise, and may not be copied or republished without permission.</p>
+    <p style="color:var(--muted);margin-top:12px;line-height:1.7;">We aim to keep the site available and error-free, but we don't guarantee uninterrupted access and are not liable for any loss arising from use of the site.</p>
+    <p style="color:var(--muted);margin-top:12px;line-height:1.7;">These terms may be updated from time to time. Continued use of the site after changes means you accept the updated terms.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>Cortex Vault — test your mind.</div>
+    <div class="footer-links">
+      <a href="#" data-nav="about">About</a>
+      <a href="#" data-nav="contact">Contact</a>
+      <a href="#" data-nav="privacy">Privacy</a>
+      <a href="#" data-nav="terms">Terms</a>
+    </div>
+    <div>© 2026</div>
+  </div>
+</footer>
+
+<script>
+/* ---------------- nav ---------------- */
+const sections = document.querySelectorAll('section');
+const navBtns = document.querySelectorAll('nav button');
+function showSection(id){
+  sections.forEach(s=>s.classList.toggle('active', s.id===id));
+  navBtns.forEach(b=>b.classList.toggle('active', b.dataset.nav===id));
+  window.scrollTo({top:0,behavior:'instant'});
+}
+document.querySelectorAll('[data-nav]').forEach(el=>{
+  el.addEventListener('click', (e)=>{
+    e.preventDefault();
+    showSection(el.dataset.nav);
+    if(el.dataset.quiz){ startQuiz(el.dataset.quiz); }
+  });
+});
+
+/* ---------------- stats ---------------- */
+let testsCompleted = 0;
+let bestScore = null; // percentage
+function recordResult(correct, total){
+  testsCompleted++;
+  const pct = Math.round((correct/total)*100);
+  if(bestScore===null || pct>bestScore) bestScore = pct;
+  document.getElementById('statDone').textContent = testsCompleted;
+  document.getElementById('statBest').textContent = bestScore + '%';
+}
+
+/* ---------------- quiz data ---------------- */
+const QUIZZES = {
+  logic: {
+    title: 'Pattern Logic',
+    questions: [
+      { q:'What comes next: 2, 4, 8, 16, ?', options:['20','32','24','30'], correct:1, explain:'Each number doubles the one before it.' },
+      { q:'Complete the sequence: 1, 4, 9, 16, ?', options:['20','24','25','21'], correct:2, explain:'These are square numbers: 1², 2², 3², 4², 5².' },
+      { q:'Which number is the odd one out: 3, 5, 7, 9, 11, 15?', options:['9','11','15','3'], correct:0, explain:'All others are prime; 9 is the only composite number.' },
+      { q:'What comes next: A, C, F, J, ?', options:['M','N','O','P'], correct:2, explain:'The gap between letters increases by one each time: +2, +3, +4, +5.' },
+      { q:'If today is Wednesday, what day was it 100 days ago?', options:['Sunday','Monday','Tuesday','Thursday'], correct:0, explain:'100 mod 7 = 2, so count back two days from Wednesday: Sunday.' }
+    ]
+  },
+  style: {
+    title: 'Thinking Style',
+    // each option maps to a style key; tally at the end
+    questions: [
+      { q:'A tough problem lands on your desk. First move?', options:[
+          {t:'Break it into smaller parts', k:'analytical'},
+          {t:'Sketch a few wild ideas first', k:'creative'},
+          {t:'Check how it was solved before', k:'systematic'},
+          {t:'Go with your gut reaction', k:'intuitive'} ]},
+      { q:'You learn best by:', options:[
+          {t:'Following a clear step-by-step method', k:'systematic'},
+          {t:'Testing things out and adjusting', k:'intuitive'},
+          {t:'Building a mental model from first principles', k:'analytical'},
+          {t:'Connecting it to something unrelated', k:'creative'} ]},
+      { q:'Under a tight deadline, you tend to:', options:[
+          {t:'Trust your instinct and move fast', k:'intuitive'},
+          {t:'Stick to the plan you already made', k:'systematic'},
+          {t:'Look for an unconventional shortcut', k:'creative'},
+          {t:'Re-check your logic before acting', k:'analytical'} ]},
+      { q:'In a group project, you naturally:', options:[
+          {t:'Organize the steps and timeline', k:'systematic'},
+          {t:'Pitch the unusual idea nobody considered', k:'creative'},
+          {t:'Question assumptions others take for granted', k:'analytical'},
+          {t:'Sense which idea will click with people', k:'intuitive'} ]},
+      { q:'When a plan fails, your instinct is to:', options:[
+          {t:'Diagnose exactly where it broke', k:'analytical'},
+          {t:'Reinvent the approach entirely', k:'creative'},
+          {t:'Follow your revised checklist', k:'systematic'},
+          {t:'Feel out a new direction on the fly', k:'intuitive'} ]}
+    ],
+    verdicts: {
+      analytical: 'You lean Analytical. You take problems apart before you trust any answer, and you\'d rather be right than fast.',
+      creative: 'You lean Creative. You reach for the unconventional angle and treat rules as a starting point, not a fence.',
+      systematic: 'You lean Systematic. You trust process over improvisation, and you build results that hold up under pressure.',
+      intuitive: 'You lean Intuitive. You read situations fast and commit — and more often than not, your gut is right.'
+    }
+  },
+  memory: {
+    title: 'Memory Test',
+    words: ['APPLE','7','BLUE','MOON','12'],
+    questions: [
+      { q:'Which word appeared in the list?', options:['River','Moon','Green','Yellow'], correct:1 },
+      { q:'Which number appeared in the list?', options:['3','12','9','20'], correct:1 },
+      { q:'What was the first item shown?', options:['BLUE','MOON','APPLE','7'], correct:2 }
+    ]
+  },
+  visual: {
+    title: 'Visual Challenge',
+    questions: [
+      { grid:['●','●','●','○','●'], oddIndex:3 },
+      { grid:['▲','▲','▼','▲','▲'], oddIndex:2 },
+      { grid:['◆','◇','◆','◆','◆'], oddIndex:1 },
+      { grid:['■','■','■','■','▪'], oddIndex:4 }
+    ]
+  }
+};
+
+/* ---------------- generic quiz engine ---------------- */
+const stage = document.getElementById('quizStage');
+const picker = document.getElementById('testsPicker');
+
+function startQuiz(key){
+  picker.style.display = 'none';
+  stage.style.display = 'block';
+  if(key==='memory'){ runMemoryQuiz(); return; }
+  if(key==='visual'){ runVisualQuiz(); return; }
+  if(key==='style'){ runStyleQuiz(); return; }
+  runStandardQuiz(key);
+}
+
+function ordinalPositions(list){
+  const letters = ['A','B','C','D','E'];
+  return list.map((t,i)=>letters[i]);
+}
+
+function backToPicker(){
+  stage.style.display='none';
+  stage.innerHTML='';
+  picker.style.display='block';
+}
+
+/* -- standard multiple choice with a defined correct index -- */
+function runStandardQuiz(key){
+  const quiz = QUIZZES[key];
+  let i = 0, correct = 0;
+
+  function render(){
+    const q = quiz.questions[i];
+    const letters = ['A','B','C','D'];
+    stage.innerHTML = `
+      <div class="quiz-head"><h2>${quiz.title}</h2><div class="qcount">Q${i+1} of ${quiz.questions.length}</div></div>
+      <div class="progress"><i style="width:${(i/quiz.questions.length)*100}%"></i></div>
+      <div class="question">${q.q}</div>
+      <div class="options">
+        ${q.options.map((opt,idx)=>`<button class="opt" data-idx="${idx}"><span class="mk">${letters[idx]}</span>${opt}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb"></div>
+      <div class="next-row" id="nextRow"></div>
+    `;
+    stage.querySelectorAll('.opt').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const idx = parseInt(btn.dataset.idx);
+        stage.querySelectorAll('.opt').forEach(b=>b.setAttribute('disabled','true'));
+        if(idx===q.correct){
+          btn.classList.add('correct');
+          correct++;
+          document.getElementById('fb').textContent = q.explain || 'Correct.';
+        } else {
+          btn.classList.add('wrong');
+          stage.querySelector(`.opt[data-idx="${q.correct}"]`).classList.add('correct');
+          document.getElementById('fb').textContent = q.explain || 'Not quite.';
+        }
+        const nextRow = document.getElementById('nextRow');
+        nextRow.innerHTML = `<button class="btn btn-primary" id="nextBtn">${i+1<quiz.questions.length?'Next':'See results'}</button>`;
+        document.getElementById('nextBtn').addEventListener('click', ()=>{
+          i++;
+          if(i<quiz.questions.length) render(); else showResult(quiz.title, correct, quiz.questions.length);
+        });
+      });
+    });
+  }
+  render();
+}
+
+/* -- thinking style quiz (tallied, not correct/incorrect) -- */
+function runStyleQuiz(){
+  const quiz = QUIZZES.style;
+  let i = 0;
+  const tally = {analytical:0, creative:0, systematic:0, intuitive:0};
+
+  function render(){
+    const q = quiz.questions[i];
+    const letters = ['A','B','C','D'];
+    stage.innerHTML = `
+      <div class="quiz-head"><h2>${quiz.title}</h2><div class="qcount">Q${i+1} of ${quiz.questions.length}</div></div>
+      <div class="progress"><i style="width:${(i/quiz.questions.length)*100}%"></i></div>
+      <div class="question">${q.q}</div>
+      <div class="options">
+        ${q.options.map((opt,idx)=>`<button class="opt" data-idx="${idx}"><span class="mk">${letters[idx]}</span>${opt.t}</button>`).join('')}
+      </div>
+    `;
+    stage.querySelectorAll('.opt').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const idx = parseInt(btn.dataset.idx);
+        tally[q.options[idx].k]++;
+        i++;
+        if(i<quiz.questions.length) render(); else showStyleResult(tally);
+      });
+    });
+  }
+
+  function showStyleResult(tally){
+    const dominant = Object.keys(tally).reduce((a,b)=> tally[a]>=tally[b]?a:b);
+    testsCompleted++;
+    document.getElementById('statDone').textContent = testsCompleted;
+    stage.innerHTML = `
+      <div class="result-box">
+        <div class="result-label">Your dominant style</div>
+        <div class="result-score" style="font-size:1.8rem;">${dominant[0].toUpperCase()+dominant.slice(1)}</div>
+        <div class="result-verdict">${quiz.verdicts[dominant]}</div>
+        <div class="result-actions">
+          <button class="btn btn-primary" id="againBtn">Take another test</button>
+          <button class="btn btn-ghost" id="homeBtn">Back to home</button>
+        </div>
+      </div>`;
+    document.getElementById('againBtn').addEventListener('click', backToPicker);
+    document.getElementById('homeBtn').addEventListener('click', ()=>{ backToPicker(); showSection('home'); });
+  }
+  render();
+}
+
+/* -- memory quiz: show, hide, then question -- */
+function runMemoryQuiz(){
+  const quiz = QUIZZES.memory;
+  let seconds = 5;
+  stage.innerHTML = `
+    <div class="quiz-head"><h2>${quiz.title}</h2><div class="qcount">Memorize</div></div>
+    <div class="memorize-box">
+      <div class="memorize-words">${quiz.words.join('   ')}</div>
+      <div class="timer" id="timerTxt">Hiding in ${seconds}s...</div>
+    </div>
+  `;
+  const timerEl = document.getElementById('timerTxt');
+  const t = setInterval(()=>{
+    seconds--;
+    if(seconds<=0){
+      clearInterval(t);
+      runMemoryQuestions();
+    } else {
+      timerEl.textContent = `Hiding in ${seconds}s...`;
+    }
+  }, 1000);
+
+  function runMemoryQuestions(){
+    let i=0, correct=0;
+    function render(){
+      const q = quiz.questions[i];
+      const letters = ['A','B','C','D'];
+      stage.innerHTML = `
+        <div class="quiz-head"><h2>${quiz.title}</h2><div class="qcount">Q${i+1} of ${quiz.questions.length}</div></div>
+        <div class="progress"><i style="width:${(i/quiz.questions.length)*100}%"></i></div>
+        <div class="question">${q.q}</div>
+        <div class="options">
+          ${q.options.map((opt,idx)=>`<button class="opt" data-idx="${idx}"><span class="mk">${letters[idx]}</span>${opt}</button>`).join('')}
+        </div>
+        <div class="feedback" id="fb"></div>
+        <div class="next-row" id="nextRow"></div>
+      `;
+      stage.querySelectorAll('.opt').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const idx = parseInt(btn.dataset.idx);
+          stage.querySelectorAll('.opt').forEach(b=>b.setAttribute('disabled','true'));
+          if(idx===q.correct){ btn.classList.add('correct'); correct++; }
+          else { btn.classList.add('wrong'); stage.querySelector(`.opt[data-idx="${q.correct}"]`).classList.add('correct'); }
+          const nextRow = document.getElementById('nextRow');
+          nextRow.innerHTML = `<button class="btn btn-primary" id="nextBtn">${i+1<quiz.questions.length?'Next':'See results'}</button>`;
+          document.getElementById('nextBtn').addEventListener('click', ()=>{
+            i++;
+            if(i<quiz.questions.length) render(); else showResult(quiz.title, correct, quiz.questions.length);
+          });
+        });
+      });
+    }
+    render();
+  }
+}
+
+/* -- visual quiz: odd symbol out -- */
+function runVisualQuiz(){
+  const quiz = QUIZZES.visual;
+  let i=0, correct=0;
+  function render(){
+    const q = quiz.questions[i];
+    const letters = ['1st','2nd','3rd','4th','5th'];
+    stage.innerHTML = `
+      <div class="quiz-head"><h2>${quiz.title}</h2><div class="qcount">Round ${i+1} of ${quiz.questions.length}</div></div>
+      <div class="progress"><i style="width:${(i/quiz.questions.length)*100}%"></i></div>
+      <div class="question">Which symbol is different?</div>
+      <div class="symbol-row">${q.grid.join(' ')}</div>
+      <div class="options">
+        ${q.grid.map((s,idx)=>`<button class="opt" data-idx="${idx}"><span class="mk">${idx+1}</span>The ${letters[idx]} symbol</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb"></div>
+      <div class="next-row" id="nextRow"></div>
+    `;
+    stage.querySelectorAll('.opt').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const idx = parseInt(btn.dataset.idx);
+        stage.querySelectorAll('.opt').forEach(b=>b.setAttribute('disabled','true'));
+        if(idx===q.oddIndex){ btn.classList.add('correct'); correct++; }
+        else { btn.classList.add('wrong'); stage.querySelector(`.opt[data-idx="${q.oddIndex}"]`).classList.add('correct'); }
+        const nextRow = document.getElementById('nextRow');
+        nextRow.innerHTML = `<button class="btn btn-primary" id="nextBtn">${i+1<quiz.questions.length?'Next round':'See results'}</button>`;
+        document.getElementById('nextBtn').addEventListener('click', ()=>{
+          i++;
+          if(i<quiz.questions.length) render(); else showResult(quiz.title, correct, quiz.questions.length);
+        });
+      });
+    });
+  }
+  render();
+}
+
+/* -- shared result screen -- */
+function showResult(title, correct, total){
+  recordResult(correct, total);
+  const pct = Math.round((correct/total)*100);
+  let verdict;
+  if(pct===100) verdict = 'A perfect run. You didn\'t miss a single one.';
+  else if(pct>=70) verdict = 'Strong result — your instincts are well calibrated.';
+  else if(pct>=40) verdict = 'A fair result. Try again and see if the second pass sharpens up.';
+  else verdict = 'Rough round — but every miss is a pattern you now know to watch for.';
+
+  stage.innerHTML = `
+    <div class="result-box">
+      <div class="result-label">${title} — your result</div>
+      <div class="result-score">${correct}/${total}</div>
+      <div class="result-verdict">${verdict}</div>
+      <div class="result-actions">
+        <button class="btn btn-primary" id="againBtn">Take another test</button>
+        <button class="btn btn-ghost" id="homeBtn">Back to home</button>
+      </div>
+    </div>`;
+  document.getElementById('againBtn').addEventListener('click', backToPicker);
+  document.getElementById('homeBtn').addEventListener('click', ()=>{ backToPicker(); showSection('home'); });
+}
+
+/* ---------------- mystery case ---------------- */
+const CASE = {
+  suspects: [
+    { name:'Warden, the librarian', statement:'I was reshelving books in the east wing all evening — ask the cleaner, she saw me at 9.' },
+    { name:'Iris, the professor\'s assistant', statement:'I left at 8, before the study was even locked. I never had a key that night.' },
+    { name:'Colm, the night cleaner', statement:'I didn\'t start my rounds in the east wing until 9:30, and I never saw the librarian there.' }
+  ],
+  // Warden claims the cleaner saw her at 9; the cleaner says he wasn't in the east wing until 9:30 and never saw her.
+  // Those two accounts directly contradict — Warden is the liar.
+  liarIndex: 0,
+  explanation: 'Warden claims the cleaner saw her in the east wing at 9. But Colm states he wasn\'t in the east wing until 9:30, and never saw her at all. Their accounts can\'t both be true — Warden is the one lying.'
+};
+
+const suspectList = document.getElementById('suspectList');
+let flagged = null;
+
+function renderSuspects(){
+  suspectList.innerHTML = CASE.suspects.map((s,idx)=>`
+    <div class="suspect" data-idx="${idx}">
+      <h3>${s.name}</h3>
+      <p>"${s.statement}"</p>
+      <button data-idx="${idx}">Flag as the liar</button>
+    </div>
+  `).join('');
+  suspectList.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      flagged = parseInt(btn.dataset.idx);
+      suspectList.querySelectorAll('.suspect').forEach(el=>el.classList.remove('flagged'));
+      suspectList.querySelector(`.suspect[data-idx="${flagged}"]`).classList.add('flagged');
+      document.getElementById('mysterySubmit').disabled = false;
+    });
+  });
+}
+renderSuspects();
+
+document.getElementById('mysterySubmit').addEventListener('click', ()=>{
+  const resultEl = document.getElementById('mysteryResult');
+  const isRight = flagged === CASE.liarIndex;
+  resultEl.innerHTML = `
+    <div class="verdict-box ${isRight?'right':'wrong'}">
+      <h3 style="margin-bottom:8px;">${isRight?'Case closed — you found the liar.':'Not quite — the trail leads elsewhere.'}</h3>
+      <p style="color:var(--muted);margin:0;">${CASE.explanation}</p>
+    </div>
+  `;
+  document.getElementById('mysterySubmit').disabled = true;
+});
+</script>
+</body>
+</html>
