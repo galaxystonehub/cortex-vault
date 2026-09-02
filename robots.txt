@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://galaxystonehub.github.io/cortex-vault/sitemap.xml
