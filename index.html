@@ -59,7 +59,7 @@
     backdrop-filter:blur(10px);
     z-index:10;
   }
-  header .wrap{display:flex;align-items:center;justify-content:space-between;}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;row-gap:8px;}
   .brand{display:flex;align-items:center;gap:9px;font-family:'Fraunces',serif;font-weight:700;font-size:1.12rem;}
   .brand-mark{
     width:30px;height:30px;border-radius:9px;flex-shrink:0;
@@ -68,7 +68,8 @@
   }
   .brand-mark svg{width:16px;height:16px;}
   .brand span{background:linear-gradient(135deg, var(--violet), var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;}
-  nav{display:flex;gap:2px;}
+  nav{display:flex;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  nav::-webkit-scrollbar{display:none;}
   nav button{
     background:none;border:none;color:var(--muted);
     font-size:0.85rem;font-weight:600;padding:9px 14px;
@@ -221,11 +222,19 @@
       Cortex <span>Vault</span>
     </div>
     <nav>
-      <button data-nav="home" class="active">Home</button>
-      <button data-nav="tests">Tests</button>
-      <button data-nav="mystery">Mystery</button>
-      <button data-nav="about">About</button>
+      <button data-nav="home" class="active" data-i18n="nav_home">Home</button>
+      <button data-nav="tests" data-i18n="nav_tests">Tests</button>
+      <button data-nav="mystery" data-i18n="nav_mystery">Mystery</button>
+      <button data-nav="about" data-i18n="nav_about">About</button>
+      <button data-nav="tips" data-i18n="nav_tips">Tips</button>
     </nav>
+    <select id="langSwitch" aria-label="Language" style="background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:0.8rem;font-family:inherit;flex-shrink:0;margin-inline-start:auto;">
+      <option value="en">EN</option>
+      <option value="ur">اردو</option>
+      <option value="hi">हिंदी</option>
+      <option value="zh">中文</option>
+      <option value="ar">عربي</option>
+    </select>
   </div>
 </header>
 
@@ -246,22 +255,22 @@
       <g fill="var(--cyan)"><circle cx="70" cy="100" r="3.5"/><circle cx="90" cy="150" r="3"/><circle cx="115" cy="155" r="3"/></g>
       <defs><linearGradient id="hg" x1="0" y1="0" x2="200" y2="200"><stop offset="0" stop-color="#A78BFA"/><stop offset="1" stop-color="#F472B6"/></linearGradient></defs>
     </svg>
-    <div class="hero-eyebrow">Free · No sign-up · Instant results</div>
-    <h1>How sharp is your mind, really?</h1>
-    <p>Four short tests and one locked-room case. Answer honestly, get scored instantly, and see where your thinking leans.</p>
+    <div class="hero-eyebrow" data-i18n="hero_badge">Free · No sign-up · Instant results</div>
+    <h1 data-i18n="hero_title">How sharp is your mind, really?</h1>
+    <p data-i18n="hero_subtitle">Four short tests and one locked-room case. Answer honestly, get scored instantly, and see where your thinking leans.</p>
     <div class="hero-cta">
-      <button class="btn btn-primary" data-nav="tests">Start a test</button>
-      <button class="btn btn-ghost" data-nav="mystery">Solve the case</button>
+      <button class="btn btn-primary" data-nav="tests" data-i18n="hero_btn1">Start a test</button>
+      <button class="btn btn-ghost" data-nav="mystery" data-i18n="hero_btn2">Solve the case</button>
     </div>
     <div class="stat-row">
-      <div><strong id="statDone">0</strong>tests completed</div>
-      <div><strong id="statBest">—</strong>best score</div>
+      <div><strong id="statDone">0</strong><span data-i18n="stat_done">tests completed</span></div>
+      <div><strong id="statBest">—</strong><span data-i18n="stat_best">best score</span></div>
     </div>
 
     <div class="card-list">
       <a class="pick-card" data-nav="tests" data-quiz="logic" style="--card-c:var(--violet)">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 12h4l2-6 4 12 2-6h4"/></svg></div>
-        <div class="body"><div class="lbl">Pattern Logic</div><div class="sub">5 questions · number and shape sequences</div></div>
+        <div class="body"><div class="lbl" data-i18n="card_logic">Pattern Logic</div><div class="sub">5 questions · number and shape sequences</div></div>
         <div class="go">Start →</div>
       </a>
       <a class="pick-card" data-nav="tests" data-quiz="style" style="--card-c:var(--pink)">
@@ -296,11 +305,11 @@
       <div class="card-list">
         <a class="pick-card" data-quiz="logic" style="--card-c:var(--violet)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 12h4l2-6 4 12 2-6h4"/></svg></div>
-          <div class="body"><div class="lbl">Pattern Logic</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_logic">Pattern Logic</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="style" style="--card-c:var(--pink)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 3a6 6 0 0 0-1 11.9V19a1 1 0 0 0 2 0v-4.1A6 6 0 0 0 12 3z"/><path d="M9 21h6"/></svg></div>
-          <div class="body"><div class="lbl">Thinking Style</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl">Thinking Style</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="memory" style="--card-c:var(--cyan)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
@@ -312,39 +321,63 @@
         </a>
         <a class="pick-card" data-quiz="iq" style="--card-c:var(--gold)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5c0 2 1 3 2 4v3h6v-3c1-1 2-2 2-4a5 5 0 0 0-5-5z"/><path d="M9 21h6"/></svg></div>
-          <div class="body"><div class="lbl">Quick IQ Check</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_iq">Quick IQ Check</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="riddles" style="--card-c:var(--pink)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 17v.01M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 4"/></svg></div>
-          <div class="body"><div class="lbl">Logic Riddles</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_riddles">Logic Riddles</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="words" style="--card-c:var(--teal)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h7"/></svg></div>
-          <div class="body"><div class="lbl">Word Puzzles</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_words">Word Puzzles</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="math" style="--card-c:var(--cyan)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M9 9h.01M15 9h.01M9 15l6-6"/></svg></div>
-          <div class="body"><div class="lbl">Math Quickies</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_math">Math Quickies</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="gk" style="--card-c:var(--violet)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg></div>
-          <div class="body"><div class="lbl">General Knowledge</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl">General Knowledge</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="detail" style="--card-c:var(--amber)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <div class="body"><div class="lbl">Attention to Detail</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl">Attention to Detail</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="analogy" style="--card-c:var(--violet)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M17 3l4 4-4 4M3 21l4-4-4-4M21 7H9M3 17h12"/></svg></div>
-          <div class="body"><div class="lbl">Analogy Challenge</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl">Analogy Challenge</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="sequence" style="--card-c:var(--teal)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 12h3m4 0h3m4 0h3"/><circle cx="3" cy="12" r="1"/><circle cx="10" cy="12" r="1"/><circle cx="17" cy="12" r="1"/></svg></div>
-          <div class="body"><div class="lbl">Sequence Master</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl">Sequence Master</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="trivia" style="--card-c:var(--gold)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg></div>
-          <div class="body"><div class="lbl">Trivia Mix</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl">Trivia Mix</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="history" style="--card-c:var(--amber)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <div class="body"><div class="lbl">History Trivia</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="science" style="--card-c:var(--cyan)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M9 3h6M10 3v6l-5 9a1 1 0 0 0 1 1.5h12a1 1 0 0 0 1-1.5l-5-9V3"/></svg></div>
+          <div class="body"><div class="lbl">Science Trivia</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="vocab" style="--card-c:var(--pink)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z"/></svg></div>
+          <div class="body"><div class="lbl">Vocabulary Builder</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="deduction" style="--card-c:var(--violet)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <div class="body"><div class="lbl">Logical Deduction</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="patterns2" style="--card-c:var(--teal)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+          <div class="body"><div class="lbl">Pattern Recognition</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="brainteasers2" style="--card-c:var(--wrong)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M9.5 2A5.5 5.5 0 0 0 4 7.5c0 2 1 3.5 2.5 4.5V15h6v-3c1.5-1 2.5-2.5 2.5-4.5A5.5 5.5 0 0 0 9.5 2z"/><path d="M8 18h3M8 21h3"/></svg></div>
+          <div class="body"><div class="lbl">Brain Teasers Extreme</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
       </div>
     </div>
@@ -409,15 +442,72 @@
   </div>
 </section>
 
+<!-- ================= MEMORY TIPS ================= -->
+<section id="tips">
+  <div class="wrap">
+    <h2 style="font-size:1.6rem;" data-i18n="tips_title">How to Sharpen Your Memory</h2>
+    <p style="color:var(--muted);margin-top:10px;line-height:1.7;" data-i18n="tips_intro">Memory is a skill, not just a talent — these evidence-based techniques can help you remember more, recall faster, and keep your mind sharp over time.</p>
+
+    <div class="result-box" style="margin-top:24px;">
+      <div style="font-family:'Fraunces',serif;font-size:1.15rem;color:var(--violet);" data-i18n="tip1_h">1. Active Recall</div>
+      <p style="color:var(--muted);margin-top:8px;line-height:1.7;" data-i18n="tip1_p">Instead of just re-reading notes, close them and try to recall the information from memory. Testing yourself strengthens the neural pathway far more than passive review. This is why quizzes (like the ones on this site) work so well for retention.</p>
+    </div>
+
+    <div class="result-box" style="margin-top:16px;">
+      <div style="font-family:'Fraunces',serif;font-size:1.15rem;color:var(--pink);" data-i18n="tip2_h">2. Spaced Repetition</div>
+      <p style="color:var(--muted);margin-top:8px;line-height:1.7;" data-i18n="tip2_p">Review information at increasing intervals — after 1 day, then 3 days, then a week. This fights the natural "forgetting curve" and moves information into long-term memory much more efficiently than cramming.</p>
+    </div>
+
+    <div class="result-box" style="margin-top:16px;">
+      <div style="font-family:'Fraunces',serif;font-size:1.15rem;color:var(--cyan);" data-i18n="tip3_h">3. The Method of Loci (Memory Palace)</div>
+      <p style="color:var(--muted);margin-top:8px;line-height:1.7;" data-i18n="tip3_p">Picture a familiar place, like your home, and mentally "place" items you want to remember along a route through it (front door, hallway, kitchen). To recall them, mentally walk the route again. This ancient technique is still used by memory champions today.</p>
+    </div>
+
+    <div class="result-box" style="margin-top:16px;">
+      <div style="font-family:'Fraunces',serif;font-size:1.15rem;color:var(--amber);" data-i18n="tip4_h">4. Chunking</div>
+      <p style="color:var(--muted);margin-top:8px;line-height:1.7;" data-i18n="tip4_p">Break long strings of information into smaller groups. A phone number like 03211234567 is easier to remember as 0321-123-4567. This is exactly why the Memory Test on this site groups items rather than presenting one long list.</p>
+    </div>
+
+    <div class="result-box" style="margin-top:16px;">
+      <div style="font-family:'Fraunces',serif;font-size:1.15rem;color:var(--teal);" data-i18n="tip5_h">5. Visualization &amp; Association</div>
+      <p style="color:var(--muted);margin-top:8px;line-height:1.7;" data-i18n="tip5_p">Turn abstract facts into vivid mental images. The stranger or more exaggerated the image, the more memorable it becomes. Linking a new fact to something you already know also builds a stronger retrieval path.</p>
+    </div>
+
+    <div class="result-box" style="margin-top:16px;">
+      <div style="font-family:'Fraunces',serif;font-size:1.15rem;color:var(--gold);" data-i18n="tip6_h">6. Sleep &amp; Physical Exercise</div>
+      <p style="color:var(--muted);margin-top:8px;line-height:1.7;" data-i18n="tip6_p">Memory consolidation — the process of moving short-term memories into long-term storage — happens largely during sleep. Regular light exercise also increases blood flow to the brain and has been linked to better recall and focus.</p>
+    </div>
+
+    <div class="result-box" style="margin-top:16px;">
+      <div style="font-family:'Fraunces',serif;font-size:1.15rem;color:var(--wrong);" data-i18n="tip7_h">7. Teach It to Someone Else</div>
+      <p style="color:var(--muted);margin-top:8px;line-height:1.7;" data-i18n="tip7_p">Explaining a concept in your own words forces you to organize and simplify it — which deepens understanding and makes it far easier to recall later, even if there's no one around and you just explain it out loud to yourself.</p>
+    </div>
+
+    <div class="result-box" style="margin-top:16px;">
+      <div style="font-family:'Fraunces',serif;font-size:1.15rem;color:var(--violet);" data-i18n="tip8_h">8. Mnemonics &amp; Acronyms</div>
+      <p style="color:var(--muted);margin-top:8px;line-height:1.7;" data-i18n="tip8_p">Turn a list into a short phrase or acronym using the first letters of each item. For example, "Roy G. Biv" helps people recall the colors of the rainbow. Your brain remembers a fun phrase far more easily than a plain list.</p>
+    </div>
+
+    <div class="result-box" style="margin-top:16px;">
+      <div style="font-family:'Fraunces',serif;font-size:1.15rem;color:var(--pink);" data-i18n="tip9_h">9. Single-Tasking &amp; Reducing Distraction</div>
+      <p style="color:var(--muted);margin-top:8px;line-height:1.7;" data-i18n="tip9_p">Memory formation needs focused attention — trying to memorize something while switching between apps or conversations weakens encoding. Give a task your full attention for even 10-15 focused minutes for far better recall than an hour of distracted effort.</p>
+    </div>
+
+    <p style="color:var(--muted);margin-top:24px;line-height:1.7;" data-i18n="tips_cta">Want to put these techniques into practice? Try the tests on this site and track your progress over time.</p>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
-    <div>Cortex Vault — test your mind.</div>
+    <div data-i18n="footer_tag">Cortex Vault — test your mind.</div>
     <div class="footer-links">
-      <a href="#" data-nav="about">About</a>
-      <a href="#" data-nav="contact">Contact</a>
-      <a href="#" data-nav="privacy">Privacy</a>
-      <a href="#" data-nav="terms">Terms</a>
+      <a href="#" data-nav="about" data-i18n="nav_about">About</a>
+      <a href="#" data-nav="tips" data-i18n="nav_tips">Tips</a>
+      <a href="#" data-nav="contact" data-i18n="nav_contact">Contact</a>
+      <a href="#" data-nav="privacy" data-i18n="nav_privacy">Privacy</a>
+      <a href="#" data-nav="terms" data-i18n="nav_terms">Terms</a>
     </div>
+
     <div>© 2026</div>
   </div>
 </footer>
@@ -612,6 +702,66 @@ const QUIZZES = {
       { q:'How many sides does a hexagon have?', options:['5','6','7','8'], correct:1, explain:'"Hex" means six — a hexagon has 6 sides.' },
       { q:'What is the freezing point of water in Celsius?', options:['-10°C','0°C','10°C','32°C'], correct:1, explain:'Water freezes at 0°C (32°F) at standard atmospheric pressure.' }
     ]
+  },
+  history: {
+    title: 'History Trivia',
+    questions: [
+      { q:'In which century did World War I begin?', options:['19th century','20th century','21st century','18th century'], correct:1, explain:'World War I began in 1914, which falls in the 20th century.' },
+      { q:'The Great Wall of China was primarily built to defend against invasions from which direction?', options:['South','East','North','West'], correct:2, explain:'The wall was built mainly to protect against invasions from northern nomadic groups.' },
+      { q:'Which ancient civilization built the pyramids of Giza?', options:['Romans','Greeks','Egyptians','Mayans'], correct:2, explain:'The pyramids of Giza were built by the ancient Egyptians as tombs for pharaohs.' },
+      { q:'Who is credited with inventing the telephone?', options:['Thomas Edison','Alexander Graham Bell','Nikola Tesla','Benjamin Franklin'], correct:1, explain:'Alexander Graham Bell is widely credited with patenting the first practical telephone.' },
+      { q:'The printing press was invented by which of these?', options:['Johannes Gutenberg','Leonardo da Vinci','Isaac Newton','Galileo Galilei'], correct:0, explain:'Johannes Gutenberg introduced the movable-type printing press in the 15th century.' }
+    ]
+  },
+  science: {
+    title: 'Science Trivia',
+    questions: [
+      { q:'What is the powerhouse of the cell?', options:['Nucleus','Ribosome','Mitochondria','Golgi body'], correct:2, explain:'Mitochondria produce most of the cell\'s ATP energy, earning the nickname "powerhouse".' },
+      { q:'Which force keeps planets in orbit around the sun?', options:['Magnetism','Gravity','Friction','Inertia'], correct:1, explain:'Gravity is the attractive force that keeps planets orbiting the sun.' },
+      { q:'What is H2O more commonly known as?', options:['Salt','Water','Sugar','Oxygen'], correct:1, explain:'H2O is the chemical formula for water — two hydrogen atoms and one oxygen atom.' },
+      { q:'How many bones are in the adult human body?', options:['196','206','216','226'], correct:1, explain:'The average adult human skeleton has 206 bones.' },
+      { q:'Which planet has the most moons in our solar system (as commonly cited)?', options:['Jupiter','Saturn','Mars','Neptune'], correct:1, explain:'Saturn is generally cited as having the most confirmed moons, closely followed by Jupiter.' }
+    ]
+  },
+  vocab: {
+    title: 'Vocabulary Builder',
+    questions: [
+      { q:'What does "Ephemeral" mean?', options:['Lasting forever','Lasting a very short time','Extremely loud','Very heavy'], correct:1, explain:'Ephemeral means lasting for a very short time.' },
+      { q:'What is a synonym for "Benevolent"?', options:['Cruel','Kind','Angry','Selfish'], correct:1, explain:'Benevolent means kind and well-meaning.' },
+      { q:'What does "Ambiguous" mean?', options:['Very clear','Open to more than one interpretation','Extremely large','Completely false'], correct:1, explain:'Ambiguous means having more than one possible meaning.' },
+      { q:'What is the meaning of "Candid"?', options:['Dishonest','Frank and open','Very shy','Angry'], correct:1, explain:'Candid means truthful and straightforward.' },
+      { q:'What does "Resilient" mean?', options:['Easily broken','Able to recover quickly from difficulty','Very slow','Extremely fragile'], correct:1, explain:'Resilient describes the ability to withstand or recover quickly from difficulties.' }
+    ]
+  },
+  deduction: {
+    title: 'Logical Deduction',
+    questions: [
+      { q:'All roses are flowers. Some flowers fade quickly. Therefore:', options:['All roses fade quickly','Some roses may fade quickly','No roses fade quickly','All flowers are roses'], correct:1, explain:'Since roses are a subset of flowers, and some flowers fade quickly, it\'s only valid to say some roses MAY fade quickly.' },
+      { q:'If it rains, the ground gets wet. The ground is wet. Can we conclude it rained?', options:['Yes, definitely','No, not necessarily','Only in summer','Only if it\'s morning'], correct:1, explain:'This is a logical fallacy (affirming the consequent) — the ground could be wet for other reasons like a sprinkler.' },
+      { q:'Five people are in a race. Amy finishes before Ben. Ben finishes before Cara. Who finishes first?', options:['Ben','Cara','Amy','Cannot be determined'], correct:2, explain:'Since Amy is before Ben, and Ben is before Cara, Amy must be first among these three.' },
+      { q:'A is taller than B. C is shorter than B. Who is the shortest?', options:['A','B','C','Cannot be determined'], correct:2, explain:'A > B > C in height, so C is the shortest.' },
+      { q:'If all cats are mammals, and all mammals are animals, then:', options:['All animals are cats','All cats are animals','No cats are animals','All mammals are cats'], correct:1, explain:'This follows the transitive property: cats → mammals → animals, so all cats are animals.' }
+    ]
+  },
+  patterns2: {
+    title: 'Pattern Recognition',
+    questions: [
+      { q:'Which shape completes the series: Circle, Square, Circle, Square, ?', options:['Triangle','Circle','Square','Star'], correct:1, explain:'The pattern alternates, so it continues with Circle.' },
+      { q:'What comes next: 5, 10, 20, 40, ?', options:['60','70','80','90'], correct:2, explain:'Each number doubles: 40 × 2 = 80.' },
+      { q:'Find the missing letter: B, D, F, H, ?', options:['I','J','K','L'], correct:1, explain:'The letters skip one each time (+2): H + 2 = J.' },
+      { q:'What comes next: 1, 4, 9, 16, 25, ?', options:['30','32','36','40'], correct:2, explain:'These are perfect squares (1²,2²,3²,4²,5²), so next is 6² = 36.' },
+      { q:'Complete the pattern: 2, 3, 5, 7, 11, ?', options:['12','13','14','15'], correct:1, explain:'These are consecutive prime numbers — 13 is the next prime after 11.' }
+    ]
+  },
+  brainteasers2: {
+    title: 'Brain Teasers Extreme',
+    questions: [
+      { q:'You see a boat filled with people. It has NOT sunk, but when you look again you don\'t see a single person. Why?', options:['They all swam away','All people are married (no single person)','The boat sank secretly','They were invisible'], correct:1, explain:'It\'s a play on words — "not a single person" means everyone on board is married.' },
+      { q:'What can travel around the world while staying in a corner?', options:['A satellite','A stamp','A map','The wind'], correct:1, explain:'A postage stamp stays in the corner of an envelope while it travels around the world.' },
+      { q:'A father and son are in a car accident. The father dies, and the son is rushed to the hospital. The surgeon says "I cannot operate on my son." How is this possible?', options:['The surgeon is a robot','The surgeon is the boy\'s mother','It\'s a different son','The surgeon is lying'], correct:1, explain:'The surgeon is the boy\'s mother — this riddle highlights unconscious gender assumptions.' },
+      { q:'What has many keys but can\'t open a single lock?', options:['A locksmith','A piano','A keychain','A safe'], correct:1, explain:'A piano has many keys, but they play music, not open locks.' },
+      { q:'The more of this there is, the less you see. What is it?', options:['Light','Darkness','Fog','Smoke'], correct:1, explain:'The more darkness there is, the less you can see.' }
+    ]
   }
 };
 
@@ -641,7 +791,7 @@ function backToPicker(){
 
 /* -- standard multiple choice with a defined correct index -- */
 function runStandardQuiz(key){
-  const quiz = QUIZZES[key];
+  const quiz = getLocalizedQuiz(key);
   let i = 0, correct = 0;
 
   function render(){
@@ -891,6 +1041,313 @@ document.getElementById('mysterySubmit').addEventListener('click', ()=>{
   `;
   document.getElementById('mysterySubmit').disabled = true;
 });
+
+/* ---------- Quiz content translations (gradually expanding) ---------- */
+let currentLang = 'en';
+const QUIZ_I18N = {
+  logic: {
+    ur: { title:'پیٹرن لاجک', questions:[
+      { q:'اگلا نمبر کیا ہے: 2, 4, 8, 16, ?', options:['20','32','24','30'], explain:'ہر نمبر پچھلے سے دگنا ہے۔' },
+      { q:'سلسلہ مکمل کریں: 1, 4, 9, 16, ?', options:['20','24','25','21'], explain:'یہ مربع اعداد ہیں: 1², 2², 3², 4², 5²۔' },
+      { q:'کون سا نمبر مختلف ہے: 3, 5, 7, 9, 11, 15؟', options:['9','11','15','3'], explain:'باقی سب اعداد اولی ہیں؛ 9 واحد مرکب عدد ہے۔' },
+      { q:'اگلا کیا ہے: A, C, F, J, ?', options:['M','N','O','P'], explain:'حروف کے درمیان فاصلہ ہر بار ایک بڑھتا ہے: +2, +3, +4, +5۔' },
+      { q:'اگر آج بدھ ہے تو 100 دن پہلے کیا دن تھا؟', options:['اتوار','پیر','منگل','جمعرات'], explain:'100 کو 7 سے تقسیم کرنے پر باقی 2 بچتا ہے، تو بدھ سے دو دن پیچھے: اتوار۔' }
+    ]},
+    hi: { title:'पैटर्न लॉजिक', questions:[
+      { q:'अगला क्या है: 2, 4, 8, 16, ?', options:['20','32','24','30'], explain:'हर संख्या पिछली से दोगुनी है।' },
+      { q:'क्रम पूरा करें: 1, 4, 9, 16, ?', options:['20','24','25','21'], explain:'ये वर्ग संख्याएं हैं: 1², 2², 3², 4², 5²।' },
+      { q:'कौन सी संख्या अलग है: 3, 5, 7, 9, 11, 15?', options:['9','11','15','3'], explain:'बाकी सभी अभाज्य हैं; 9 अकेली भाज्य संख्या है।' },
+      { q:'अगला क्या है: A, C, F, J, ?', options:['M','N','O','P'], explain:'अक्षरों के बीच का अंतर हर बार एक बढ़ता है: +2, +3, +4, +5।' },
+      { q:'अगर आज बुधवार है, तो 100 दिन पहले कौन सा दिन था?', options:['रविवार','सोमवार','मंगलवार','गुरुवार'], explain:'100 को 7 से भाग देने पर शेष 2 बचता है, तो बुधवार से दो दिन पीछे: रविवार।' }
+    ]},
+    zh: { title:'模式逻辑', questions:[
+      { q:'接下来是什么：2, 4, 8, 16, ?', options:['20','32','24','30'], explain:'每个数字都是前一个的两倍。' },
+      { q:'完成数列：1, 4, 9, 16, ?', options:['20','24','25','21'], explain:'这些是平方数：1², 2², 3², 4², 5²。' },
+      { q:'哪个数字与众不同：3, 5, 7, 9, 11, 15？', options:['9','11','15','3'], explain:'其他都是质数；9是唯一的合数。' },
+      { q:'接下来是什么：A, C, F, J, ?', options:['M','N','O','P'], explain:'字母之间的间隔每次增加一：+2, +3, +4, +5。' },
+      { q:'如果今天是星期三，100天前是星期几？', options:['星期日','星期一','星期二','星期四'], explain:'100除以7余2，所以从星期三往前推两天：星期日。' }
+    ]},
+    ar: { title:'المنطق النمطي', questions:[
+      { q:'ما التالي: 2, 4, 8, 16, ?', options:['20','32','24','30'], explain:'كل رقم هو ضعف الرقم الذي قبله.' },
+      { q:'أكمل التسلسل: 1, 4, 9, 16, ?', options:['20','24','25','21'], explain:'هذه أعداد تربيعية: 1², 2², 3², 4², 5².' },
+      { q:'ما هو الرقم المختلف: 3, 5, 7, 9, 11, 15؟', options:['9','11','15','3'], explain:'كل الأرقام الأخرى أولية؛ 9 هو الرقم المركب الوحيد.' },
+      { q:'ما التالي: A, C, F, J, ?', options:['M','N','O','P'], explain:'الفجوة بين الحروف تزداد بمقدار واحد كل مرة: +2, +3, +4, +5.' },
+      { q:'إذا كان اليوم الأربعاء، فما هو اليوم قبل 100 يوم؟', options:['الأحد','الاثنين','الثلاثاء','الخميس'], explain:'باقي قسمة 100 على 7 يساوي 2، فنعود يومين للخلف من الأربعاء: الأحد.' }
+    ]}
+  },
+  riddles: {
+    ur: { title:'منطقی پہیلیاں', questions:[
+      { q:'جتنا آپ لیتے ہیں، اتنا ہی پیچھے چھوڑ جاتے ہیں۔ میں کیا ہوں؟', options:['وقت','قدموں کے نشان','پیسہ','یادیں'], explain:'قدموں کے نشان — جتنے زیادہ قدم اٹھائیں گے، اتنے ہی زیادہ نشان پیچھے چھوڑیں گے۔' },
+      { q:'ایک آدمی ایک تصویر دیکھ رہا ہے۔ کوئی پوچھتا ہے یہ کون ہے۔ وہ کہتا ہے: "میرے کوئی بھائی بہن نہیں، لیکن اس آدمی کا باپ میرے باپ کا بیٹا ہے۔" تصویر میں کون ہے؟', options:['اس کا باپ','خود وہ','اس کا بیٹا','اس کا چچا'], explain:'"میرے باپ کا بیٹا" (کوئی بھائی نہ ہونے کی وجہ سے) خود وہی ہے — تو تصویر میں اس کا اپنا بیٹا ہے۔' },
+      { q:'کس چیز کا چہرہ اور دو ہاتھ ہوتے ہیں لیکن بازو یا ٹانگیں نہیں؟', options:['گھڑی','گڑیا','روبوٹ','مجسمہ'], explain:'گھڑی کا ایک چہرہ اور دو ہاتھ (گھڑی کی سوئیاں) ہوتے ہیں۔' },
+      { q:'کیا چیز جتنا زیادہ سکھاتی ہے اتنی ہی زیادہ گیلی ہو جاتی ہے؟', options:['سپنج','تولیہ','بارش','صابن'], explain:'تولیہ جتنی زیادہ چیزیں سکھاتا ہے، اتنا ہی زیادہ گیلا ہوتا جاتا ہے۔' },
+      { q:'میں زندہ نہیں لیکن بڑھتا ہوں؛ میرے پھیپھڑے نہیں لیکن مجھے ہوا چاہیے۔ میں کیا ہوں؟', options:['درخت','آگ','سایہ','بادل'], explain:'آگ بڑھتی ہے، جلنے کے لیے ہوا (آکسیجن) چاہیے، لیکن یہ زندہ چیز نہیں۔' }
+    ]},
+    hi: { title:'तार्किक पहेलियां', questions:[
+      { q:'जितना आप लेते हैं, उतना ही पीछे छोड़ जाते हैं। मैं क्या हूं?', options:['समय','पदचिह्न','पैसा','यादें'], explain:'पदचिह्न — जितने ज़्यादा कदम उठाएंगे, उतने ही ज़्यादा निशान पीछे छोड़ेंगे।' },
+      { q:'एक आदमी एक तस्वीर देख रहा है। कोई पूछता है यह कौन है। वह कहता है: "मेरे कोई भाई-बहन नहीं, लेकिन उस आदमी का पिता मेरे पिता का बेटा है।" तस्वीर में कौन है?', options:['उसका पिता','खुद वह','उसका बेटा','उसका चाचा'], explain:'"मेरे पिता का बेटा" (कोई भाई-बहन न होने के कारण) खुद वही है — तो तस्वीर में उसका अपना बेटा है।' },
+      { q:'किसका एक चेहरा और दो हाथ होते हैं लेकिन बांहें या टांगें नहीं?', options:['घड़ी','गुड़िया','रोबोट','मूर्ति'], explain:'घड़ी का एक चेहरा और दो हाथ (घड़ी की सुइयां) होते हैं।' },
+      { q:'क्या चीज़ जितना ज़्यादा सुखाती है उतनी ही ज़्यादा गीली हो जाती है?', options:['स्पंज','तौलिया','बारिश','साबुन'], explain:'तौलिया जितनी ज़्यादा चीज़ें सुखाता है, उतना ही ज़्यादा गीला होता जाता है।' },
+      { q:'मैं जीवित नहीं लेकिन बढ़ता हूं; मेरे फेफड़े नहीं लेकिन मुझे हवा चाहिए। मैं क्या हूं?', options:['पेड़','आग','छाया','बादल'], explain:'आग बढ़ती है, जलने के लिए हवा (ऑक्सीजन) चाहिए, लेकिन यह जीवित चीज़ नहीं।' }
+    ]},
+    zh: { title:'逻辑谜语', questions:[
+      { q:'你拿得越多，留下的就越多。我是什么？', options:['时间','脚印','金钱','回忆'], explain:'脚印——你走的步数越多，留下的脚印就越多。' },
+      { q:'一个人在看一张照片。有人问这是谁。他说："我没有兄弟姐妹，但那个人的父亲是我父亲的儿子。"照片里是谁？', options:['他的父亲','他自己','他的儿子','他的叔叔'], explain:'"我父亲的儿子"（没有兄弟姐妹）就是他自己——所以照片里是他自己的儿子。' },
+      { q:'什么东西有一张脸和两只手，但没有手臂或腿？', options:['时钟','娃娃','机器人','雕像'], explain:'时钟有一张表盘和两根指针（时针分针）。' },
+      { q:'什么东西被弄干的东西越多，自己就变得越湿？', options:['海绵','毛巾','雨','肥皂'], explain:'毛巾擦干的东西越多，自己就变得越湿。' },
+      { q:'我不是活的，但我会生长；我没有肺，但我需要空气。我是什么？', options:['树','火','影子','云'], explain:'火会生长，燃烧需要空气（氧气），但它不是活的东西。' }
+    ]},
+    ar: { title:'ألغاز منطقية', questions:[
+      { q:'كلما أخذت أكثر، تركت أكثر خلفك. ما أنا؟', options:['الوقت','آثار الأقدام','المال','الذكريات'], explain:'آثار الأقدام — كلما زادت خطواتك، زادت الآثار التي تتركها خلفك.' },
+      { q:'رجل ينظر إلى صورة. يسأله أحدهم من هذا. يقول: "ليس لدي إخوة، لكن والد ذلك الرجل هو ابن والدي." من في الصورة؟', options:['والده','هو نفسه','ابنه','عمه'], explain:'"ابن والدي" (بدون إخوة) هو هو نفسه — إذن الصورة لابنه هو.' },
+      { q:'ما الذي له وجه ويدان لكن بلا ذراعين أو رجلين؟', options:['ساعة','دمية','روبوت','تمثال'], explain:'الساعة لها وجه ويدان (عقربا الساعة).' },
+      { q:'ما الذي يبتل أكثر كلما جفف أكثر؟', options:['إسفنجة','منشفة','المطر','صابون'], explain:'المنشفة تبتل أكثر كلما جففت أشياء أكثر.' },
+      { q:'أنا لست حيًا لكنني أنمو؛ ليس لدي رئتان لكنني أحتاج الهواء. ما أنا؟', options:['شجرة','النار','الظل','الغيمة'], explain:'النار تنمو، وتحتاج الهواء (الأكسجين) لتشتعل، لكنها ليست كائنًا حيًا.' }
+    ]}
+  },
+  iq: {
+    ur: { title:'فوری آئی کیو چیک', questions:[
+      { q:'کتاب پڑھنے کے لیے ہے، اسی طرح کانٹا کس کے لیے ہے؟', options:['باورچی خانہ','کھانے کے لیے','دھات','چمچ'], explain:'کتاب پڑھنے کا آلہ ہے؛ کانٹا کھانے کا آلہ ہے۔' },
+      { q:'اگر 3 مزدور ایک دیوار 6 دن میں بناتے ہیں، تو 6 مزدور کتنے دن لیں گے (وہی رفتار)؟', options:['12','6','3','9'], explain:'مزدور دگنے، وقت آدھا: 6 ÷ 2 = 3 دن۔' },
+      { q:'کون سی شکل پیٹرن مکمل کرتی ہے: مربع، دائرہ، مربع، دائرہ، ?', options:['مثلث','دائرہ','مربع','ستارہ'], explain:'پیٹرن مربع/دائرہ کے درمیان بدلتا ہے، تو اگلی مربع ہوگی۔' },
+      { q:'مختلف چیز تلاش کریں: وہیل، ڈولفن، شارک، سیل', options:['وہیل','ڈولفن','شارک','سیل'], explain:'وہیل، ڈولفن اور سیل ممالیہ ہیں؛ شارک ایک مچھلی ہے۔' },
+      { q:'گھڑی میں 3:15 بجے ہیں۔ گھنٹے اور منٹ کی سوئی کے درمیان تخمینی زاویہ کتنا ہے؟', options:['0°','7.5°','15°','30°'], explain:'3:15 پر گھنٹے کی سوئی 3 سے تھوڑا آگے بڑھ چکی ہوتی ہے، جس سے منٹ کی سوئی کے ساتھ تقریباً 7.5° کا فاصلہ بنتا ہے۔' }
+    ]},
+    hi: { title:'त्वरित आईक्यू जांच', questions:[
+      { q:'किताब पढ़ने के लिए है, वैसे ही कांटा किसके लिए है?', options:['रसोई','खाने के लिए','धातु','चम्मच'], explain:'किताब पढ़ने का उपकरण है; कांटा खाने का उपकरण है।' },
+      { q:'यदि 3 मज़दूर एक दीवार 6 दिन में बनाते हैं, तो 6 मज़दूर कितने दिन लेंगे (वही गति)?', options:['12','6','3','9'], explain:'मज़दूर दोगुने, समय आधा: 6 ÷ 2 = 3 दिन।' },
+      { q:'कौन सा आकार पैटर्न पूरा करता है: वर्ग, वृत्त, वर्ग, वृत्त, ?', options:['त्रिभुज','वृत्त','वर्ग','तारा'], explain:'पैटर्न वर्ग/वृत्त के बीच बदलता है, तो अगला वर्ग होगा।' },
+      { q:'अलग चीज़ खोजें: व्हेल, डॉल्फ़िन, शार्क, सील', options:['व्हेल','डॉल्फ़िन','शार्क','सील'], explain:'व्हेल, डॉल्फ़िन और सील स्तनधारी हैं; शार्क एक मछली है।' },
+      { q:'घड़ी में 3:15 बजे हैं। घंटे और मिनट की सुई के बीच लगभग कितना कोण है?', options:['0°','7.5°','15°','30°'], explain:'3:15 पर घंटे की सुई 3 से थोड़ा आगे बढ़ चुकी होती है, जिससे मिनट की सुई के साथ लगभग 7.5° का अंतर बनता है।' }
+    ]},
+    zh: { title:'快速智商检测', questions:[
+      { q:'书是用来阅读的，那么叉子是用来做什么的？', options:['厨房','吃饭','金属','勺子'], explain:'书是阅读的工具；叉子是吃饭的工具。' },
+      { q:'如果3个工人6天建成一堵墙，6个工人需要多少天（速度相同）？', options:['12','6','3','9'], explain:'工人加倍，时间减半：6 ÷ 2 = 3天。' },
+      { q:'哪个图形能完成这个模式：正方形、圆形、正方形、圆形、？', options:['三角形','圆形','正方形','星形'], explain:'模式在正方形和圆形之间交替，所以下一个是正方形。' },
+      { q:'找出不同的一个：鲸鱼、海豚、鲨鱼、海豹', options:['鲸鱼','海豚','鲨鱼','海豹'], explain:'鲸鱼、海豚和海豹是哺乳动物；鲨鱼是鱼类。' },
+      { q:'时钟显示3:15。时针和分针之间大约是多少度？', options:['0°','7.5°','15°','30°'], explain:'在3:15时，时针已经从3的位置稍微移动，与分针之间形成约7.5°的夹角。' }
+    ]},
+    ar: { title:'اختبار الذكاء السريع', questions:[
+      { q:'الكتاب أداة للقراءة، فما هي أداة الشوكة؟', options:['المطبخ','الأكل','المعدن','الملعقة'], explain:'الكتاب أداة للقراءة؛ الشوكة أداة للأكل.' },
+      { q:'إذا بنى 3 عمال جدارًا في 6 أيام، فكم يومًا سيستغرق 6 عمال (بنفس المعدل)؟', options:['12','6','3','9'], explain:'ضعف العمال، نصف الوقت: 6 ÷ 2 = 3 أيام.' },
+      { q:'أي شكل يكمل النمط: مربع، دائرة، مربع، دائرة، ?', options:['مثلث','دائرة','مربع','نجمة'], explain:'النمط يتناوب بين مربع ودائرة، فالتالي مربع.' },
+      { q:'ابحث عن المختلف: حوت، دولفين، قرش، فقمة', options:['حوت','دولفين','قرش','فقمة'], explain:'الحوت والدولفين والفقمة ثدييات؛ القرش سمكة.' },
+      { q:'الساعة تشير إلى 3:15. ما الزاوية التقريبية بين عقربي الساعة والدقائق؟', options:['0°','7.5°','15°','30°'], explain:'عند الساعة 3:15 يكون عقرب الساعات قد تحرك قليلاً بعد 3، مما يشكل فجوة حوالي 7.5° مع عقرب الدقائق.' }
+    ]}
+  },
+  words: {
+    ur: { title:'لفظی پہیلیاں', questions:[
+      { q:'ترتیب دیں: "TISLEN" — کون سا لفظ بنتا ہے؟', options:['LISTEN','SILENT','TINSEL','ENLIST'], explain:'"TISLEN" سے LISTEN بنتا ہے (جو SILENT اور ENLIST کا بھی حروفِ مبادلہ ہے!)۔' },
+      { q:'کون سا لفظ تعلق نہیں رکھتا: سیب، کیلا، گاجر، آم؟', options:['سیب','کیلا','گاجر','آم'], explain:'گاجر ایک سبزی/جڑ ہے؛ باقی سب پھل ہیں۔' },
+      { q:'مشابہت مکمل کریں: قلم لکھنے کے لیے ہے جیسے چاقو کس کے لیے؟', options:['تیز','کاٹنے','باورچی خانہ','دھات'], explain:'قلم لکھنے کے لیے استعمال ہوتا ہے؛ چاقو کاٹنے کے لیے استعمال ہوتا ہے۔' },
+      { q:'"کثیر" کا مخالف کیا ہے؟', options:['بہت','قلیل','امیر','بھرا ہوا'], explain:'"قلیل" کا مطلب کمی یا ناکافی ہے — یہ کثیر کا مخالف ہے۔' },
+      { q:'"محتاط" کا ہم معنی لفظ کون سا ہے؟', options:['لاپرواہ','خیال رکھنے والا','تیز','سست'], explain:'محتاط کا مطلب تفصیل پر بہت زیادہ توجہ دینا ہے — "خیال رکھنے والا" کے قریب ترین۔' }
+    ]},
+    hi: { title:'शब्द पहेलियां', questions:[
+      { q:'क्रम में लगाएं: "TISLEN" — कौन सा शब्द बनता है?', options:['LISTEN','SILENT','TINSEL','ENLIST'], explain:'"TISLEN" से LISTEN बनता है (जो SILENT और ENLIST का भी एनाग्राम है!)।' },
+      { q:'कौन सा शब्द संबंधित नहीं है: सेब, केला, गाजर, आम?', options:['सेब','केला','गाजर','आम'], explain:'गाजर एक सब्ज़ी/जड़ है; बाकी सभी फल हैं।' },
+      { q:'सादृश्य पूरा करें: कलम लिखने के लिए है जैसे चाकू किसके लिए है?', options:['तेज़','काटने के लिए','रसोई','धातु'], explain:'कलम लिखने के लिए इस्तेमाल होती है; चाकू काटने के लिए इस्तेमाल होता है।' },
+      { q:'"प्रचुर" का विपरीत क्या है?', options:['बहुत','दुर्लभ','अमीर','भरा हुआ'], explain:'"दुर्लभ" का मतलब कमी या अपर्याप्त होना है — यह प्रचुर का विपरीत है।' },
+      { q:'"सावधान" का समानार्थी शब्द कौन सा है?', options:['लापरवाह','सतर्क','तेज़','आलसी'], explain:'सावधान का मतलब विस्तार पर बहुत ध्यान देना है — "सतर्क" के सबसे करीब।' }
+    ]},
+    zh: { title:'文字游戏', questions:[
+      { q:'重新排列："TISLEN" —— 能组成什么单词？', options:['LISTEN','SILENT','TINSEL','ENLIST'], explain:'"TISLEN"重新排列组成LISTEN（它也是SILENT和ENLIST的字母异位词！）。' },
+      { q:'哪个词不属于这组：苹果、香蕉、胡萝卜、芒果？', options:['苹果','香蕉','胡萝卜','芒果'], explain:'胡萝卜是蔬菜/根茎类；其他都是水果。' },
+      { q:'完成类比：钢笔用来写字，那么刀是用来做什么的？', options:['锋利','切割','厨房','金属'], explain:'钢笔用来写字；刀用来切割。' },
+      { q:'"丰富"的反义词是什么？', options:['充足','稀缺','富有','充满'], explain:'"稀缺"意味着缺乏或不足——是"丰富"的反义词。' },
+      { q:'哪个词与"细致"意思相同？', options:['粗心','仔细','快速','懒惰'], explain:'细致意味着对细节给予极大关注——最接近"仔细"。' }
+    ]},
+    ar: { title:'ألغاز الكلمات', questions:[
+      { q:'رتب الحروف: "TISLEN" — ما الكلمة الناتجة؟', options:['LISTEN','SILENT','TINSEL','ENLIST'], explain:'"TISLEN" تُرتب لتكوّن LISTEN (وهي أيضًا جناس حرفي لكلمتي SILENT و ENLIST!).' },
+      { q:'أي كلمة لا تنتمي: تفاح، موز، جزر، مانجو؟', options:['تفاح','موز','جزر','مانجو'], explain:'الجزر خضار/جذر؛ البقية فواكه.' },
+      { q:'أكمل التشابه: القلم للكتابة، فالسكين لـ:', options:['حاد','القطع','المطبخ','معدن'], explain:'القلم يُستخدم للكتابة؛ السكين يُستخدم للقطع.' },
+      { q:'ما عكس كلمة "وفير"؟', options:['كثير','نادر','غني','ممتلئ'], explain:'"نادر" تعني قليل أو غير كافٍ — عكس وفير.' },
+      { q:'أي كلمة تعني نفس معنى "دقيق"؟', options:['مهمل','حريص','سريع','كسول'], explain:'دقيق يعني إظهار اهتمام كبير بالتفاصيل — الأقرب لـ"حريص".' }
+    ]}
+  },
+  math: {
+    ur: { title:'ریاضی کے فوری سوالات', questions:[
+      { q:'200 کا 15% کیا ہے؟', options:['20','25','30','35'], explain:'200 کا 15% = 0.15 × 200 = 30۔' },
+      { q:'اگر ایک ٹرین 45 منٹ میں 60 کلومیٹر کا سفر کرتی ہے، تو اس کی رفتار کلومیٹر فی گھنٹہ میں کیا ہے؟', options:['60 کلومیٹر/گھنٹہ','75 کلومیٹر/گھنٹہ','80 کلومیٹر/گھنٹہ','90 کلومیٹر/گھنٹہ'], explain:'45 منٹ میں 60 کلومیٹر = 60 ÷ 0.75 = 80 کلومیٹر/گھنٹہ۔' },
+      { q:'اگلا کیا ہے: 2, 6, 12, 20, 30, ?', options:['36','40','42','44'], explain:'فرق ہیں 4,6,8,10,12 — تو 30 + 12 = 42۔' },
+      { q:'ایک قمیض 20% رعایت کے بعد $40 کی ہے۔ اصل قیمت کیا تھی؟', options:['$48','$50','$52','$55'], explain:'$40 اصل کا 80% ہے: $40 ÷ 0.8 = $50۔' },
+      { q:'17 کے بعد اگلا اولی عدد کیا ہے؟', options:['18','19','21','23'], explain:'19 ایک اولی عدد ہے (صرف 1 اور خود سے تقسیم ہوتا ہے)؛ 18، 20، 21 نہیں ہیں۔' }
+    ]},
+    hi: { title:'गणित के त्वरित सवाल', questions:[
+      { q:'200 का 15% क्या है?', options:['20','25','30','35'], explain:'200 का 15% = 0.15 × 200 = 30।' },
+      { q:'अगर एक ट्रेन 45 मिनट में 60 किमी की यात्रा करती है, तो उसकी गति किमी/घंटा में क्या है?', options:['60 किमी/घंटा','75 किमी/घंटा','80 किमी/घंटा','90 किमी/घंटा'], explain:'45 मिनट में 60 किमी = 60 ÷ 0.75 = 80 किमी/घंटा।' },
+      { q:'अगला क्या है: 2, 6, 12, 20, 30, ?', options:['36','40','42','44'], explain:'अंतर हैं 4,6,8,10,12 — तो 30 + 12 = 42।' },
+      { q:'एक शर्ट 20% छूट के बाद $40 की है। मूल कीमत क्या थी?', options:['$48','$50','$52','$55'], explain:'$40 मूल का 80% है: $40 ÷ 0.8 = $50।' },
+      { q:'17 के बाद अगली अभाज्य संख्या क्या है?', options:['18','19','21','23'], explain:'19 एक अभाज्य संख्या है (केवल 1 और खुद से विभाज्य); 18, 20, 21 नहीं हैं।' }
+    ]},
+    zh: { title:'数学快问快答', questions:[
+      { q:'200的15%是多少？', options:['20','25','30','35'], explain:'200的15% = 0.15 × 200 = 30。' },
+      { q:'如果一列火车45分钟行驶60公里，其速度是多少公里/小时？', options:['60公里/小时','75公里/小时','80公里/小时','90公里/小时'], explain:'45分钟60公里 = 60 ÷ 0.75 = 80公里/小时。' },
+      { q:'接下来是什么：2, 6, 12, 20, 30, ?', options:['36','40','42','44'], explain:'差值是4,6,8,10,12——所以30 + 12 = 42。' },
+      { q:'一件衬衫打8折后是40美元。原价是多少？', options:['48美元','50美元','52美元','55美元'], explain:'40美元是原价的80%：40 ÷ 0.8 = 50美元。' },
+      { q:'17之后的下一个质数是什么？', options:['18','19','21','23'], explain:'19是质数（只能被1和自身整除）；18、20、21都不是。' }
+    ]},
+    ar: { title:'أسئلة رياضيات سريعة', questions:[
+      { q:'ما هو 15% من 200؟', options:['20','25','30','35'], explain:'15% من 200 = 0.15 × 200 = 30.' },
+      { q:'إذا قطع قطار 60 كم في 45 دقيقة، فما سرعته بالكم/ساعة؟', options:['60 كم/س','75 كم/س','80 كم/س','90 كم/س'], explain:'60 كم في 45 دقيقة = 60 ÷ 0.75 = 80 كم/س.' },
+      { q:'ما التالي: 2, 6, 12, 20, 30, ?', options:['36','40','42','44'], explain:'الفروق هي 4,6,8,10,12 — إذن 30 + 12 = 42.' },
+      { q:'قميص سعره 40 دولارًا بعد خصم 20%. ما السعر الأصلي؟', options:['48 دولار','50 دولار','52 دولار','55 دولار'], explain:'40 دولارًا تمثل 80% من السعر الأصلي: 40 ÷ 0.8 = 50 دولارًا.' },
+      { q:'ما هو العدد الأولي التالي بعد 17؟', options:['18','19','21','23'], explain:'19 عدد أولي (يقبل القسمة على 1 وعلى نفسه فقط)؛ 18، 20، 21 ليست كذلك.' }
+    ]}
+  }
+};
+
+function getLocalizedQuiz(key){
+  const base = QUIZZES[key];
+  if(!base) return base;
+  const trans = (QUIZ_I18N[key] && QUIZ_I18N[key][currentLang]) ? QUIZ_I18N[key][currentLang] : null;
+  if(!trans) return base;
+  return {
+    title: trans.title || base.title,
+    questions: base.questions.map((q,idx)=>{
+      const t = trans.questions && trans.questions[idx];
+      return t ? { q:t.q, options:t.options, correct:q.correct, explain:t.explain } : q;
+    })
+  };
+}
+
+/* ---------- i18n (multi-language) ---------- */
+const I18N = {
+  en: {
+    nav_home:"Home", nav_tests:"Tests", nav_mystery:"Mystery", nav_about:"About", nav_tips:"Tips",
+    nav_contact:"Contact", nav_privacy:"Privacy", nav_terms:"Terms",
+    hero_badge:"Free · No sign-up · Instant results",
+    hero_title:"How sharp is your mind, really?",
+    hero_subtitle:"Four short tests and one locked-room case. Answer honestly, get scored instantly, and see where your thinking leans.",
+    hero_btn1:"Start a test", hero_btn2:"Solve the case",
+    stat_done:"tests completed", stat_best:"best score",
+    footer_tag:"Cortex Vault — test your mind.",
+    tips_title:"How to Sharpen Your Memory",
+    tips_intro:"Memory is a skill, not just a talent — these evidence-based techniques can help you remember more, recall faster, and keep your mind sharp over time.",
+    tip1_h:"1. Active Recall", tip1_p:"Instead of just re-reading notes, close them and try to recall the information from memory. Testing yourself strengthens the neural pathway far more than passive review. This is why quizzes (like the ones on this site) work so well for retention.",
+    tip2_h:"2. Spaced Repetition", tip2_p:'Review information at increasing intervals — after 1 day, then 3 days, then a week. This fights the natural "forgetting curve" and moves information into long-term memory much more efficiently than cramming.',
+    tip3_h:"3. The Method of Loci (Memory Palace)", tip3_p:'Picture a familiar place, like your home, and mentally "place" items you want to remember along a route through it (front door, hallway, kitchen). To recall them, mentally walk the route again. This ancient technique is still used by memory champions today.',
+    tip4_h:"4. Chunking", tip4_p:"Break long strings of information into smaller groups. A phone number like 03211234567 is easier to remember as 0321-123-4567. This is exactly why the Memory Test on this site groups items rather than presenting one long list.",
+    tip5_h:"5. Visualization & Association", tip5_p:"Turn abstract facts into vivid mental images. The stranger or more exaggerated the image, the more memorable it becomes. Linking a new fact to something you already know also builds a stronger retrieval path.",
+    tip6_h:"6. Sleep & Physical Exercise", tip6_p:"Memory consolidation — the process of moving short-term memories into long-term storage — happens largely during sleep. Regular light exercise also increases blood flow to the brain and has been linked to better recall and focus.",
+    tip7_h:"7. Teach It to Someone Else", tip7_p:"Explaining a concept in your own words forces you to organize and simplify it — which deepens understanding and makes it far easier to recall later, even if there's no one around and you just explain it out loud to yourself.",
+    tip8_h:"8. Mnemonics & Acronyms", tip8_p:'Turn a list into a short phrase or acronym using the first letters of each item. For example, "Roy G. Biv" helps people recall the colors of the rainbow. Your brain remembers a fun phrase far more easily than a plain list.',
+    tip9_h:"9. Single-Tasking & Reducing Distraction", tip9_p:"Memory formation needs focused attention — trying to memorize something while switching between apps or conversations weakens encoding. Give a task your full attention for even 10-15 focused minutes for far better recall than an hour of distracted effort.",
+    tips_cta:"Want to put these techniques into practice? Try the tests on this site and track your progress over time."
+  },
+  ur: {
+    nav_home:"ہوم", nav_tests:"ٹیسٹس", nav_mystery:"مسٹری", nav_about:"تعارف", nav_tips:"ٹپس",
+    nav_contact:"رابطہ", nav_privacy:"پرائیویسی", nav_terms:"شرائط",
+    hero_badge:"مفت · بغیر سائن اپ · فوری نتیجہ",
+    hero_title:"آپ کا ذہن واقعی کتنا تیز ہے؟",
+    hero_subtitle:"چار مختصر ٹیسٹ اور ایک بند کمرے کا کیس۔ ایمانداری سے جواب دیں، فوری اسکور حاصل کریں، اور دیکھیں آپ کی سوچ کس طرف جھکتی ہے۔",
+    hero_btn1:"ٹیسٹ شروع کریں", hero_btn2:"کیس حل کریں",
+    stat_done:"مکمل شدہ ٹیسٹ", stat_best:"بہترین اسکور",
+    footer_tag:"کورٹیکس والٹ — اپنے ذہن کو جانچیں۔",
+    tips_title:"اپنی یادداشت کیسے تیز کریں",
+    tips_intro:"یادداشت ایک مہارت ہے، صرف صلاحیت نہیں — یہ ثابت شدہ طریقے آپ کو زیادہ یاد رکھنے، تیزی سے یاد کرنے اور اپنے ذہن کو وقت کے ساتھ تیز رکھنے میں مدد دیتے ہیں۔",
+    tip1_h:"1۔ ایکٹو ریکال (فعال یاد آوری)", tip1_p:"صرف نوٹس دوبارہ پڑھنے کی بجائے، انہیں بند کر کے معلومات کو یاد کرنے کی کوشش کریں۔ خود کو ٹیسٹ کرنا محض دوبارہ پڑھنے سے کہیں زیادہ ذہنی راستے کو مضبوط بناتا ہے۔ یہی وجہ ہے کہ اس سائٹ جیسے کوئز یاد رکھنے کے لیے اتنے مؤثر ہیں۔",
+    tip2_h:"2۔ وقفے وقفے سے دہرانا", tip2_p:"معلومات کو بڑھتے ہوئے وقفوں پر دہرائیں — ایک دن بعد، پھر تین دن بعد، پھر ایک ہفتے بعد۔ یہ فطری \"بھولنے کے عمل\" کا مقابلہ کرتا ہے اور معلومات کو رٹا لگانے سے کہیں بہتر انداز میں طویل مدتی یادداشت میں منتقل کرتا ہے۔",
+    tip3_h:"3۔ میتھڈ آف لوکی (میموری پیلس)", tip3_p:"کسی جانی پہچانی جگہ کا تصور کریں، جیسے اپنا گھر، اور ذہنی طور پر ان اشیاء کو اس راستے پر \"رکھیں\" جنہیں آپ یاد رکھنا چاہتے ہیں (دروازہ، برآمدہ، باورچی خانہ)۔ انہیں یاد کرنے کے لیے، ذہنی طور پر دوبارہ اسی راستے پر چلیں۔ یہ قدیم طریقہ آج بھی یادداشت کے چیمپئنز استعمال کرتے ہیں۔",
+    tip4_h:"4۔ چنکنگ (گروپ بندی)", tip4_p:"لمبی معلومات کو چھوٹے گروپوں میں تقسیم کریں۔ ایک فون نمبر 03211234567 کو 0321-123-4567 کی صورت میں یاد رکھنا آسان ہے۔ یہی وجہ ہے کہ اس سائٹ کا میموری ٹیسٹ اشیاء کو ایک لمبی فہرست کی بجائے گروپوں میں پیش کرتا ہے۔",
+    tip5_h:"5۔ تصور اور تعلق", tip5_p:"خیالی حقائق کو واضح ذہنی تصاویر میں بدل دیں۔ تصویر جتنی عجیب یا بڑھا چڑھا کر ہو، اتنی ہی یادگار بنتی ہے۔ نئی معلومات کو کسی جانی پہچانی چیز سے جوڑنا بھی یاد رکھنے کا راستہ مضبوط بناتا ہے۔",
+    tip6_h:"6۔ نیند اور جسمانی ورزش", tip6_p:"یادداشت کی مضبوطی — مختصر مدتی یادوں کو طویل مدتی ذخیرے میں منتقل کرنے کا عمل — زیادہ تر نیند کے دوران ہوتا ہے۔ باقاعدہ ہلکی ورزش بھی دماغ میں خون کے بہاؤ کو بڑھاتی ہے اور بہتر یادداشت اور توجہ سے جڑی ہوئی ہے۔",
+    tip7_h:"7۔ کسی اور کو سکھائیں", tip7_p:"کسی تصور کو اپنے الفاظ میں بیان کرنا آپ کو اسے منظم اور آسان بنانے پر مجبور کرتا ہے — جو سمجھ کو گہرا کرتا ہے اور بعد میں یاد کرنا کہیں آسان بنا دیتا ہے، چاہے کوئی آس پاس نہ ہو اور آپ خود کو بلند آواز میں سمجھا رہے ہوں۔",
+    tip8_h:"8۔ مخفف اور یاد آوری کے فقرے", tip8_p:"کسی فہرست کو ہر چیز کے پہلے حرف سے ایک مختصر جملہ یا مخفف بنا لیں۔ ایک دلچسپ جملہ آپ کے دماغ کو سادہ فہرست سے کہیں زیادہ آسانی سے یاد رہتا ہے۔",
+    tip9_h:"9۔ ایک وقت میں ایک کام اور توجہ برقرار رکھنا", tip9_p:"یادداشت بننے کے لیے مکمل توجہ درکار ہوتی ہے — ایپس یا گفتگو کے درمیان بار بار سوئچ کرتے ہوئے کچھ یاد کرنے کی کوشش یادداشت کو کمزور بناتی ہے۔ کسی کام کو صرف 10-15 منٹ کی مکمل توجہ دینا، ایک گھنٹے کی بکھری ہوئی کوشش سے کہیں بہتر نتیجہ دیتا ہے۔",
+    tips_cta:"ان طریقوں کو عملی جامہ پہنانا چاہتے ہیں؟ اس سائٹ کے ٹیسٹ آزمائیں اور وقت کے ساتھ اپنی پیش رفت دیکھیں۔"
+  },
+  hi: {
+    nav_home:"होम", nav_tests:"टेस्ट्स", nav_mystery:"मिस्ट्री", nav_about:"परिचय", nav_tips:"टिप्स",
+    nav_contact:"संपर्क", nav_privacy:"प्राइवेसी", nav_terms:"शर्तें",
+    hero_badge:"मुफ़्त · बिना साइन-अप · तुरंत परिणाम",
+    hero_title:"आपका दिमाग़ वाकई कितना तेज़ है?",
+    hero_subtitle:"चार छोटे टेस्ट और एक बंद कमरे का केस। ईमानदारी से जवाब दें, तुरंत स्कोर पाएं, और देखें आपकी सोच किस दिशा में है।",
+    hero_btn1:"टेस्ट शुरू करें", hero_btn2:"केस सुलझाएं",
+    stat_done:"पूरे किए गए टेस्ट", stat_best:"सर्वश्रेष्ठ स्कोर",
+    footer_tag:"कॉर्टेक्स वॉल्ट — अपने दिमाग़ को परखें।",
+    tips_title:"अपनी याददाश्त कैसे तेज़ करें",
+    tips_intro:"याददाश्त एक कौशल है, सिर्फ़ प्रतिभा नहीं — ये सिद्ध तरीके आपको ज़्यादा याद रखने, तेज़ी से याद करने और समय के साथ दिमाग़ को तेज़ बनाए रखने में मदद करते हैं।",
+    tip1_h:"1. एक्टिव रिकॉल", tip1_p:"सिर्फ़ नोट्स दोबारा पढ़ने के बजाय, उन्हें बंद करके जानकारी को याद करने की कोशिश करें। खुद को टेस्ट करना सिर्फ़ दोबारा पढ़ने से कहीं ज़्यादा तंत्रिका मार्ग को मज़बूत बनाता है। यही वजह है कि इस साइट जैसे क्विज़ याद रखने के लिए इतने कारगर हैं।",
+    tip2_h:"2. स्पेस्ड रिपिटिशन", tip2_p:"जानकारी को बढ़ते अंतराल पर दोहराएं — 1 दिन बाद, फिर 3 दिन बाद, फिर एक हफ़्ते बाद। यह स्वाभाविक \"भूलने की प्रक्रिया\" से लड़ता है और रटने की तुलना में जानकारी को कहीं बेहतर तरीके से दीर्घकालिक याददाश्त में ले जाता है।",
+    tip3_h:"3. मेथड ऑफ़ लोकाई (मेमोरी पैलेस)", tip3_p:"किसी परिचित जगह की कल्पना करें, जैसे अपना घर, और मानसिक रूप से उन चीज़ों को उस रास्ते पर \"रखें\" जिन्हें आप याद रखना चाहते हैं (दरवाज़ा, गलियारा, रसोई)। उन्हें याद करने के लिए, मानसिक रूप से फिर से उस रास्ते पर चलें। यह प्राचीन तकनीक आज भी याददाश्त चैंपियन इस्तेमाल करते हैं।",
+    tip4_h:"4. चंकिंग", tip4_p:"लंबी जानकारी को छोटे-छोटे समूहों में तोड़ें। फ़ोन नंबर 03211234567 को 0321-123-4567 के रूप में याद रखना आसान है। यही वजह है कि इस साइट का मेमोरी टेस्ट एक लंबी सूची के बजाय चीज़ों को समूहों में दिखाता है।",
+    tip5_h:"5. विज़ुअलाइज़ेशन और जुड़ाव", tip5_p:"अमूर्त तथ्यों को स्पष्ट मानसिक चित्रों में बदलें। चित्र जितना अजीब या बढ़ा-चढ़ाकर हो, उतना ही यादगार बनता है। नई जानकारी को पहले से जानी हुई किसी चीज़ से जोड़ना भी याद रखने का रास्ता मज़बूत बनाता है।",
+    tip6_h:"6. नींद और शारीरिक व्यायाम", tip6_p:"मेमोरी कंसॉलिडेशन — अल्पकालिक यादों को दीर्घकालिक भंडारण में ले जाने की प्रक्रिया — ज़्यादातर नींद के दौरान होती है। नियमित हल्का व्यायाम भी दिमाग़ में रक्त प्रवाह बढ़ाता है और बेहतर याददाश्त व फोकस से जुड़ा है।",
+    tip7_h:"7. किसी और को सिखाएं", tip7_p:"किसी विचार को अपने शब्दों में समझाना आपको उसे व्यवस्थित और सरल बनाने पर मजबूर करता है — जो समझ को गहरा करता है और बाद में याद करना कहीं आसान बना देता है, भले ही आस-पास कोई न हो और आप खुद को ज़ोर से समझा रहे हों।",
+    tip8_h:"8. निमोनिक्स और संक्षिप्ताक्षर", tip8_p:"किसी सूची को हर चीज़ के पहले अक्षर से एक छोटा वाक्यांश या संक्षिप्ताक्षर बना लें। एक मज़ेदार वाक्यांश आपके दिमाग़ को एक सादी सूची से कहीं ज़्यादा आसानी से याद रहता है।",
+    tip9_h:"9. एक समय में एक काम और ध्यान बनाए रखना", tip9_p:"याददाश्त बनने के लिए पूरा ध्यान चाहिए — ऐप्स या बातचीत के बीच बार-बार स्विच करते हुए कुछ याद करने की कोशिश याददाश्त को कमज़ोर बनाती है। किसी काम को सिर्फ़ 10-15 मिनट का पूरा ध्यान देना, एक घंटे की बिखरी हुई कोशिश से कहीं बेहतर नतीजा देता है।",
+    tips_cta:"इन तरीकों को अमल में लाना चाहते हैं? इस साइट के टेस्ट आज़माएं और समय के साथ अपनी प्रगति देखें।"
+  },
+  zh: {
+    nav_home:"首页", nav_tests:"测试", nav_mystery:"悬疑案件", nav_about:"关于", nav_tips:"技巧",
+    nav_contact:"联系我们", nav_privacy:"隐私政策", nav_terms:"使用条款",
+    hero_badge:"免费 · 无需注册 · 即时结果",
+    hero_title:"你的头脑到底有多敏锐？",
+    hero_subtitle:"四个简短测试和一个密室案件。诚实作答，立即获得评分，看看你的思维倾向。",
+    hero_btn1:"开始测试", hero_btn2:"破解案件",
+    stat_done:"已完成测试", stat_best:"最佳成绩",
+    footer_tag:"Cortex Vault — 测试你的头脑。",
+    tips_title:"如何提升记忆力",
+    tips_intro:"记忆力是一种技能，而不仅仅是天赋——以下这些经过验证的方法可以帮助你记住更多、回忆更快，并长期保持头脑敏锐。",
+    tip1_h:"1. 主动回忆", tip1_p:"与其只是重新阅读笔记，不如合上它们尝试从记忆中回忆信息。自我测试比被动复习更能强化神经通路。这也是为什么本站的测验对记忆效果如此显著。",
+    tip2_h:"2. 间隔重复", tip2_p:"以逐渐增加的间隔复习信息——1天后，然后3天后，再然后一周后。这能对抗自然的“遗忘曲线”，比死记硬背更有效地将信息转化为长期记忆。",
+    tip3_h:"3. 记忆宫殿法", tip3_p:"想象一个熟悉的地方，比如你的家，然后在脑海中把要记住的物品“放置”在这条路线上（前门、走廊、厨房）。回忆时，在脑海中再次走一遍这条路线。这项古老的技巧至今仍被记忆冠军使用。",
+    tip4_h:"4. 组块化", tip4_p:"把长串信息拆分成较小的组。例如电话号码03211234567，记成0321-123-4567会更容易。这也是为什么本站的记忆测试会将项目分组呈现，而不是列出一长串清单。",
+    tip5_h:"5. 视觉化与联想", tip5_p:"把抽象事实转化为生动的画面。画面越奇特或夸张，就越令人难忘。把新信息与已知事物联系起来，也能建立更强的回忆路径。",
+    tip6_h:"6. 睡眠与运动", tip6_p:"记忆巩固——将短期记忆转化为长期存储的过程——主要发生在睡眠期间。规律的轻度运动也能增加大脑血流量，有助于提升记忆力和专注力。",
+    tip7_h:"7. 教给别人", tip7_p:"用自己的话解释一个概念，会促使你去组织和简化它——这能加深理解，让日后回忆更容易，即使身边没人，只是大声讲给自己听也一样有效。",
+    tip8_h:"8. 记忆口诀与首字母缩略词", tip8_p:"把清单变成一个简短的短语或首字母缩略词。一个有趣的短语远比一份平淡的清单更容易被大脑记住。",
+    tip9_h:"9. 单一任务与减少干扰", tip9_p:"记忆的形成需要专注的注意力——在应用程序或对话之间频繁切换会削弱记忆编码。哪怕只专注10-15分钟做一件事，效果也远胜过一小时心不在焉的努力。",
+    tips_cta:"想把这些技巧付诸实践吗？试试本站的测试，随时间追踪你的进步。"
+  },
+  ar: {
+    nav_home:"الرئيسية", nav_tests:"الاختبارات", nav_mystery:"لغز", nav_about:"من نحن", nav_tips:"نصائح",
+    nav_contact:"اتصل بنا", nav_privacy:"الخصوصية", nav_terms:"الشروط",
+    hero_badge:"مجاني · بدون تسجيل · نتائج فورية",
+    hero_title:"إلى أي مدى عقلك حاد حقًا؟",
+    hero_subtitle:"أربعة اختبارات قصيرة وقضية غرفة مغلقة واحدة. أجب بصدق، احصل على نتيجة فورية، وشاهد إلى أين يميل تفكيرك.",
+    hero_btn1:"ابدأ اختبارًا", hero_btn2:"حل القضية",
+    stat_done:"اختبارات مكتملة", stat_best:"أفضل نتيجة",
+    footer_tag:"كورتكس فولت — اختبر عقلك.",
+    tips_title:"كيف تقوي ذاكرتك",
+    tips_intro:"الذاكرة مهارة وليست مجرد موهبة — هذه الأساليب المدعومة بالأدلة يمكن أن تساعدك على تذكّر المزيد، والتذكر بشكل أسرع، والحفاظ على حدة عقلك مع مرور الوقت.",
+    tip1_h:"١. الاستدعاء النشط", tip1_p:"بدلاً من مجرد إعادة قراءة الملاحظات، أغلقها وحاول تذكّر المعلومات من الذاكرة. اختبار نفسك يقوّي المسار العصبي أكثر بكثير من المراجعة السلبية. لهذا السبب تعمل الاختبارات مثل التي في هذا الموقع بشكل جيد جدًا للاحتفاظ بالمعلومات.",
+    tip2_h:"٢. التكرار المتباعد", tip2_p:"راجع المعلومات على فترات متزايدة — بعد يوم واحد، ثم ثلاثة أيام، ثم أسبوع. هذا يقاوم \"منحنى النسيان\" الطبيعي وينقل المعلومات إلى الذاكرة طويلة المدى بكفاءة أكبر بكثير من الحفظ في اللحظة الأخيرة.",
+    tip3_h:"٣. طريقة المواقع (قصر الذاكرة)", tip3_p:"تخيّل مكانًا مألوفًا، مثل منزلك، وضع ذهنيًا العناصر التي تريد تذكرها على طول مسار داخله (الباب الأمامي، الممر، المطبخ). لتذكرها، امشِ ذهنيًا على نفس المسار مرة أخرى. لا تزال هذه التقنية القديمة تستخدمها بطلات وأبطال الذاكرة اليوم.",
+    tip4_h:"٤. التقسيم إلى مجموعات", tip4_p:"قسّم السلاسل الطويلة من المعلومات إلى مجموعات أصغر. رقم هاتف مثل 03211234567 أسهل تذكرًا كـ 0321-123-4567. لهذا السبب بالضبط يقوم اختبار الذاكرة في هذا الموقع بتجميع العناصر بدلاً من عرض قائمة طويلة واحدة.",
+    tip5_h:"٥. التصور والربط", tip5_p:"حوّل الحقائق المجردة إلى صور ذهنية حية. كلما كانت الصورة أغرب أو أكثر مبالغة، كانت أكثر تذكرًا. ربط حقيقة جديدة بشيء تعرفه بالفعل يبني أيضًا مسار استرجاع أقوى.",
+    tip6_h:"٦. النوم والتمارين الرياضية", tip6_p:"توطيد الذاكرة — عملية نقل الذكريات قصيرة المدى إلى التخزين طويل المدى — يحدث غالبًا أثناء النوم. التمارين الخفيفة المنتظمة تزيد أيضًا من تدفق الدم إلى الدماغ وترتبط بتحسين التذكر والتركيز.",
+    tip7_h:"٧. علّمها لشخص آخر", tip7_p:"شرح فكرة بكلماتك الخاصة يجبرك على تنظيمها وتبسيطها — مما يعمّق الفهم ويجعل تذكرها لاحقًا أسهل بكثير، حتى لو لم يكن هناك أحد حولك وقمت فقط بشرحها بصوت عالٍ لنفسك.",
+    tip8_h:"٨. الاختصارات وعبارات التذكر", tip8_p:"حوّل قائمة إلى عبارة قصيرة أو اختصار باستخدام الحرف الأول من كل عنصر. عقلك يتذكر عبارة ممتعة أسهل بكثير من قائمة عادية.",
+    tip9_h:"٩. التركيز على مهمة واحدة وتقليل التشتت", tip9_p:"يحتاج تكوين الذاكرة إلى انتباه مركّز — محاولة حفظ شيء ما أثناء التنقل بين التطبيقات أو المحادثات يضعف الترميز. امنح المهمة انتباهك الكامل لمدة 10-15 دقيقة فقط للحصول على تذكر أفضل بكثير من ساعة من الجهد المشتت.",
+    tips_cta:"هل تريد تطبيق هذه الأساليب؟ جرّب الاختبارات في هذا الموقع وتابع تقدمك مع مرور الوقت."
+  }
+};
+
+function applyLang(lang){
+  currentLang = lang;
+  const dict = I18N[lang] || I18N.en;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.dataset.i18n;
+    if(dict[key]) el.textContent = dict[key];
+  });
+  document.documentElement.lang = lang;
+  document.documentElement.dir = (lang === 'ur' || lang === 'ar') ? 'rtl' : 'ltr';
+  try{ localStorage.setItem('cortexLang', lang); }catch(e){}
+}
+
+(function(){
+  let savedLang = 'en';
+  try{ savedLang = localStorage.getItem('cortexLang') || 'en'; }catch(e){}
+  const sel = document.getElementById('langSwitch');
+  if(sel){
+    sel.value = savedLang;
+    applyLang(savedLang);
+    sel.addEventListener('change', ()=> applyLang(sel.value));
+  }
+})();
+
 </script>
 </body>
 </html>
