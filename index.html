@@ -6,7 +6,7 @@
 <title>Cortex Vault — Puzzles, Memory & Deduction</title>
 <meta name="description" content="Cortex Vault offers free brain teasers, logic puzzles, memory tests, IQ checks and detective mystery cases with instant results. No sign-up needed.">
 <meta name="robots" content="index, follow">
-  <meta name="google-site-verification" content="odvFUGyM-wNP3X-UgRbwzhbqDKl5ErjRhaOSsxh5d9g" />
+<meta name="google-site-verification" content="odvFUGyM-wNP3X-UgRbwzhbqDKl5ErjRhaOSsxh5d9g" />
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap');
 
@@ -318,6 +318,34 @@
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 17v.01M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 4"/></svg></div>
           <div class="body"><div class="lbl">Logic Riddles</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
         </a>
+        <a class="pick-card" data-quiz="words" style="--card-c:var(--teal)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h7"/></svg></div>
+          <div class="body"><div class="lbl">Word Puzzles</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="math" style="--card-c:var(--cyan)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M9 9h.01M15 9h.01M9 15l6-6"/></svg></div>
+          <div class="body"><div class="lbl">Math Quickies</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="gk" style="--card-c:var(--violet)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg></div>
+          <div class="body"><div class="lbl">General Knowledge</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="detail" style="--card-c:var(--amber)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div class="body"><div class="lbl">Attention to Detail</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="analogy" style="--card-c:var(--violet)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M17 3l4 4-4 4M3 21l4-4-4-4M21 7H9M3 17h12"/></svg></div>
+          <div class="body"><div class="lbl">Analogy Challenge</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="sequence" style="--card-c:var(--teal)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 12h3m4 0h3m4 0h3"/><circle cx="3" cy="12" r="1"/><circle cx="10" cy="12" r="1"/><circle cx="17" cy="12" r="1"/></svg></div>
+          <div class="body"><div class="lbl">Sequence Master</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+        </a>
+        <a class="pick-card" data-quiz="trivia" style="--card-c:var(--gold)">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg></div>
+          <div class="body"><div class="lbl">Trivia Mix</div><div class="sub">5 questions</div></div><div class="go">Start →</div>
+        </a>
       </div>
     </div>
     <div id="quizStage" style="display:none;"></div>
@@ -513,6 +541,76 @@ const QUIZZES = {
       { q:'What has a face and two hands but no arms or legs?', options:['A clock','A doll','A robot','A statue'], correct:0, explain:'A clock has a face and two hands (the clock hands).' },
       { q:'What gets wetter the more it dries?', options:['A sponge','A towel','Rain','Soap'], correct:1, explain:'A towel gets wetter the more things it dries.' },
       { q:'I am not alive, but I grow; I don\'t have lungs, but I need air. What am I?', options:['A tree','Fire','A shadow','A cloud'], correct:1, explain:'Fire grows, needs air (oxygen) to burn, but is not a living thing.' }
+    ]
+  },
+  words: {
+    title: 'Word Puzzles',
+    questions: [
+      { q:'Unscramble: "TISLEN" — what word does it make?', options:['LISTEN','SILENT','TINSEL','ENLIST'], correct:0, explain:'"TISLEN" rearranges to LISTEN (which is also an anagram of SILENT and ENLIST!).' },
+      { q:'Which word does NOT belong: Apple, Banana, Carrot, Mango?', options:['Apple','Banana','Carrot','Mango'], correct:2, explain:'Carrot is a vegetable/root; the others are fruits.' },
+      { q:'Complete the analogy: Pen is to Write as Knife is to:', options:['Sharp','Cut','Kitchen','Metal'], correct:1, explain:'A pen is used to write; a knife is used to cut.' },
+      { q:'What is the opposite of "Abundant"?', options:['Plenty','Scarce','Rich','Full'], correct:1, explain:'"Scarce" means lacking or insufficient — the opposite of abundant.' },
+      { q:'Which word means the same as "Meticulous"?', options:['Careless','Careful','Quick','Lazy'], correct:1, explain:'Meticulous means showing great attention to detail — closest to "careful".' }
+    ]
+  },
+  math: {
+    title: 'Math Quickies',
+    questions: [
+      { q:'What is 15% of 200?', options:['20','25','30','35'], correct:2, explain:'15% of 200 = 0.15 × 200 = 30.' },
+      { q:'If a train travels 60 km in 45 minutes, what is its speed in km/h?', options:['60 km/h','75 km/h','80 km/h','90 km/h'], correct:2, explain:'60 km in 45 min = 60 ÷ 0.75 = 80 km/h.' },
+      { q:'What comes next: 2, 6, 12, 20, 30, ?', options:['36','40','42','44'], correct:2, explain:'The differences are 4,6,8,10,12 — so 30 + 12 = 42.' },
+      { q:'A shirt costs $40 after a 20% discount. What was the original price?', options:['$48','$50','$52','$55'], correct:1, explain:'$40 is 80% of the original: $40 ÷ 0.8 = $50.' },
+      { q:'What is the next prime number after 17?', options:['18','19','21','23'], correct:1, explain:'19 is prime (only divisible by 1 and itself); 18, 20, 21 are not.' }
+    ]
+  },
+  gk: {
+    title: 'General Knowledge',
+    questions: [
+      { q:'Which planet is known as the Red Planet?', options:['Venus','Mars','Jupiter','Saturn'], correct:1, explain:'Mars appears red due to iron oxide (rust) on its surface.' },
+      { q:'What is the largest ocean on Earth?', options:['Atlantic','Indian','Arctic','Pacific'], correct:3, explain:'The Pacific Ocean is the largest and deepest of Earth\'s oceans.' },
+      { q:'How many continents are there on Earth?', options:['5','6','7','8'], correct:2, explain:'There are 7 continents: Asia, Africa, North America, South America, Antarctica, Europe, Australia.' },
+      { q:'Which gas do plants absorb from the atmosphere for photosynthesis?', options:['Oxygen','Nitrogen','Carbon dioxide','Hydrogen'], correct:2, explain:'Plants absorb carbon dioxide (CO2) and release oxygen during photosynthesis.' },
+      { q:'What is the smallest prime number?', options:['0','1','2','3'], correct:2, explain:'2 is the smallest prime number and the only even prime.' }
+    ]
+  },
+  detail: {
+    title: 'Attention to Detail',
+    questions: [
+      { q:'Count the letter "e" in this sentence: "The seven elephants seemed pleased."', options:['5','6','7','8'], correct:2, explain:'There are 7 letter "e"s in that sentence.' },
+      { q:'Which of these words is spelled correctly?', options:['Recieve','Receive','Receve','Receeve'], correct:1, explain:'"Receive" follows the "i before e except after c" rule correctly.' },
+      { q:'In the sequence A1, B2, C3, D4, what comes next?', options:['D5','E5','E4','F5'], correct:1, explain:'The pattern increases both letter and number together: E5.' },
+      { q:'Which number is different: 4, 8, 15, 16, 23, 42, 41?', options:['15','23','41','42'], correct:2, explain:'This is the famous "Lost" sequence — 41 doesn\'t belong; the real sequence is 4,8,15,16,23,42.' },
+      { q:'How many triangles can you make from 4 non-collinear points, taking 3 at a time?', options:['2','3','4','6'], correct:2, explain:'With 4 points, choosing any 3 gives C(4,3) = 4 possible triangles.' }
+    ]
+  },
+  analogy: {
+    title: 'Analogy Challenge',
+    questions: [
+      { q:'Doctor is to Hospital as Teacher is to:', options:['Student','School','Book','Class'], correct:1, explain:'A doctor works in a hospital; a teacher works in a school.' },
+      { q:'Bird is to Sky as Fish is to:', options:['River','Water','Ocean','Lake'], correct:1, explain:'A bird\'s natural domain is the sky; a fish\'s is water (most general answer).' },
+      { q:'Author is to Book as Composer is to:', options:['Instrument','Song','Music','Orchestra'], correct:2, explain:'An author creates a book; a composer creates music.' },
+      { q:'Thermometer is to Temperature as Clock is to:', options:['Time','Numbers','Hands','Wall'], correct:0, explain:'A thermometer measures temperature; a clock measures/shows time.' },
+      { q:'Puppy is to Dog as Cub is to:', options:['Cat','Lion','Fox','Wolf'], correct:1, explain:'A puppy is a baby dog; a cub is most commonly the term for a baby lion (also bear/wolf, but lion is the classic pairing).' }
+    ]
+  },
+  sequence: {
+    title: 'Sequence Master',
+    questions: [
+      { q:'What comes next: 1, 1, 2, 3, 5, 8, ?', options:['11','12','13','14'], correct:2, explain:'This is the Fibonacci sequence — each number is the sum of the two before it: 5+8=13.' },
+      { q:'What comes next: A, C, F, J, O, ?', options:['S','T','U','V'], correct:2, explain:'The gaps increase by one each time (+2,+3,+4,+5,+6): O + 6 = U.' },
+      { q:'What comes next: 3, 9, 27, 81, ?', options:['162','189','243','256'], correct:2, explain:'Each term is multiplied by 3: 81 × 3 = 243.' },
+      { q:'What comes next: 100, 95, 85, 70, 50, ?', options:['20','25','30','35'], correct:2, explain:'The gaps between terms increase by 5 each time (-5,-10,-15,-20,-25): 50 - 25 = 30.' },
+      { q:'What comes next: Z, X, V, T, ?', options:['S','R','Q','P'], correct:1, explain:'The letters skip one each time going backward (Z,Y,X → skip Y): after T, skip U, land on R.' }
+    ]
+  },
+  trivia: {
+    title: 'Trivia Mix',
+    questions: [
+      { q:'How many strings does a standard guitar have?', options:['4','5','6','7'], correct:2, explain:'A standard guitar has 6 strings.' },
+      { q:'What is the chemical symbol for Gold?', options:['Go','Gd','Au','Ag'], correct:2, explain:'Au comes from the Latin word "Aurum", meaning gold.' },
+      { q:'Which organ in the human body produces insulin?', options:['Liver','Pancreas','Kidney','Heart'], correct:1, explain:'The pancreas produces insulin to regulate blood sugar levels.' },
+      { q:'How many sides does a hexagon have?', options:['5','6','7','8'], correct:1, explain:'"Hex" means six — a hexagon has 6 sides.' },
+      { q:'What is the freezing point of water in Celsius?', options:['-10°C','0°C','10°C','32°C'], correct:1, explain:'Water freezes at 0°C (32°F) at standard atmospheric pressure.' }
     ]
   }
 };
