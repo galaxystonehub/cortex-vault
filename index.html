@@ -334,22 +334,22 @@
       </a>
       <a class="pick-card" data-nav="tests" data-quiz="style" style="--card-c:var(--pink)">
         <div class="icon img"><img src="thinking-style.jpg" alt="Thinking Style" loading="lazy"></div>
-        <div class="body"><div class="lbl">Thinking Style</div><div class="sub">5 questions · how you approach problems</div><div class="tagline">Know how you think, not just what</div></div>
+        <div class="body"><div class="lbl" data-i18n="card_style">Thinking Style</div><div class="sub">5 questions · how you approach problems</div><div class="tagline">Know how you think, not just what</div></div>
         <div class="go">Start →</div>
       </a>
       <a class="pick-card" data-nav="tests" data-quiz="memory" style="--card-c:var(--cyan)">
         <div class="icon img"><img src="memory-test.jpg" alt="Memory Test" loading="lazy"></div>
-        <div class="body"><div class="lbl">Memory Test</div><div class="sub">Memorize, then recall under pressure</div><div class="tagline">Blink and it's gone — remember it anyway</div></div>
+        <div class="body"><div class="lbl" data-i18n="card_memory">Memory Test</div><div class="sub">Memorize, then recall under pressure</div><div class="tagline">Blink and it's gone — remember it anyway</div></div>
         <div class="go">Start →</div>
       </a>
       <a class="pick-card" data-nav="tests" data-quiz="visual" style="--card-c:var(--amber)">
         <div class="icon img"><img src="visual-challenge.jpg" alt="Visual Challenge" loading="lazy"></div>
-        <div class="body"><div class="lbl">Visual Challenge</div><div class="sub">4 rounds · spot what doesn't belong</div><div class="tagline">Your eyes will lie — don't let them</div></div>
+        <div class="body"><div class="lbl" data-i18n="card_visual">Visual Challenge</div><div class="sub">4 rounds · spot what doesn't belong</div><div class="tagline">Your eyes will lie — don't let them</div></div>
         <div class="go">Start →</div>
       </a>
       <a class="pick-card" data-nav="mystery" style="--card-c:var(--gold)">
         <div class="icon img"><img src="mystery-study.jpg" alt="The Sealed Study" loading="lazy"></div>
-        <div class="body"><div class="lbl">The Sealed Study</div><div class="sub">1 case · three suspects, one liar</div><div class="tagline">Someone in this room is lying to you</div></div>
+        <div class="body"><div class="lbl" data-i18n="card_mystery">The Sealed Study</div><div class="sub">1 case · three suspects, one liar</div><div class="tagline">Someone in this room is lying to you</div></div>
         <div class="go">Investigate →</div>
       </a>
     </div>
@@ -368,15 +368,15 @@
         </a>
         <a class="pick-card" data-quiz="style" style="--card-c:var(--pink)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 3a6 6 0 0 0-1 11.9V19a1 1 0 0 0 2 0v-4.1A6 6 0 0 0 12 3z"/><path d="M9 21h6"/></svg></div>
-          <div class="body"><div class="lbl">Thinking Style</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_style">Thinking Style</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="memory" style="--card-c:var(--cyan)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
-          <div class="body"><div class="lbl">Memory Test</div><div class="sub">Timed recall</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_memory">Memory Test</div><div class="sub">Timed recall</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="visual" style="--card-c:var(--amber)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <div class="body"><div class="lbl">Visual Challenge</div><div class="sub">4 rounds</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_visual">Visual Challenge</div><div class="sub">4 rounds</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="iq" style="--card-c:var(--gold)">
           <div class="icon img"><img src="iq-test.jpg" alt="Quick IQ Check" loading="lazy"></div>
@@ -908,7 +908,16 @@ function runStandardQuiz(key){
 
 /* -- thinking style quiz (tallied, not correct/incorrect) -- */
 function runStyleQuiz(){
-  const quiz = QUIZZES.style;
+  const base = QUIZZES.style;
+  const trans = (QUIZ_I18N.style && QUIZ_I18N.style[currentLang]) ? QUIZ_I18N.style[currentLang] : null;
+  const quiz = trans ? {
+    title: trans.title || base.title,
+    questions: base.questions.map((q,idx)=>{
+      const t = trans.questions && trans.questions[idx];
+      return t ? { q:t.q, options: q.options.map((opt,oidx)=>({ t:t.options[oidx], k:opt.k })) } : q;
+    }),
+    verdicts: trans.verdicts || base.verdicts
+  } : base;
   let i = 0;
   const tally = {analytical:0, creative:0, systematic:0, intuitive:0};
 
@@ -955,7 +964,16 @@ function runStyleQuiz(){
 
 /* -- memory quiz: show, hide, then question -- */
 function runMemoryQuiz(){
-  const quiz = QUIZZES.memory;
+  const base = QUIZZES.memory;
+  const trans = (QUIZ_I18N.memory && QUIZ_I18N.memory[currentLang]) ? QUIZ_I18N.memory[currentLang] : null;
+  const quiz = trans ? {
+    title: trans.title || base.title,
+    words: trans.words || base.words,
+    questions: base.questions.map((q,idx)=>{
+      const t = trans.questions && trans.questions[idx];
+      return t ? { q:t.q, options:t.options, correct:q.correct } : q;
+    })
+  } : base;
   let seconds = 5;
   stage.innerHTML = `
     <div class="quiz-head"><h2>${quiz.title}</h2><div class="qcount">Memorize</div></div>
@@ -1011,7 +1029,9 @@ function runMemoryQuiz(){
 
 /* -- visual quiz: odd symbol out -- */
 function runVisualQuiz(){
-  const quiz = QUIZZES.visual;
+  const base = QUIZZES.visual;
+  const trans = (QUIZ_I18N.visual && QUIZ_I18N.visual[currentLang]) ? QUIZ_I18N.visual[currentLang] : null;
+  const quiz = trans ? { title: trans.title || base.title, questions: base.questions } : base;
   let i=0, correct=0;
   function render(){
     const q = quiz.questions[i];
@@ -1598,7 +1618,86 @@ const QUIZ_I18N = {
       { q:'ما الذي له مفاتيح كثيرة لكن لا يستطيع فتح قفل واحد؟', options:['صانع أقفال','بيانو','سلسلة مفاتيح','خزنة'], explain:'البيانو له مفاتيح كثيرة، لكنها تعزف الموسيقى، ولا تفتح الأقفال.' },
       { q:'كلما زاد منه، قلّ ما تراه. ما هو؟', options:['الضوء','الظلام','الضباب','الدخان'], explain:'كلما زاد الظلام، قلّ ما يمكنك رؤيته.' }
     ]}
+  },
+  style: {
+    ur: { title:'سوچنے کا انداز', questions:[
+      { q:'ایک مشکل مسئلہ آپ کی میز پر آتا ہے۔ پہلا قدم؟', options:['اسے چھوٹے حصوں میں تقسیم کریں','پہلے کچھ انوکھے آئیڈیاز بنائیں','دیکھیں پہلے کیسے حل ہوا تھا','اپنی اندرونی سوچ پر عمل کریں'] },
+      { q:'آپ بہترین طریقے سے سیکھتے ہیں:', options:['واضح قدم بہ قدم طریقہ اپنا کر','چیزیں آزما کر اور بہتر بنا کر','بنیادی اصولوں سے ذہنی ماڈل بنا کر','کسی غیر متعلقہ چیز سے جوڑ کر'] },
+      { q:'سخت ڈیڈ لائن میں، آپ عام طور پر:', options:['اپنی اندرونی سوچ پر بھروسہ کر کے تیزی سے آگے بڑھتے ہیں','پہلے سے بنائے گئے منصوبے پر قائم رہتے ہیں','کوئی غیر روایتی شارٹ کٹ ڈھونڈتے ہیں','عمل سے پہلے اپنی منطق دوبارہ جانچتے ہیں'] },
+      { q:'گروپ پروجیکٹ میں، آپ فطری طور پر:', options:['قدم اور ٹائم لائن ترتیب دیتے ہیں','وہ انوکھا آئیڈیا پیش کرتے ہیں جس پر کسی نے غور نہیں کیا','دوسروں کے مفروضوں پر سوال اٹھاتے ہیں','محسوس کرتے ہیں کون سا آئیڈیا لوگوں کو پسند آئے گا'] },
+      { q:'جب کوئی منصوبہ ناکام ہو جائے، آپ کی اندرونی سوچ ہے:', options:['بالکل معلوم کریں کہ کہاں غلطی ہوئی','پورا طریقہ نئے سرے سے بنائیں','اپنی نظرثانی شدہ فہرست کی پیروی کریں','فوری طور پر نئی سمت محسوس کریں'] }
+    ], verdicts:{
+      analytical:'آپ کا رجحان تجزیاتی ہے۔ آپ کسی بھی جواب پر بھروسہ کرنے سے پہلے مسئلے کو الگ الگ کرتے ہیں، اور تیز ہونے سے زیادہ درست ہونا پسند کرتے ہیں۔',
+      creative:'آپ کا رجحان تخلیقی ہے۔ آپ غیر روایتی زاویہ اپناتے ہیں اور اصولوں کو رکاوٹ نہیں بلکہ نقطہ آغاز سمجھتے ہیں۔',
+      systematic:'آپ کا رجحان منظم ہے۔ آپ فوری سوچ سے زیادہ عمل پر بھروسہ کرتے ہیں، اور دباؤ میں بھی مضبوط نتائج بناتے ہیں۔',
+      intuitive:'آپ کا رجحان بدیہی ہے۔ آپ حالات کو تیزی سے سمجھ کر فیصلہ کرتے ہیں — اور اکثر آپ کا اندازہ درست ہوتا ہے۔'
+    }},
+    hi: { title:'सोचने का तरीका', questions:[
+      { q:'एक कठिन समस्या आपकी मेज़ पर आती है। पहला कदम?', options:['इसे छोटे हिस्सों में बांटें','पहले कुछ अनोखे विचार बनाएं','देखें पहले कैसे हल हुआ था','अपनी सहज सोच पर अमल करें'] },
+      { q:'आप सबसे अच्छी तरह सीखते हैं:', options:['स्पष्ट चरण-दर-चरण तरीका अपनाकर','चीज़ें आज़माकर और सुधार कर','मूल सिद्धांतों से मानसिक मॉडल बनाकर','किसी असंबंधित चीज़ से जोड़कर'] },
+      { q:'सख्त समय सीमा में, आप आमतौर पर:', options:['अपनी सहज सोच पर भरोसा करके तेज़ी से आगे बढ़ते हैं','पहले से बनाई योजना पर टिके रहते हैं','कोई अपरंपरागत शॉर्टकट ढूंढते हैं','कार्य से पहले अपने तर्क की दोबारा जांच करते हैं'] },
+      { q:'समूह परियोजना में, आप स्वाभाविक रूप से:', options:['चरण और समय-सीमा व्यवस्थित करते हैं','वह अनोखा विचार पेश करते हैं जिस पर किसी ने ध्यान नहीं दिया','दूसरों की धारणाओं पर सवाल उठाते हैं','महसूस करते हैं कौन सा विचार लोगों को पसंद आएगा'] },
+      { q:'जब कोई योजना विफल हो जाए, आपकी सहज प्रतिक्रिया है:', options:['ठीक-ठीक पता करें कहां गलती हुई','पूरा तरीका नए सिरे से बनाएं','अपनी संशोधित सूची का पालन करें','तुरंत नई दिशा महसूस करें'] }
+    ], verdicts:{
+      analytical:'आपका झुकाव विश्लेषणात्मक है। आप किसी भी उत्तर पर भरोसा करने से पहले समस्या को अलग-अलग करते हैं, और तेज़ होने से ज़्यादा सही होना पसंद करते हैं।',
+      creative:'आपका झुकाव रचनात्मक है। आप अपरंपरागत नज़रिया अपनाते हैं और नियमों को रुकावट नहीं बल्कि शुरुआती बिंदु मानते हैं।',
+      systematic:'आपका झुकाव व्यवस्थित है। आप तात्कालिक सोच से ज़्यादा प्रक्रिया पर भरोसा करते हैं, और दबाव में भी मज़बूत नतीजे बनाते हैं।',
+      intuitive:'आपका झुकाव सहज है। आप स्थितियों को तेज़ी से समझकर फैसला लेते हैं — और अक्सर आपका अंदाज़ा सही होता है।'
+    }},
+    zh: { title:'思维风格', questions:[
+      { q:'一个棘手的问题摆在你面前。第一反应？', options:['把它拆分成小部分','先勾勒一些大胆的想法','看看以前是怎么解决的','跟随直觉行动'] },
+      { q:'你学习效果最好的方式是：', options:['遵循清晰的分步方法','动手尝试并不断调整','从基本原理构建心智模型','把它和不相关的事物联系起来'] },
+      { q:'在紧迫的截止日期下，你通常会：', options:['相信直觉并迅速行动','坚持已制定的计划','寻找非常规的捷径','行动前重新检查逻辑'] },
+      { q:'在团队项目中，你自然会：', options:['安排步骤和时间表','提出别人没想到的独特想法','质疑他人认为理所当然的假设','感知哪个想法能打动大家'] },
+      { q:'当计划失败时，你的直觉是：', options:['准确诊断问题出在哪里','彻底重新构想方法','遵循修订后的清单','当场感知新的方向'] }
+    ], verdicts:{
+      analytical:'你倾向于分析型。你在信任任何答案之前会先拆解问题，宁愿正确也不愿仓促。',
+      creative:'你倾向于创造型。你善于寻找非常规角度，把规则当作起点而非限制。',
+      systematic:'你倾向于系统型。你相信流程胜于临场发挥，在压力下也能拿出稳定的结果。',
+      intuitive:'你倾向于直觉型。你能快速读懂局势并做出决断——而且往往猜得很准。'
+    }},
+    ar: { title:'أسلوب التفكير', questions:[
+      { q:'مشكلة صعبة تصل إلى مكتبك. ما هي خطوتك الأولى؟', options:['تقسيمها إلى أجزاء أصغر','رسم بعض الأفكار الجريئة أولاً','معرفة كيف تم حلها سابقاً','اتباع حدسك الفوري'] },
+      { q:'تتعلم بشكل أفضل من خلال:', options:['اتباع طريقة واضحة خطوة بخطوة','تجربة الأشياء وتعديلها','بناء نموذج ذهني من المبادئ الأساسية','ربطها بشيء غير متعلق'] },
+      { q:'في ظل موعد نهائي ضيق، تميل إلى:', options:['الثقة بحدسك والتحرك بسرعة','الالتزام بالخطة التي وضعتها بالفعل','البحث عن طريقة مختصرة غير تقليدية','إعادة فحص منطقك قبل التصرف'] },
+      { q:'في مشروع جماعي، تقوم بشكل طبيعي بـ:', options:['تنظيم الخطوات والجدول الزمني','طرح الفكرة غير المألوفة التي لم يفكر بها أحد','التشكيك في افتراضات الآخرين','الشعور بالفكرة التي ستنال إعجاب الجميع'] },
+      { q:'عندما تفشل خطة، يكون حدسك الأول هو:', options:['تشخيص أين حدث الخلل بالضبط','إعادة ابتكار الطريقة من جديد','اتباع قائمتك المعدّلة','استشعار اتجاه جديد فوراً'] }
+    ], verdicts:{
+      analytical:'أنت تميل إلى النمط التحليلي. تفكك المشكلة قبل أن تثق بأي إجابة، وتفضل أن تكون مصيباً على أن تكون سريعاً.',
+      creative:'أنت تميل إلى النمط الإبداعي. تبحث عن الزاوية غير التقليدية وتتعامل مع القواعد كنقطة انطلاق لا كحاجز.',
+      systematic:'أنت تميل إلى النمط المنهجي. تثق بالعملية أكثر من الارتجال، وتحقق نتائج ثابتة تحت الضغط.',
+      intuitive:'أنت تميل إلى النمط الحدسي. تقرأ المواقف بسرعة وتلتزم بقرارك — وغالباً ما يكون حدسك صائباً.'
+    }}
+  },
+  memory: {
+    ur: { title:'یادداشت ٹیسٹ', words:['سیب','7','نیلا','چاند','12'], questions:[
+      { q:'فہرست میں کون سا لفظ شامل تھا؟', options:['دریا','چاند','سبز','پیلا'] },
+      { q:'فہرست میں کون سا نمبر شامل تھا؟', options:['3','12','9','20'] },
+      { q:'سب سے پہلی چیز کیا دکھائی گئی تھی؟', options:['نیلا','چاند','سیب','7'] }
+    ]},
+    hi: { title:'स्मृति परीक्षण', words:['सेब','7','नीला','चांद','12'], questions:[
+      { q:'सूची में कौन सा शब्द था?', options:['नदी','चांद','हरा','पीला'] },
+      { q:'सूची में कौन सा नंबर था?', options:['3','12','9','20'] },
+      { q:'सबसे पहली चीज़ क्या दिखाई गई थी?', options:['नीला','चांद','सेब','7'] }
+    ]},
+    zh: { title:'记忆测试', words:['苹果','7','蓝色','月亮','12'], questions:[
+      { q:'列表中出现了哪个词？', options:['河流','月亮','绿色','黄色'] },
+      { q:'列表中出现了哪个数字？', options:['3','12','9','20'] },
+      { q:'最先显示的是什么？', options:['蓝色','月亮','苹果','7'] }
+    ]},
+    ar: { title:'اختبار الذاكرة', words:['تفاحة','7','أزرق','قمر','12'], questions:[
+      { q:'أي كلمة ظهرت في القائمة؟', options:['نهر','قمر','أخضر','أصفر'] },
+      { q:'أي رقم ظهر في القائمة؟', options:['3','12','9','20'] },
+      { q:'ما هو أول عنصر تم عرضه؟', options:['أزرق','قمر','تفاحة','7'] }
+    ]}
+  },
+  visual: {
+    ur: { title:'بصری چیلنج' },
+    hi: { title:'दृश्य चुनौती' },
+    zh: { title:'视觉挑战' },
+    ar: { title:'التحدي البصري' }
   }
+
 };
 
 function getLocalizedQuiz(key){
@@ -1640,7 +1739,8 @@ const I18N = {
     tips_cta:"Want to put these techniques into practice? Try the tests on this site and track your progress over time.",
     card_logic:"Pattern Logic", card_riddles:"Logic Riddles", card_iq:"Quick IQ Check", card_words:"Word Puzzles", card_math:"Math Quickies",
     card_gk:"General Knowledge", card_detail:"Attention to Detail", card_analogy:"Analogy Challenge", card_sequence:"Sequence Master", card_trivia:"Trivia Mix",
-    card_history:"History Trivia", card_science:"Science Trivia", card_vocab:"Vocabulary Builder", card_deduction:"Logical Deduction", card_patterns2:"Pattern Recognition", card_brainteasers2:"Brain Teasers Extreme"
+    card_history:"History Trivia", card_science:"Science Trivia", card_vocab:"Vocabulary Builder", card_deduction:"Logical Deduction", card_patterns2:"Pattern Recognition", card_brainteasers2:"Brain Teasers Extreme",
+    card_style:"Thinking Style", card_memory:"Memory Test", card_visual:"Visual Challenge", card_mystery:"The Sealed Study"
   },
   ur: {
     nav_home:"ہوم", nav_tests:"ٹیسٹس", nav_mystery:"مسٹری", nav_about:"تعارف", nav_tips:"ٹپس",
@@ -1665,7 +1765,8 @@ const I18N = {
     tips_cta:"ان طریقوں کو عملی جامہ پہنانا چاہتے ہیں؟ اس سائٹ کے ٹیسٹ آزمائیں اور وقت کے ساتھ اپنی پیش رفت دیکھیں۔",
     card_logic:"پیٹرن لاجک", card_riddles:"منطقی پہیلیاں", card_iq:"فوری آئی کیو چیک", card_words:"لفظی پہیلیاں", card_math:"ریاضی کے فوری سوالات",
     card_gk:"عمومی معلومات", card_detail:"تفصیل پر توجہ", card_analogy:"مشابہت کا چیلنج", card_sequence:"سلسلہ ماسٹر", card_trivia:"ٹریویا مکس",
-    card_history:"تاریخی ٹریویا", card_science:"سائنسی ٹریویا", card_vocab:"الفاظ کی تعمیر", card_deduction:"منطقی استخراج", card_patterns2:"پیٹرن کی پہچان", card_brainteasers2:"انتہائی دماغی چیلنج"
+    card_history:"تاریخی ٹریویا", card_science:"سائنسی ٹریویا", card_vocab:"الفاظ کی تعمیر", card_deduction:"منطقی استخراج", card_patterns2:"پیٹرن کی پہچان", card_brainteasers2:"انتہائی دماغی چیلنج",
+    card_style:"سوچنے کا انداز", card_memory:"یادداشت کا امتحان", card_visual:"بصری چیلنج", card_mystery:"بند مطالعہ گاہ"
   },
   hi: {
     nav_home:"होम", nav_tests:"टेस्ट्स", nav_mystery:"मिस्ट्री", nav_about:"परिचय", nav_tips:"टिप्स",
@@ -1690,7 +1791,8 @@ const I18N = {
     tips_cta:"इन तरीकों को अमल में लाना चाहते हैं? इस साइट के टेस्ट आज़माएं और समय के साथ अपनी प्रगति देखें।",
     card_logic:"पैटर्न लॉजिक", card_riddles:"तार्किक पहेलियां", card_iq:"त्वरित आईक्यू जांच", card_words:"शब्द पहेलियां", card_math:"गणित के त्वरित सवाल",
     card_gk:"सामान्य ज्ञान", card_detail:"विवरण पर ध्यान", card_analogy:"सादृश्य चुनौती", card_sequence:"सीक्वेंस मास्टर", card_trivia:"ट्रिविया मिक्स",
-    card_history:"इतिहास त्रिविया", card_science:"विज्ञान त्रिविया", card_vocab:"शब्दावली निर्माण", card_deduction:"तार्किक निष्कर्ष", card_patterns2:"पैटर्न पहचान", card_brainteasers2:"अत्यधिक दिमागी चुनौती"
+    card_history:"इतिहास त्रिविया", card_science:"विज्ञान त्रिविया", card_vocab:"शब्दावली निर्माण", card_deduction:"तार्किक निष्कर्ष", card_patterns2:"पैटर्न पहचान", card_brainteasers2:"अत्यधिक दिमागी चुनौती",
+    card_style:"सोचने की शैली", card_memory:"स्मृति परीक्षण", card_visual:"दृश्य चुनौती", card_mystery:"सीलबंद अध्ययन कक्ष"
   },
   zh: {
     nav_home:"首页", nav_tests:"测试", nav_mystery:"悬疑案件", nav_about:"关于", nav_tips:"技巧",
@@ -1715,7 +1817,8 @@ const I18N = {
     tips_cta:"想把这些技巧付诸实践吗？试试本站的测试，随时间追踪你的进步。",
     card_logic:"模式逻辑", card_riddles:"逻辑谜语", card_iq:"快速智商检测", card_words:"文字游戏", card_math:"数学快问快答",
     card_gk:"常识问答", card_detail:"注意细节", card_analogy:"类比挑战", card_sequence:"数列大师", card_trivia:"趣味问答",
-    card_history:"历史知识问答", card_science:"科学知识问答", card_vocab:"词汇构建", card_deduction:"逻辑推理", card_patterns2:"模式识别", card_brainteasers2:"极限脑筋急转弯"
+    card_history:"历史知识问答", card_science:"科学知识问答", card_vocab:"词汇构建", card_deduction:"逻辑推理", card_patterns2:"模式识别", card_brainteasers2:"极限脑筋急转弯",
+    card_style:"思维风格", card_memory:"记忆测试", card_visual:"视觉挑战", card_mystery:"密室书房"
   },
   ar: {
     nav_home:"الرئيسية", nav_tests:"الاختبارات", nav_mystery:"لغز", nav_about:"من نحن", nav_tips:"نصائح",
@@ -1740,7 +1843,8 @@ const I18N = {
     tips_cta:"هل تريد تطبيق هذه الأساليب؟ جرّب الاختبارات في هذا الموقع وتابع تقدمك مع مرور الوقت.",
     card_logic:"المنطق النمطي", card_riddles:"ألغاز منطقية", card_iq:"اختبار الذكاء السريع", card_words:"ألغاز الكلمات", card_math:"أسئلة رياضيات سريعة",
     card_gk:"المعرفة العامة", card_detail:"الانتباه للتفاصيل", card_analogy:"تحدي التشابه", card_sequence:"سيد التسلسل", card_trivia:"مزيج معلومات عامة",
-    card_history:"معلومات تاريخية", card_science:"معلومات علمية", card_vocab:"بناء المفردات", card_deduction:"الاستنتاج المنطقي", card_patterns2:"التعرف على الأنماط", card_brainteasers2:"ألغاز ذهنية متطرفة"
+    card_history:"معلومات تاريخية", card_science:"معلومات علمية", card_vocab:"بناء المفردات", card_deduction:"الاستنتاج المنطقي", card_patterns2:"التعرف على الأنماط", card_brainteasers2:"ألغاز ذهنية متطرفة",
+    card_style:"أسلوب التفكير", card_memory:"اختبار الذاكرة", card_visual:"التحدي البصري", card_mystery:"الدراسة المغلقة"
   }
 };
 
