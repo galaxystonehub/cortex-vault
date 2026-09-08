@@ -1999,6 +1999,32 @@ function applyLang(lang){
   }
 })();
 
+  function shareSite() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'Cortex Vault',
+      text: 'Check out these free brain tests, IQ quiz & memory games!',
+      url: 'https://galaxystonehub.github.io/cortex-vault/'
+    });
+  } else {
+    navigator.clipboard.writeText('https://galaxystonehub.github.io/cortex-vault/');
+    alert('Link copied!');
+  }
+}
+
+function shareResult(testName, score) {
+  const text = `I scored ${score} on "${testName}" at Cortex Vault! Try it yourself:`;
+  if (navigator.share) {
+    navigator.share({
+      title: 'My Cortex Vault Result',
+      text: text,
+      url: 'https://galaxystonehub.github.io/cortex-vault/'
+    });
+  } else {
+    navigator.clipboard.writeText(text + ' https://galaxystonehub.github.io/cortex-vault/');
+    alert('Result copied!');
+  }
+}
 </script>
   <script async="async" data-cfasync="false" src="https://pl31241919.profitableratecpmnetwork.com/b4c6ee4395895c8f1b351f13d6218d9f/invoke.js"></script>
 <div id="container-b4c6ee4395895c8f1b351f13d6218d9f"></div>
