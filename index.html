@@ -37,6 +37,20 @@
 }
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Is Cortex Vault really free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every test, quiz, and the mystery case is completely free, with no sign-up, no account, and no hidden paywall." } },
+    { "@type": "Question", "name": "Do I need to create an account?", "acceptedAnswer": { "@type": "Answer", "text": "No. You can take any test instantly. Your scores are saved only in your own browser so you can track your best result over time." } },
+    { "@type": "Question", "name": "Are these tests scientifically validated IQ tests?", "acceptedAnswer": { "@type": "Answer", "text": "No. They're built for fun, casual self-reflection, and entertainment — not as clinical or professional psychological assessments." } },
+    { "@type": "Question", "name": "Can I use Cortex Vault on my phone?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, the whole site is designed to work smoothly on phones, tablets, and desktops alike." } },
+    { "@type": "Question", "name": "Is my data safe?", "acceptedAnswer": { "@type": "Answer", "text": "We don't ask for personal information to take a test. See our Privacy Policy for full details." } }
+  ]
+}
+</script>
+
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-V9LSV7175B"></script>
 <script>
@@ -254,6 +268,22 @@
   .footer-links a{color:var(--muted);}
   .footer-links a:hover{color:var(--text);}
 
+  @media(min-width:768px){
+    .wrap{max-width:920px;}
+    .card-list{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .pick-card{align-items:flex-start;}
+    #home .card-list{grid-template-columns:1fr 1fr;}
+    .hero h1{max-width:16ch;font-size:3rem;}
+    .hero-visual{width:260px;height:260px;top:-30px;right:-20px;}
+    #home > .wrap::before{width:440px;height:300px;}
+    #quizStage, #mystery .wrap > *:not(h2):not(p), .result-box, .options, .memorize-box{max-width:560px;}
+    #mystery #suspectList, #mystery #mysteryResult, #mystery #mysterySubmit{max-width:560px;}
+  }
+  @media(min-width:1024px){
+    .wrap{max-width:1080px;}
+    .card-list{grid-template-columns:1fr 1fr 1fr;}
+    #home .card-list{grid-template-columns:1fr 1fr;}
+  }
   @media(max-width:480px){
     .hero h1{font-size:1.9rem;max-width:9ch;}
     .hero-visual{width:120px;height:120px;top:-6px;right:-6px;opacity:0.75;}
@@ -360,8 +390,10 @@
 <section id="tests">
   <div class="wrap">
     <div id="testsPicker">
-      <h2 style="font-size:1.6rem;margin-bottom:20px;">Pick a test</h2>
-      <div class="card-list">
+      <h2 style="font-size:1.6rem;margin-bottom:16px;">Pick a test</h2>
+      <input type="text" id="testSearch" placeholder="Search tests… (e.g. memory, math, riddles)" style="width:100%;padding:13px 16px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:0.95rem;font-family:inherit;margin-bottom:18px;">
+      <div id="noResultsMsg" style="display:none;color:var(--muted);font-size:0.9rem;padding:20px 0;text-align:center;">No tests match your search.</div>
+      <div class="card-list" id="testsCardList">
         <a class="pick-card" data-quiz="logic" style="--card-c:var(--violet)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 12h4l2-6 4 12 2-6h4"/></svg></div>
           <div class="body"><div class="lbl" data-i18n="card_logic">Pattern Logic</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
@@ -383,59 +415,59 @@
           <div class="body"><div class="lbl" data-i18n="card_iq">Quick IQ Check</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Five minutes to measure your mental edge</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="riddles" style="--card-c:var(--pink)">
-          <div class="icon img"><img src="riddles.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="riddles.jpg" alt="Logic Riddles" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_riddles">Logic Riddles</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Ancient tricks for a modern brain</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="words" style="--card-c:var(--teal)">
-          <div class="icon img"><img src="words.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="words.jpg" alt="Word Puzzles" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_words">Word Puzzles</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Letters hide more than you think</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="math" style="--card-c:var(--cyan)">
-          <div class="icon img"><img src="math.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="math.jpg" alt="Math Quickies" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_math">Math Quickies</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Numbers don't lie, but they do trick</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="gk" style="--card-c:var(--violet)">
-          <div class="icon img"><img src="gk.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="gk.jpg" alt="General Knowledge" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_gk">General Knowledge</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">How much of the world do you really know?</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="detail" style="--card-c:var(--amber)">
-          <div class="icon img"><img src="detail.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="detail.jpg" alt="Attention to Detail" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_detail">Attention to Detail</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">The devil really is in the details</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="analogy" style="--card-c:var(--violet)">
-          <div class="icon img"><img src="analogy.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="analogy.jpg" alt="Analogy Challenge" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_analogy">Analogy Challenge</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">If this is to that, what is this to you?</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="sequence" style="--card-c:var(--teal)">
-          <div class="icon img"><img src="sequence.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="sequence.jpg" alt="Sequence Master" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_sequence">Sequence Master</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Find the rhythm before it finds you</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="trivia" style="--card-c:var(--gold)">
-          <div class="icon img"><img src="trivia.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="trivia.jpg" alt="Trivia Mix" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_trivia">Trivia Mix</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Random facts, real bragging rights</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="history" style="--card-c:var(--amber)">
-          <div class="icon img"><img src="history.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="history.jpg" alt="History Trivia" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_history">History Trivia</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">The past is still testing you</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="science" style="--card-c:var(--cyan)">
-          <div class="icon img"><img src="science.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="science.jpg" alt="Science Trivia" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_science">Science Trivia</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Curiosity is the only prerequisite</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="vocab" style="--card-c:var(--pink)">
-          <div class="icon img"><img src="vocab.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="vocab.jpg" alt="Vocabulary Builder" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_vocab">Vocabulary Builder</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Words are power — wield more of them</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="deduction" style="--card-c:var(--violet)">
-          <div class="icon img"><img src="deduction.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="deduction.jpg" alt="Logical Deduction" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_deduction">Logical Deduction</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Think like a detective, not a guesser</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="patterns2" style="--card-c:var(--teal)">
-          <div class="icon img"><img src="patterns2.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="patterns2.jpg" alt="Pattern Recognition" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_patterns2">Pattern Recognition</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Order is hiding in the chaos</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="brainteasers2" style="--card-c:var(--wrong)">
-          <div class="icon img"><img src="brainteasers2.jpg" alt="" loading="lazy"></div>
+          <div class="icon img"><img src="brainteasers2.jpg" alt="Brain Teasers Extreme" loading="lazy"></div>
           <div class="body"><div class="lbl" data-i18n="card_brainteasers2">Brain Teasers Extreme</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Not for the faint of brain</div></div><div class="go">Start →</div>
         </a>
       </div>
@@ -462,6 +494,30 @@
     <p style="color:var(--muted);margin-top:12px;line-height:1.7;">Cortex Vault is a small collection of free brain teasers, logic puzzles, memory drills, and short deduction cases. Everything is instant — no account, no email, no download. Answer a few questions and see your result right away.</p>
     <p style="color:var(--muted);margin-top:12px;line-height:1.7;">The tests here are built for fun and self-reflection, not clinical or professional assessment. They're a quick way to pass a few minutes and see how your mind tends to work — nothing more, nothing less.</p>
     <p style="color:var(--muted);margin-top:12px;line-height:1.7;">New tests and mystery cases are added over time. If you have an idea for one, get in touch on the <a href="#" data-nav="contact" style="color:var(--violet);text-decoration:underline;">contact page</a>.</p>
+
+    <h2 style="font-size:1.4rem;margin-top:44px;">Frequently Asked Questions</h2>
+    <div style="margin-top:18px;display:flex;flex-direction:column;gap:10px;">
+      <details style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;">
+        <summary style="cursor:pointer;font-weight:700;">Is Cortex Vault really free?</summary>
+        <p style="color:var(--muted);margin-top:10px;line-height:1.6;">Yes. Every test, quiz, and the mystery case is completely free, with no sign-up, no account, and no hidden paywall.</p>
+      </details>
+      <details style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;">
+        <summary style="cursor:pointer;font-weight:700;">Do I need to create an account?</summary>
+        <p style="color:var(--muted);margin-top:10px;line-height:1.6;">No. You can take any test instantly. Your scores are saved only in your own browser so you can track your best result over time.</p>
+      </details>
+      <details style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;">
+        <summary style="cursor:pointer;font-weight:700;">Are these tests scientifically validated IQ tests?</summary>
+        <p style="color:var(--muted);margin-top:10px;line-height:1.6;">No. They're built for fun, casual self-reflection, and entertainment — not as clinical or professional psychological assessments.</p>
+      </details>
+      <details style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;">
+        <summary style="cursor:pointer;font-weight:700;">Can I use Cortex Vault on my phone?</summary>
+        <p style="color:var(--muted);margin-top:10px;line-height:1.6;">Yes, the whole site is designed to work smoothly on phones, tablets, and desktops alike.</p>
+      </details>
+      <details style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;">
+        <summary style="cursor:pointer;font-weight:700;">Is my data safe?</summary>
+        <p style="color:var(--muted);margin-top:10px;line-height:1.6;">We don't ask for personal information to take a test. See our <a href="#" data-nav="privacy" style="color:var(--violet);text-decoration:underline;">Privacy Policy</a> for full details.</p>
+      </details>
+    </div>
   </div>
 </section>
 
@@ -612,12 +668,23 @@ document.querySelectorAll('[data-quiz]:not([data-nav])').forEach(el=>{
 /* ---------------- stats ---------------- */
 let testsCompleted = 0;
 let bestScore = null; // percentage
+try {
+  testsCompleted = parseInt(localStorage.getItem('cortexTestsCompleted') || '0', 10);
+  const storedBest = localStorage.getItem('cortexBestScore');
+  bestScore = storedBest !== null ? parseInt(storedBest, 10) : null;
+} catch(e) {}
+document.getElementById('statDone').textContent = testsCompleted;
+document.getElementById('statBest').textContent = bestScore !== null ? bestScore + '%' : '—';
 function recordResult(correct, total){
   testsCompleted++;
   const pct = Math.round((correct/total)*100);
   if(bestScore===null || pct>bestScore) bestScore = pct;
   document.getElementById('statDone').textContent = testsCompleted;
   document.getElementById('statBest').textContent = bestScore + '%';
+  try {
+    localStorage.setItem('cortexTestsCompleted', testsCompleted);
+    localStorage.setItem('cortexBestScore', bestScore);
+  } catch(e) {}
 }
 
 /* ---------------- quiz data ---------------- */
@@ -843,6 +910,25 @@ const QUIZZES = {
 const stage = document.getElementById('quizStage');
 const picker = document.getElementById('testsPicker');
 
+/* ---------------- test search/filter ---------------- */
+const testSearchInput = document.getElementById('testSearch');
+if(testSearchInput){
+  testSearchInput.addEventListener('input', ()=>{
+    const q = testSearchInput.value.trim().toLowerCase();
+    const cards = document.querySelectorAll('#testsCardList .pick-card');
+    let visibleCount = 0;
+    cards.forEach(card=>{
+      const label = (card.querySelector('.lbl')?.textContent || '').toLowerCase();
+      const sub = (card.querySelector('.sub')?.textContent || '').toLowerCase();
+      const tagline = (card.querySelector('.tagline')?.textContent || '').toLowerCase();
+      const match = !q || label.includes(q) || sub.includes(q) || tagline.includes(q);
+      card.style.display = match ? '' : 'none';
+      if(match) visibleCount++;
+    });
+    document.getElementById('noResultsMsg').style.display = visibleCount === 0 ? 'block' : 'none';
+  });
+}
+
 function startQuiz(key){
   picker.style.display = 'none';
   stage.style.display = 'block';
@@ -946,6 +1032,7 @@ function runStyleQuiz(){
     const dominant = Object.keys(tally).reduce((a,b)=> tally[a]>=tally[b]?a:b);
     testsCompleted++;
     document.getElementById('statDone').textContent = testsCompleted;
+    try { localStorage.setItem('cortexTestsCompleted', testsCompleted); } catch(e) {}
     stage.innerHTML = `
       <div class="result-box">
         <div class="result-label">Your dominant style</div>
@@ -954,10 +1041,21 @@ function runStyleQuiz(){
         <div class="result-actions">
           <button class="btn btn-primary" id="againBtn">Take another test</button>
           <button class="btn btn-ghost" id="homeBtn">Back to home</button>
+          <button class="btn btn-ghost" id="shareBtn">Share result</button>
         </div>
       </div>`;
     document.getElementById('againBtn').addEventListener('click', backToPicker);
     document.getElementById('homeBtn').addEventListener('click', ()=>{ backToPicker(); showSection('home'); });
+    document.getElementById('shareBtn').addEventListener('click', ()=>{
+      const shareText = `My thinking style on Cortex Vault is ${dominant[0].toUpperCase()+dominant.slice(1)}. What's yours?`;
+      const shareUrl = 'https://galaxystonehub.github.io/cortex-vault/';
+      if(navigator.share){
+        navigator.share({ title:'Cortex Vault', text:shareText, url:shareUrl }).catch(()=>{});
+      } else {
+        const waUrl = 'https://wa.me/?text=' + encodeURIComponent(shareText + ' ' + shareUrl);
+        window.open(waUrl, '_blank');
+      }
+    });
   }
   render();
 }
@@ -1083,10 +1181,21 @@ function showResult(title, correct, total){
       <div class="result-actions">
         <button class="btn btn-primary" id="againBtn">Take another test</button>
         <button class="btn btn-ghost" id="homeBtn">Back to home</button>
+        <button class="btn btn-ghost" id="shareBtn">Share result</button>
       </div>
     </div>`;
   document.getElementById('againBtn').addEventListener('click', backToPicker);
   document.getElementById('homeBtn').addEventListener('click', ()=>{ backToPicker(); showSection('home'); });
+  document.getElementById('shareBtn').addEventListener('click', ()=>{
+    const shareText = `I scored ${correct}/${total} on "${title}" at Cortex Vault. Think you can beat it?`;
+    const shareUrl = 'https://galaxystonehub.github.io/cortex-vault/';
+    if(navigator.share){
+      navigator.share({ title:'Cortex Vault', text:shareText, url:shareUrl }).catch(()=>{});
+    } else {
+      const waUrl = 'https://wa.me/?text=' + encodeURIComponent(shareText + ' ' + shareUrl);
+      window.open(waUrl, '_blank');
+    }
+  });
 }
 
 /* ---------------- mystery case ---------------- */
