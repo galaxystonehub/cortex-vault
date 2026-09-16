@@ -384,7 +384,7 @@
         </a>
         <a class="pick-card" data-quiz="style" style="--card-c:var(--pink)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 3a6 6 0 0 0-1 11.9V19a1 1 0 0 0 2 0v-4.1A6 6 0 0 0 12 3z"/><path d="M9 21h6"/></svg></div>
-          <div class="body"><div class="lbl" data-i18n="card_style">Thinking Style</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_style">Thinking Style</div><div class="sub" data-i18n="n_questions">8 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="memory" style="--card-c:var(--cyan)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
@@ -392,7 +392,7 @@
         </a>
         <a class="pick-card" data-quiz="visual" style="--card-c:var(--amber)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <div class="body"><div class="lbl" data-i18n="card_visual">Visual Challenge</div><div class="sub">4 rounds</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_visual">Visual Challenge</div><div class="sub">6 rounds</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="iq" style="--card-c:var(--gold)">
           <div class="icon img"><img src="iq-test.jpg" alt="Quick IQ Check" loading="lazy"></div>
@@ -750,7 +750,22 @@ const QUIZZES = {
           {t:'Diagnose exactly where it broke', k:'analytical'},
           {t:'Reinvent the approach entirely', k:'creative'},
           {t:'Follow your revised checklist', k:'systematic'},
-          {t:'Feel out a new direction on the fly', k:'intuitive'} ]}
+          {t:'Feel out a new direction on the fly', k:'intuitive'} ]},
+      { q:'Given a blank page and a new project, you first:', options:[
+          {t:'List out the requirements one by one', k:'systematic'},
+          {t:'Doodle a rough, unusual concept', k:'creative'},
+          {t:'Map out the cause-and-effect logic', k:'analytical'},
+          {t:'Start and see what feels right', k:'intuitive'} ]},
+      { q:'A teammate disagrees with your idea. You:', options:[
+          {t:'Ask them to walk you through their reasoning', k:'analytical'},
+          {t:'Sense whether their pushback feels right', k:'intuitive'},
+          {t:'Suggest combining both ideas in a new way', k:'creative'},
+          {t:'Check which approach follows the agreed process', k:'systematic'} ]},
+      { q:'Your ideal way to spend a free afternoon is:', options:[
+          {t:'Organizing and planning something ahead of time', k:'systematic'},
+          {t:'Exploring a completely new hobby or idea', k:'creative'},
+          {t:'Digging deep into a topic that interests you', k:'analytical'},
+          {t:'Doing whatever feels right in the moment', k:'intuitive'} ]}
     ],
     verdicts: {
       analytical: 'You lean Analytical. You take problems apart before you trust any answer, and you\'d rather be right than fast.',
@@ -765,7 +780,9 @@ const QUIZZES = {
     questions: [
       { q:'Which word appeared in the list?', options:['River','Moon','Green','Yellow'], correct:1 },
       { q:'Which number appeared in the list?', options:['3','12','9','20'], correct:1 },
-      { q:'What was the first item shown?', options:['BLUE','MOON','APPLE','7'], correct:2 }
+      { q:'What was the first item shown?', options:['BLUE','MOON','APPLE','7'], correct:2 },
+      { q:'What was the last item shown?', options:['12','MOON','7','APPLE'], correct:0 },
+      { q:'How many numbers (not words) were in the list?', options:['1','2','3','4'], correct:1 }
     ]
   },
   visual: {
@@ -774,7 +791,9 @@ const QUIZZES = {
       { grid:['●','●','●','○','●'], oddIndex:3 },
       { grid:['▲','▲','▼','▲','▲'], oddIndex:2 },
       { grid:['◆','◇','◆','◆','◆'], oddIndex:1 },
-      { grid:['■','■','■','■','▪'], oddIndex:4 }
+      { grid:['■','■','■','■','▪'], oddIndex:4 },
+      { grid:['★','★','★','☆','★'], oddIndex:3 },
+      { grid:['●','◉','●','●','●'], oddIndex:1 }
     ]
   },
   iq: {
