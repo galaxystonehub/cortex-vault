@@ -157,8 +157,7 @@
   .pick-card .tagline{color:var(--card-c, var(--violet));font-size:0.78rem;font-weight:600;margin-top:5px;font-style:italic;}
   .hero h1{font-size:2.5rem;line-height:1.14;max-width:11ch;}
   .hero p{color:var(--muted);margin-top:16px;font-size:1.02rem;max-width:42ch;}
-  .hero-cta{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap;justify-content:center;}
-  .hero-cta-secondary{display:flex;justify-content:center;margin-top:14px;}
+  .hero-cta{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap;}
   .btn{
     display:inline-block;padding:13px 22px;border-radius:999px;
     font-weight:700;font-size:0.92rem;border:1px solid transparent;
@@ -168,7 +167,6 @@
   .btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 26px -8px rgba(167,139,250,0.7);}
   .btn-ghost{border-color:var(--line);color:var(--text);background:rgba(255,255,255,0.03);}
   .btn-ghost:hover{border-color:var(--violet);}
-  .btn-xl{padding:20px 44px;font-size:1.2rem;border-radius:18px;}
   .stat-row{display:flex;gap:28px;margin-top:36px;padding-top:24px;border-top:1px solid var(--line);}
   .stat-row div{font-size:0.8rem;color:var(--muted);}
   .stat-row strong{display:block;font-family:'Fraunces',serif;font-size:1.5rem;background:linear-gradient(135deg, var(--gold), var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;}
@@ -218,8 +216,6 @@
   .opt.correct .mk{background:var(--teal);border-color:var(--teal);color:#0A2318;}
   .opt.wrong{border-color:var(--wrong);background:rgba(251,113,133,0.12);}
   .opt.wrong .mk{background:var(--wrong);border-color:var(--wrong);color:#2E0A12;}
-  .opt.other{border-color:var(--cyan);background:rgba(77,216,232,0.12);}
-  .opt.other .mk{background:var(--cyan);border-color:var(--cyan);color:#052226;}
   .opt[disabled]{cursor:default;}
 
   .feedback{margin-top:16px;font-size:0.88rem;color:var(--muted);min-height:20px;}
@@ -243,7 +239,6 @@
   .result-score{font-family:'Fraunces',serif;font-size:2.7rem;
     background:linear-gradient(135deg, var(--gold), var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;}
   .result-label{color:var(--muted);font-size:0.9rem;margin-top:2px;}
-  .result-complete{display:inline-block;padding:6px 16px;border-radius:999px;background:rgba(63,221,166,0.15);color:var(--teal);font-weight:800;font-size:0.78rem;letter-spacing:0.03em;text-transform:uppercase;margin-bottom:14px;}
   .result-verdict{margin-top:18px;font-size:1rem;line-height:1.6;}
   .result-actions{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap;}
 
@@ -301,6 +296,68 @@
   @media(prefers-reduced-motion: reduce){
     .hero-visual animate{display:none;}
   }
+
+  /* ---------- puzzle arena ---------- */
+  .puzzle-stats{display:flex;gap:24px;margin:22px 0 30px;padding:18px 20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;flex-wrap:wrap;align-items:center;}
+  .puzzle-stats .pz-points{font-family:'Fraunces',serif;font-size:1.6rem;background:linear-gradient(135deg,var(--gold),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .puzzle-stats .pz-label{color:var(--muted);font-size:0.78rem;}
+  .puzzle-stats .pz-mind{font-weight:700;font-size:1rem;color:var(--text);}
+  .game-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:480px){.game-grid{grid-template-columns:1fr;}}
+  .game-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;transition:border-color .15s ease, transform .15s ease;}
+  .game-card:hover{border-color:var(--card-c,var(--violet));transform:translateY(-2px);}
+  .game-card .gicon{font-size:1.8rem;margin-bottom:8px;}
+  .game-card .gname{font-weight:700;font-size:1rem;margin-bottom:4px;}
+  .game-card .gdesc{color:var(--muted);font-size:0.82rem;margin-bottom:10px;min-height:2.4em;}
+  .game-card .gmeta{display:flex;justify-content:space-between;align-items:center;}
+  .game-card .gprogress{font-size:0.76rem;color:var(--card-c,var(--violet));font-weight:600;}
+  .game-card .gplay{background:linear-gradient(135deg,var(--violet),var(--pink));color:#1A0E2E;border:none;padding:8px 16px;border-radius:999px;font-weight:700;font-size:0.82rem;}
+
+  .pz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .pz-level-badge{color:var(--muted);font-size:0.85rem;}
+  .pz-back{background:none;border:1px solid var(--line);color:var(--muted);padding:6px 14px;border-radius:999px;font-size:0.8rem;}
+  .pz-board{margin-top:20px;}
+
+  /* memory match */
+  .mm-grid{display:grid;gap:8px;justify-content:center;}
+  .mm-card{aspect-ratio:1;width:100%;border-radius:10px;background:var(--panel-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer;user-select:none;transition:background .15s ease, transform .1s ease;}
+  .mm-card.flipped{background:linear-gradient(135deg,var(--violet),var(--pink));transform:scale(1.03);}
+  .mm-card.matched{background:rgba(63,221,166,0.18);border-color:var(--teal);opacity:0.75;}
+
+  /* simon */
+  .simon-pad{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:280px;margin:0 auto;}
+  .simon-btn{aspect-ratio:1;border-radius:16px;border:none;opacity:0.55;transition:opacity .12s ease, transform .12s ease;}
+  .simon-btn.lit{opacity:1;transform:scale(1.05);}
+  .simon-btn.red{background:#E5484D;} .simon-btn.blue{background:#4DA8DA;}
+  .simon-btn.green{background:#3FDDA6;} .simon-btn.yellow{background:#FBBF62;}
+
+  /* number recall */
+  .nr-display{font-family:'Fraunces',serif;font-size:2.4rem;text-align:center;padding:40px 0;letter-spacing:0.1em;color:var(--gold);}
+  .nr-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:280px;margin:0 auto;}
+  .nr-keypad button{padding:16px 0;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:1.1rem;font-weight:700;}
+  .nr-input{text-align:center;font-size:1.4rem;letter-spacing:0.15em;min-height:1.6em;margin-bottom:16px;color:var(--text);}
+
+  /* sliding puzzle */
+  .sp-grid{display:grid;gap:6px;max-width:320px;margin:0 auto;}
+  .sp-tile{aspect-ratio:1;background:linear-gradient(135deg,var(--violet),var(--pink));border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;color:#1A0E2E;cursor:pointer;}
+  .sp-tile.empty{background:none;cursor:default;}
+
+  /* speed match */
+  .sm-grid{display:grid;gap:10px;justify-content:center;margin-top:10px;}
+  .sm-item{aspect-ratio:1;width:56px;border-radius:10px;background:var(--panel-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:1.6rem;cursor:pointer;}
+  .sm-timer{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:14px 0;}
+  .sm-timer i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .1s linear;}
+
+  /* word memory */
+  .wm-words{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:24px 0;}
+  .wm-words span{background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:600;}
+
+  /* level complete / win overlay */
+  .pz-overlay{background:var(--panel);border:2px solid var(--gold);border-radius:16px;padding:32px 24px;text-align:center;margin-top:10px;}
+  .pz-overlay.win{border-color:var(--teal);}
+  .pz-overlay h2{font-size:1.6rem;margin-bottom:8px;}
+  .pz-overlay .pz-points-earned{font-family:'Fraunces',serif;font-size:2.2rem;color:var(--gold);margin:12px 0;}
+  .pz-overlay .pz-mind-result{margin-top:14px;color:var(--muted);font-size:0.95rem;line-height:1.6;}
 </style>
   <script src="https://pl31241918.profitableratecpmnetwork.com/f8/7b/4a/f87b4aba80f6b6e80b653bb36f741919.js"></script>
   <script src="https://pl31241920.profitableratecpmnetwork.com/4c/e8/1b/4ce81bed4dc6a3361caff5fcbf85f074.js"></script>
@@ -320,6 +377,7 @@
       <button data-nav="mystery" data-i18n="nav_mystery">Mystery</button>
       <button data-nav="about" data-i18n="nav_about">About</button>
       <button data-nav="tips" data-i18n="nav_tips">Tips</button>
+      <button data-nav="puzzle" data-i18n="nav_puzzle">Puzzle</button>
     </nav>
     <button onclick="shareSite()" style="background:none;border:1px solid #444;color:#fff;padding:6px 12px;border-radius:6px;cursor:pointer;">🔗 Share</button>
     <select id="langSwitch" aria-label="Language" style="background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:0.8rem;font-family:inherit;flex-shrink:0;margin-inline-start:auto;">
@@ -354,9 +412,7 @@
     <h1 data-i18n="hero_title">How sharp is your mind, really?</h1>
     <p data-i18n="hero_subtitle">Four short tests and one locked-room case. Answer honestly, get scored instantly, and see where your thinking leans.</p>
     <div class="hero-cta">
-      <button class="btn btn-primary btn-xl" data-nav="tests" data-i18n="hero_btn1">Start a test</button>
-    </div>
-    <div class="hero-cta-secondary">
+      <button class="btn btn-primary" data-nav="tests" data-i18n="hero_btn1">Start a test</button>
       <button class="btn btn-ghost" data-nav="mystery" data-i18n="hero_btn2">Solve the case</button>
     </div>
     <div class="stat-row">
@@ -367,6 +423,34 @@
     <!-- AdSense slot: after approval, paste your <ins class="adsbygoogle"> unit here,
          then add <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> right after it -->
     <div id="ad-slot-home" style="margin-top:28px;"></div>
+
+    <div class="card-list">
+      <a class="pick-card" data-nav="tests" data-quiz="logic" style="--card-c:var(--violet)">
+        <div class="icon img"><img src="pattern-logic.jpg" alt="Pattern Logic" loading="lazy"></div>
+        <div class="body"><div class="lbl" data-i18n="card_logic">Pattern Logic</div><div class="sub">5 questions · number and shape sequences</div><div class="tagline">Crack the code before it cracks you</div></div>
+        <div class="go">Start →</div>
+      </a>
+      <a class="pick-card" data-nav="tests" data-quiz="style" style="--card-c:var(--pink)">
+        <div class="icon img"><img src="thinking-style.jpg" alt="Thinking Style" loading="lazy"></div>
+        <div class="body"><div class="lbl" data-i18n="card_style">Thinking Style</div><div class="sub">5 questions · how you approach problems</div><div class="tagline">Know how you think, not just what</div></div>
+        <div class="go">Start →</div>
+      </a>
+      <a class="pick-card" data-nav="tests" data-quiz="memory" style="--card-c:var(--cyan)">
+        <div class="icon img"><img src="memory-test.jpg" alt="Memory Test" loading="lazy"></div>
+        <div class="body"><div class="lbl" data-i18n="card_memory">Memory Test</div><div class="sub">Memorize, then recall under pressure</div><div class="tagline">Blink and it's gone — remember it anyway</div></div>
+        <div class="go">Start →</div>
+      </a>
+      <a class="pick-card" data-nav="tests" data-quiz="visual" style="--card-c:var(--amber)">
+        <div class="icon img"><img src="visual-challenge.jpg" alt="Visual Challenge" loading="lazy"></div>
+        <div class="body"><div class="lbl" data-i18n="card_visual">Visual Challenge</div><div class="sub">4 rounds · spot what doesn't belong</div><div class="tagline">Your eyes will lie — don't let them</div></div>
+        <div class="go">Start →</div>
+      </a>
+      <a class="pick-card" data-nav="mystery" style="--card-c:var(--gold)">
+        <div class="icon img"><img src="mystery-study.jpg" alt="The Sealed Study" loading="lazy"></div>
+        <div class="body"><div class="lbl" data-i18n="card_mystery">The Sealed Study</div><div class="sub">1 case · three suspects, one liar</div><div class="tagline">Someone in this room is lying to you</div></div>
+        <div class="go">Investigate →</div>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -380,11 +464,11 @@
       <div class="card-list" id="testsCardList">
         <a class="pick-card" data-quiz="logic" style="--card-c:var(--violet)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 12h4l2-6 4 12 2-6h4"/></svg></div>
-          <div class="body"><div class="lbl" data-i18n="card_logic">Pattern Logic</div><div class="sub" data-i18n="n_questions">8 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_logic">Pattern Logic</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="style" style="--card-c:var(--pink)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 3a6 6 0 0 0-1 11.9V19a1 1 0 0 0 2 0v-4.1A6 6 0 0 0 12 3z"/><path d="M9 21h6"/></svg></div>
-          <div class="body"><div class="lbl" data-i18n="card_style">Thinking Style</div><div class="sub" data-i18n="n_questions">8 questions</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_style">Thinking Style</div><div class="sub" data-i18n="n_questions">5 questions</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="memory" style="--card-c:var(--cyan)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
@@ -392,67 +476,67 @@
         </a>
         <a class="pick-card" data-quiz="visual" style="--card-c:var(--amber)">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <div class="body"><div class="lbl" data-i18n="card_visual">Visual Challenge</div><div class="sub">6 rounds</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_visual">Visual Challenge</div><div class="sub">4 rounds</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="iq" style="--card-c:var(--gold)">
           <div class="icon img"><img src="iq-test.jpg" alt="Quick IQ Check" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_iq">Quick IQ Check</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">Five minutes to measure your mental edge</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_iq">Quick IQ Check</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Five minutes to measure your mental edge</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="riddles" style="--card-c:var(--pink)">
           <div class="icon img"><img src="riddles.jpg" alt="Logic Riddles" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_riddles">Logic Riddles</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">Ancient tricks for a modern brain</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_riddles">Logic Riddles</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Ancient tricks for a modern brain</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="words" style="--card-c:var(--teal)">
           <div class="icon img"><img src="words.jpg" alt="Word Puzzles" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_words">Word Puzzles</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">Letters hide more than you think</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_words">Word Puzzles</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Letters hide more than you think</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="math" style="--card-c:var(--cyan)">
           <div class="icon img"><img src="math.jpg" alt="Math Quickies" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_math">Math Quickies</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">Numbers don't lie, but they do trick</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_math">Math Quickies</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Numbers don't lie, but they do trick</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="gk" style="--card-c:var(--violet)">
           <div class="icon img"><img src="gk.jpg" alt="General Knowledge" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_gk">General Knowledge</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">How much of the world do you really know?</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_gk">General Knowledge</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">How much of the world do you really know?</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="detail" style="--card-c:var(--amber)">
           <div class="icon img"><img src="detail.jpg" alt="Attention to Detail" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_detail">Attention to Detail</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">The devil really is in the details</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_detail">Attention to Detail</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">The devil really is in the details</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="analogy" style="--card-c:var(--violet)">
           <div class="icon img"><img src="analogy.jpg" alt="Analogy Challenge" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_analogy">Analogy Challenge</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">If this is to that, what is this to you?</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_analogy">Analogy Challenge</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">If this is to that, what is this to you?</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="sequence" style="--card-c:var(--teal)">
           <div class="icon img"><img src="sequence.jpg" alt="Sequence Master" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_sequence">Sequence Master</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">Find the rhythm before it finds you</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_sequence">Sequence Master</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Find the rhythm before it finds you</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="trivia" style="--card-c:var(--gold)">
           <div class="icon img"><img src="trivia.jpg" alt="Trivia Mix" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_trivia">Trivia Mix</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">Random facts, real bragging rights</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_trivia">Trivia Mix</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Random facts, real bragging rights</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="history" style="--card-c:var(--amber)">
           <div class="icon img"><img src="history.jpg" alt="History Trivia" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_history">History Trivia</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">The past is still testing you</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_history">History Trivia</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">The past is still testing you</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="science" style="--card-c:var(--cyan)">
           <div class="icon img"><img src="science.jpg" alt="Science Trivia" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_science">Science Trivia</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">Curiosity is the only prerequisite</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_science">Science Trivia</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Curiosity is the only prerequisite</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="vocab" style="--card-c:var(--pink)">
           <div class="icon img"><img src="vocab.jpg" alt="Vocabulary Builder" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_vocab">Vocabulary Builder</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">Words are power — wield more of them</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_vocab">Vocabulary Builder</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Words are power — wield more of them</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="deduction" style="--card-c:var(--violet)">
           <div class="icon img"><img src="deduction.jpg" alt="Logical Deduction" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_deduction">Logical Deduction</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">Think like a detective, not a guesser</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_deduction">Logical Deduction</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Think like a detective, not a guesser</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="patterns2" style="--card-c:var(--teal)">
           <div class="icon img"><img src="patterns2.jpg" alt="Pattern Recognition" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_patterns2">Pattern Recognition</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">Order is hiding in the chaos</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_patterns2">Pattern Recognition</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Order is hiding in the chaos</div></div><div class="go">Start →</div>
         </a>
         <a class="pick-card" data-quiz="brainteasers2" style="--card-c:var(--wrong)">
           <div class="icon img"><img src="brainteasers2.jpg" alt="Brain Teasers Extreme" loading="lazy"></div>
-          <div class="body"><div class="lbl" data-i18n="card_brainteasers2">Brain Teasers Extreme</div><div class="sub" data-i18n="n_questions">8 questions</div><div class="tagline">Not for the faint of brain</div></div><div class="go">Start →</div>
+          <div class="body"><div class="lbl" data-i18n="card_brainteasers2">Brain Teasers Extreme</div><div class="sub" data-i18n="n_questions">5 questions</div><div class="tagline">Not for the faint of brain</div></div><div class="go">Start →</div>
         </a>
       </div>
       <script>
@@ -473,12 +557,8 @@
 <!-- ================= MYSTERY ================= -->
 <section id="mystery">
   <div class="wrap">
-    <div id="caseTabs" style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;">
-      <button class="btn case-tab" data-case="0" style="padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel-2);">Case 1: The Sealed Study</button>
-      <button class="btn case-tab" data-case="1" style="padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;">Case 2: The Midnight Gallery</button>
-    </div>
-    <h2 id="caseTitle" style="font-size:1.6rem;">The Sealed Study</h2>
-    <p id="caseIntro" style="color:var(--muted);margin-top:8px;">A rare manuscript vanished from Professor Hale's locked study. Only three people had a key. Read each statement carefully — one of them is lying.</p>
+    <h2 style="font-size:1.6rem;">The Sealed Study</h2>
+    <p style="color:var(--muted);margin-top:8px;">A rare manuscript vanished from Professor Hale's locked study. Only three people had a key. Read each statement carefully — one of them is lying.</p>
     <div id="suspectList" style="margin-top:22px;"></div>
     <button class="btn btn-primary" id="mysterySubmit" style="margin-top:8px;" disabled>Accuse the liar</button>
     <div id="mysteryResult"></div>
@@ -609,6 +689,70 @@
     <p style="color:var(--muted);margin-top:24px;line-height:1.7;" data-i18n="tips_cta">Want to put these techniques into practice? Try the tests on this site and track your progress over time.</p>
   </div>
 </section>
+
+<!-- ================= PUZZLE ARENA ================= -->
+<section id="puzzle">
+  <div class="wrap">
+    <h2 style="font-size:1.7rem;">Memory & Puzzle Arena</h2>
+    <p style="color:var(--muted);margin-top:8px;">Trending brain-training games — 10 levels each, real rewards, real bragging rights.</p>
+
+    <div class="puzzle-stats">
+      <div><div class="pz-points" id="pzTotalPoints">0</div><div class="pz-label">total points</div></div>
+      <div><div class="pz-mind" id="pzMindLevel">Warming Up</div><div class="pz-label">your mind level</div></div>
+    </div>
+
+    <div id="gamesPicker">
+      <div class="game-grid">
+        <div class="game-card" style="--card-c:var(--violet)">
+          <div class="gicon">🃏</div>
+          <div class="gname">Memory Match</div>
+          <div class="gdesc">Flip cards, find every pair before you run out of focus.</div>
+          <div class="gmeta"><span class="gprogress" data-progress="memorymatch">Level 1</span><button class="gplay" data-game="memorymatch">Play</button></div>
+        </div>
+        <div class="game-card" style="--card-c:var(--pink)">
+          <div class="gicon">🔴</div>
+          <div class="gname">Simon Sequence</div>
+          <div class="gdesc">Watch the pattern light up, then repeat it back exactly.</div>
+          <div class="gmeta"><span class="gprogress" data-progress="simon">Level 1</span><button class="gplay" data-game="simon">Play</button></div>
+        </div>
+        <div class="game-card" style="--card-c:var(--gold)">
+          <div class="gicon">🔢</div>
+          <div class="gname">Number Recall</div>
+          <div class="gdesc">A number flashes for a moment — type it back from memory.</div>
+          <div class="gmeta"><span class="gprogress" data-progress="numrecall">Level 1</span><button class="gplay" data-game="numrecall">Play</button></div>
+        </div>
+        <div class="game-card" style="--card-c:var(--cyan)">
+          <div class="gicon">🧩</div>
+          <div class="gname">Sliding Puzzle</div>
+          <div class="gdesc">Slide the tiles back into perfect order, fastest wins big.</div>
+          <div class="gmeta"><span class="gprogress" data-progress="sliding">Level 1</span><button class="gplay" data-game="sliding">Play</button></div>
+        </div>
+        <div class="game-card" style="--card-c:var(--amber)">
+          <div class="gicon">⚡</div>
+          <div class="gname">Speed Match</div>
+          <div class="gdesc">Spot the odd one out before the timer runs all the way down.</div>
+          <div class="gmeta"><span class="gprogress" data-progress="speedmatch">Level 1</span><button class="gplay" data-game="speedmatch">Play</button></div>
+        </div>
+        <div class="game-card" style="--card-c:var(--wrong)">
+          <div class="gicon">📝</div>
+          <div class="gname">Word Memory</div>
+          <div class="gdesc">Study the list, then catch the one word that was never there.</div>
+          <div class="gmeta"><span class="gprogress" data-progress="wordmem">Level 1</span><button class="gplay" data-game="wordmem">Play</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="puzzleStage" style="display:none;">
+      <div class="pz-header">
+        <button class="pz-back" id="pzBackBtn">← All games</button>
+        <div class="pz-level-badge" id="pzLevelBadge">Level 1 of 10</div>
+      </div>
+      <h3 id="pzGameTitle" style="font-size:1.3rem;margin-top:4px;"></h3>
+      <div class="pz-board" id="pzBoard"></div>
+    </div>
+  </div>
+</section>
+
 <div style="display:flex;justify-content:center;margin:24px 0;">
 <script>
   atOptions = {
@@ -720,10 +864,7 @@ const QUIZZES = {
       { q:'Complete the sequence: 1, 4, 9, 16, ?', options:['20','24','25','21'], correct:2, explain:'These are square numbers: 1², 2², 3², 4², 5².' },
       { q:'Which number is the odd one out: 3, 5, 7, 9, 11, 15?', options:['9','11','15','3'], correct:0, explain:'All others are prime; 9 is the only composite number.' },
       { q:'What comes next: A, C, F, J, ?', options:['M','N','O','P'], correct:2, explain:'The gap between letters increases by one each time: +2, +3, +4, +5.' },
-      { q:'If today is Wednesday, what day was it 100 days ago?', options:['Sunday','Monday','Tuesday','Thursday'], correct:0, explain:'100 mod 7 = 2, so count back two days from Wednesday: Sunday.' },
-      { q:'What comes next: 3, 6, 12, 24, ?', options:['30','36','42','48'], correct:3, explain:'Each number doubles the one before it: 24 × 2 = 48.' },
-      { q:'Which number is the odd one out: 4, 9, 16, 20, 25, 36?', options:['20','25','9','36'], correct:0, explain:'All others are perfect squares; 20 is not.' },
-      { q:'What comes next: Z, Y, X, W, ?', options:['U','V','T','S'], correct:1, explain:'The alphabet is moving backward one letter at a time, so after W comes V.' }
+      { q:'If today is Wednesday, what day was it 100 days ago?', options:['Sunday','Monday','Tuesday','Thursday'], correct:0, explain:'100 mod 7 = 2, so count back two days from Wednesday: Sunday.' }
     ]
   },
   style: {
@@ -754,22 +895,7 @@ const QUIZZES = {
           {t:'Diagnose exactly where it broke', k:'analytical'},
           {t:'Reinvent the approach entirely', k:'creative'},
           {t:'Follow your revised checklist', k:'systematic'},
-          {t:'Feel out a new direction on the fly', k:'intuitive'} ]},
-      { q:'Given a blank page and a new project, you first:', options:[
-          {t:'List out the requirements one by one', k:'systematic'},
-          {t:'Doodle a rough, unusual concept', k:'creative'},
-          {t:'Map out the cause-and-effect logic', k:'analytical'},
-          {t:'Start and see what feels right', k:'intuitive'} ]},
-      { q:'A teammate disagrees with your idea. You:', options:[
-          {t:'Ask them to walk you through their reasoning', k:'analytical'},
-          {t:'Sense whether their pushback feels right', k:'intuitive'},
-          {t:'Suggest combining both ideas in a new way', k:'creative'},
-          {t:'Check which approach follows the agreed process', k:'systematic'} ]},
-      { q:'Your ideal way to spend a free afternoon is:', options:[
-          {t:'Organizing and planning something ahead of time', k:'systematic'},
-          {t:'Exploring a completely new hobby or idea', k:'creative'},
-          {t:'Digging deep into a topic that interests you', k:'analytical'},
-          {t:'Doing whatever feels right in the moment', k:'intuitive'} ]}
+          {t:'Feel out a new direction on the fly', k:'intuitive'} ]}
     ],
     verdicts: {
       analytical: 'You lean Analytical. You take problems apart before you trust any answer, and you\'d rather be right than fast.',
@@ -784,9 +910,7 @@ const QUIZZES = {
     questions: [
       { q:'Which word appeared in the list?', options:['River','Moon','Green','Yellow'], correct:1 },
       { q:'Which number appeared in the list?', options:['3','12','9','20'], correct:1 },
-      { q:'What was the first item shown?', options:['BLUE','MOON','APPLE','7'], correct:2 },
-      { q:'What was the last item shown?', options:['12','MOON','7','APPLE'], correct:0 },
-      { q:'How many numbers (not words) were in the list?', options:['1','2','3','4'], correct:1 }
+      { q:'What was the first item shown?', options:['BLUE','MOON','APPLE','7'], correct:2 }
     ]
   },
   visual: {
@@ -795,9 +919,7 @@ const QUIZZES = {
       { grid:['●','●','●','○','●'], oddIndex:3 },
       { grid:['▲','▲','▼','▲','▲'], oddIndex:2 },
       { grid:['◆','◇','◆','◆','◆'], oddIndex:1 },
-      { grid:['■','■','■','■','▪'], oddIndex:4 },
-      { grid:['★','★','★','☆','★'], oddIndex:3 },
-      { grid:['●','◉','●','●','●'], oddIndex:1 }
+      { grid:['■','■','■','■','▪'], oddIndex:4 }
     ]
   },
   iq: {
@@ -807,10 +929,7 @@ const QUIZZES = {
       { q:'If 3 workers build a wall in 6 days, how many days would 6 workers take (same rate)?', options:['12','6','3','9'], correct:2, explain:'Double the workers, half the time: 6 ÷ 2 = 3 days.' },
       { q:'Which shape completes the pattern: Square, Circle, Square, Circle, ?', options:['Triangle','Circle','Square','Star'], correct:2, explain:'The pattern alternates Square/Circle, so the next one is Square.' },
       { q:'Find the odd one out: Whale, Dolphin, Shark, Seal', options:['Whale','Dolphin','Shark','Seal'], correct:2, explain:'Whale, Dolphin and Seal are mammals; a Shark is a fish.' },
-      { q:'A clock shows 3:15. What is the angle between the hour and minute hand (approx)?', options:['0°','7.5°','15°','30°'], correct:1, explain:'At 3:15 the hour hand has moved slightly past 3, making a small ~7.5° gap with the minute hand at 3.' },
-      { q:'A farmer has 17 sheep, and all but 9 die. How many are left?', options:['8','9','17','0'], correct:1, explain:'"All but 9 die" means 9 sheep survive.' },
-      { q:'Which word is the odd one out: Triangle, Square, Circle, Rectangle?', options:['Triangle','Square','Circle','Rectangle'], correct:2, explain:'A circle has no straight sides or corners, unlike the other shapes.' },
-      { q:'If you rearrange the letters "CIFAIPC", you get the name of a(n):', options:['Country','Animal','Ocean','City'], correct:2, explain:'"CIFAIPC" rearranges to PACIFIC, one of the world\'s oceans.' }
+      { q:'A clock shows 3:15. What is the angle between the hour and minute hand (approx)?', options:['0°','7.5°','15°','30°'], correct:1, explain:'At 3:15 the hour hand has moved slightly past 3, making a small ~7.5° gap with the minute hand at 3.' }
     ]
   },
   riddles: {
@@ -820,10 +939,7 @@ const QUIZZES = {
       { q:'A man is looking at a photo. Someone asks who it is. He says: "Brothers and sisters I have none, but that man\'s father is my father\'s son." Who is in the photo?', options:['His father','Himself','His son','His uncle'], correct:2, explain:'"My father\'s son" (with no siblings) is himself — so the photo is of his own son.' },
       { q:'What has a face and two hands but no arms or legs?', options:['A clock','A doll','A robot','A statue'], correct:0, explain:'A clock has a face and two hands (the clock hands).' },
       { q:'What gets wetter the more it dries?', options:['A sponge','A towel','Rain','Soap'], correct:1, explain:'A towel gets wetter the more things it dries.' },
-      { q:'I am not alive, but I grow; I don\'t have lungs, but I need air. What am I?', options:['A tree','Fire','A shadow','A cloud'], correct:1, explain:'Fire grows, needs air (oxygen) to burn, but is not a living thing.' },
-      { q:'What can you catch but not throw?', options:['A ball','A cold','A fish','A thief'], correct:1, explain:'You can catch a cold, but you can\'t throw it.' },
-      { q:'What has one eye but cannot see?', options:['A storm','A needle','A statue','A camera'], correct:1, explain:'A needle has an "eye" (the hole for thread) but cannot see.' },
-      { q:'What building has the most stories?', options:['A skyscraper','A castle','A library','A museum'], correct:2, explain:'A library has the most "stories" — a play on words with books.' }
+      { q:'I am not alive, but I grow; I don\'t have lungs, but I need air. What am I?', options:['A tree','Fire','A shadow','A cloud'], correct:1, explain:'Fire grows, needs air (oxygen) to burn, but is not a living thing.' }
     ]
   },
   words: {
@@ -833,10 +949,7 @@ const QUIZZES = {
       { q:'Which word does NOT belong: Apple, Banana, Carrot, Mango?', options:['Apple','Banana','Carrot','Mango'], correct:2, explain:'Carrot is a vegetable/root; the others are fruits.' },
       { q:'Complete the analogy: Pen is to Write as Knife is to:', options:['Sharp','Cut','Kitchen','Metal'], correct:1, explain:'A pen is used to write; a knife is used to cut.' },
       { q:'What is the opposite of "Abundant"?', options:['Plenty','Scarce','Rich','Full'], correct:1, explain:'"Scarce" means lacking or insufficient — the opposite of abundant.' },
-      { q:'Which word means the same as "Meticulous"?', options:['Careless','Careful','Quick','Lazy'], correct:1, explain:'Meticulous means showing great attention to detail — closest to "careful".' },
-      { q:'Unscramble: "GNITEL" — what word does it make?', options:['GENTLI','TINGLE','LITENG','GENLIT'], correct:1, explain:'"GNITEL" rearranges to TINGLE.' },
-      { q:'Which word does NOT belong: Trumpet, Violin, Piano, Painting?', options:['Trumpet','Violin','Piano','Painting'], correct:3, explain:'The first three are musical instruments; painting is a visual art form.' },
-      { q:'What is the opposite of "Generous"?', options:['Kind','Stingy','Wealthy','Helpful'], correct:1, explain:'"Stingy" means unwilling to give or share — the opposite of generous.' }
+      { q:'Which word means the same as "Meticulous"?', options:['Careless','Careful','Quick','Lazy'], correct:1, explain:'Meticulous means showing great attention to detail — closest to "careful".' }
     ]
   },
   math: {
@@ -846,10 +959,7 @@ const QUIZZES = {
       { q:'If a train travels 60 km in 45 minutes, what is its speed in km/h?', options:['60 km/h','75 km/h','80 km/h','90 km/h'], correct:2, explain:'60 km in 45 min = 60 ÷ 0.75 = 80 km/h.' },
       { q:'What comes next: 2, 6, 12, 20, 30, ?', options:['36','40','42','44'], correct:2, explain:'The differences are 4,6,8,10,12 — so 30 + 12 = 42.' },
       { q:'A shirt costs $40 after a 20% discount. What was the original price?', options:['$48','$50','$52','$55'], correct:1, explain:'$40 is 80% of the original: $40 ÷ 0.8 = $50.' },
-      { q:'What is the next prime number after 17?', options:['18','19','21','23'], correct:1, explain:'19 is prime (only divisible by 1 and itself); 18, 20, 21 are not.' },
-      { q:'What is 8 squared minus 15?', options:['39','44','49','52'], correct:2, explain:'8² = 64, and 64 − 15 = 49.' },
-      { q:'A recipe needs 3 cups of flour for 12 cookies. How many cups for 20 cookies?', options:['4','5','6','7'], correct:1, explain:'3 cups ÷ 12 cookies = 0.25 cups each; 0.25 × 20 = 5 cups.' },
-      { q:'What is the value of x if 4x − 7 = 21?', options:['5','6','7','8'], correct:2, explain:'4x = 28, so x = 7.' }
+      { q:'What is the next prime number after 17?', options:['18','19','21','23'], correct:1, explain:'19 is prime (only divisible by 1 and itself); 18, 20, 21 are not.' }
     ]
   },
   gk: {
@@ -859,10 +969,7 @@ const QUIZZES = {
       { q:'What is the largest ocean on Earth?', options:['Atlantic','Indian','Arctic','Pacific'], correct:3, explain:'The Pacific Ocean is the largest and deepest of Earth\'s oceans.' },
       { q:'How many continents are there on Earth?', options:['5','6','7','8'], correct:2, explain:'There are 7 continents: Asia, Africa, North America, South America, Antarctica, Europe, Australia.' },
       { q:'Which gas do plants absorb from the atmosphere for photosynthesis?', options:['Oxygen','Nitrogen','Carbon dioxide','Hydrogen'], correct:2, explain:'Plants absorb carbon dioxide (CO2) and release oxygen during photosynthesis.' },
-      { q:'What is the smallest prime number?', options:['0','1','2','3'], correct:2, explain:'2 is the smallest prime number and the only even prime.' },
-      { q:'Which is the longest river in the world?', options:['Amazon','Nile','Yangtze','Mississippi'], correct:1, explain:'The Nile River, in Africa, is generally considered the longest river in the world.' },
-      { q:'What is the capital city of Japan?', options:['Osaka','Kyoto','Tokyo','Nagoya'], correct:2, explain:'Tokyo is the capital and most populous city of Japan.' },
-      { q:'Which country is known as the Land of the Rising Sun?', options:['China','Japan','Thailand','South Korea'], correct:1, explain:'Japan is nicknamed the "Land of the Rising Sun" because of its eastern position in Asia.' }
+      { q:'What is the smallest prime number?', options:['0','1','2','3'], correct:2, explain:'2 is the smallest prime number and the only even prime.' }
     ]
   },
   detail: {
@@ -872,10 +979,7 @@ const QUIZZES = {
       { q:'Which of these words is spelled correctly?', options:['Recieve','Receive','Receve','Receeve'], correct:1, explain:'"Receive" follows the "i before e except after c" rule correctly.' },
       { q:'In the sequence A1, B2, C3, D4, what comes next?', options:['D5','E5','E4','F5'], correct:1, explain:'The pattern increases both letter and number together: E5.' },
       { q:'Which number is different: 4, 8, 15, 16, 23, 42, 41?', options:['15','23','41','42'], correct:2, explain:'This is the famous "Lost" sequence — 41 doesn\'t belong; the real sequence is 4,8,15,16,23,42.' },
-      { q:'How many triangles can you make from 4 non-collinear points, taking 3 at a time?', options:['2','3','4','6'], correct:2, explain:'With 4 points, choosing any 3 gives C(4,3) = 4 possible triangles.' },
-      { q:'Count the letter "s" in: "Sally sells seashells by the seashore."', options:['6','7','8','9'], correct:2, explain:'There are 8 letter "s"s in that sentence.' },
-      { q:'Which of these words is spelled correctly?', options:['Definately','Definitly','Definitely','Defenitely'], correct:2, explain:'"Definitely" is the correct spelling.' },
-      { q:'In the sequence 2A, 4B, 6C, 8D, what comes next?', options:['9E','10E','10F','12E'], correct:1, explain:'The number increases by 2 and the letter moves forward one, so next is 10E.' }
+      { q:'How many triangles can you make from 4 non-collinear points, taking 3 at a time?', options:['2','3','4','6'], correct:2, explain:'With 4 points, choosing any 3 gives C(4,3) = 4 possible triangles.' }
     ]
   },
   analogy: {
@@ -885,10 +989,7 @@ const QUIZZES = {
       { q:'Bird is to Sky as Fish is to:', options:['River','Water','Ocean','Lake'], correct:1, explain:'A bird\'s natural domain is the sky; a fish\'s is water (most general answer).' },
       { q:'Author is to Book as Composer is to:', options:['Instrument','Song','Music','Orchestra'], correct:2, explain:'An author creates a book; a composer creates music.' },
       { q:'Thermometer is to Temperature as Clock is to:', options:['Time','Numbers','Hands','Wall'], correct:0, explain:'A thermometer measures temperature; a clock measures/shows time.' },
-      { q:'Puppy is to Dog as Cub is to:', options:['Cat','Lion','Fox','Wolf'], correct:1, explain:'A puppy is a baby dog; a cub is most commonly the term for a baby lion (also bear/wolf, but lion is the classic pairing).' },
-      { q:'Chef is to Kitchen as Pilot is to:', options:['Airport','Cockpit','Sky','Plane'], correct:1, explain:'A chef works in a kitchen; a pilot works in a cockpit.' },
-      { q:'Seed is to Tree as Egg is to:', options:['Nest','Bird','Shell','Farm'], correct:1, explain:'A seed grows into a tree; an egg hatches into a bird.' },
-      { q:'Key is to Lock as Password is to:', options:['Computer','Account','Security','Login'], correct:1, explain:'A key opens a lock; a password unlocks access to an account.' }
+      { q:'Puppy is to Dog as Cub is to:', options:['Cat','Lion','Fox','Wolf'], correct:1, explain:'A puppy is a baby dog; a cub is most commonly the term for a baby lion (also bear/wolf, but lion is the classic pairing).' }
     ]
   },
   sequence: {
@@ -898,10 +999,7 @@ const QUIZZES = {
       { q:'What comes next: A, C, F, J, O, ?', options:['S','T','U','V'], correct:2, explain:'The gaps increase by one each time (+2,+3,+4,+5,+6): O + 6 = U.' },
       { q:'What comes next: 3, 9, 27, 81, ?', options:['162','189','243','256'], correct:2, explain:'Each term is multiplied by 3: 81 × 3 = 243.' },
       { q:'What comes next: 100, 95, 85, 70, 50, ?', options:['20','25','30','35'], correct:2, explain:'The gaps between terms increase by 5 each time (-5,-10,-15,-20,-25): 50 - 25 = 30.' },
-      { q:'What comes next: Z, X, V, T, ?', options:['S','R','Q','P'], correct:1, explain:'The letters skip one each time going backward (Z,Y,X → skip Y): after T, skip U, land on R.' },
-      { q:'What comes next: 2, 5, 11, 23, 47, ?', options:['71','83','89','95'], correct:3, explain:'Each term doubles and adds 1: 47 × 2 + 1 = 95.' },
-      { q:'What comes next: J, F, M, A, M, ?', options:['J','A','S','O'], correct:0, explain:'These are the first letters of the months (Jan, Feb, Mar, Apr, May), so next is June (J).' },
-      { q:'What comes next: 1, 2, 4, 7, 11, ?', options:['14','15','16','17'], correct:2, explain:'The gaps increase by one each time (+1,+2,+3,+4,+5): 11 + 5 = 16.' }
+      { q:'What comes next: Z, X, V, T, ?', options:['S','R','Q','P'], correct:1, explain:'The letters skip one each time going backward (Z,Y,X → skip Y): after T, skip U, land on R.' }
     ]
   },
   trivia: {
@@ -911,10 +1009,7 @@ const QUIZZES = {
       { q:'What is the chemical symbol for Gold?', options:['Go','Gd','Au','Ag'], correct:2, explain:'Au comes from the Latin word "Aurum", meaning gold.' },
       { q:'Which organ in the human body produces insulin?', options:['Liver','Pancreas','Kidney','Heart'], correct:1, explain:'The pancreas produces insulin to regulate blood sugar levels.' },
       { q:'How many sides does a hexagon have?', options:['5','6','7','8'], correct:1, explain:'"Hex" means six — a hexagon has 6 sides.' },
-      { q:'What is the freezing point of water in Celsius?', options:['-10°C','0°C','10°C','32°C'], correct:1, explain:'Water freezes at 0°C (32°F) at standard atmospheric pressure.' },
-      { q:'What is the tallest mountain in the world?', options:['K2','Mount Everest','Kangchenjunga','Denali'], correct:1, explain:'Mount Everest, at 8,849 meters, is the tallest mountain above sea level.' },
-      { q:'Which country hosted the first modern Olympic Games?', options:['France','Greece','Italy','USA'], correct:1, explain:'The first modern Olympic Games were held in Athens, Greece, in 1896.' },
-      { q:'What is the currency of the United Kingdom?', options:['Euro','Dollar','Pound Sterling','Franc'], correct:2, explain:'The Pound Sterling (GBP) is the official currency of the United Kingdom.' }
+      { q:'What is the freezing point of water in Celsius?', options:['-10°C','0°C','10°C','32°C'], correct:1, explain:'Water freezes at 0°C (32°F) at standard atmospheric pressure.' }
     ]
   },
   history: {
@@ -924,10 +1019,7 @@ const QUIZZES = {
       { q:'The Great Wall of China was primarily built to defend against invasions from which direction?', options:['South','East','North','West'], correct:2, explain:'The wall was built mainly to protect against invasions from northern nomadic groups.' },
       { q:'Which ancient civilization built the pyramids of Giza?', options:['Romans','Greeks','Egyptians','Mayans'], correct:2, explain:'The pyramids of Giza were built by the ancient Egyptians as tombs for pharaohs.' },
       { q:'Who is credited with inventing the telephone?', options:['Thomas Edison','Alexander Graham Bell','Nikola Tesla','Benjamin Franklin'], correct:1, explain:'Alexander Graham Bell is widely credited with patenting the first practical telephone.' },
-      { q:'The printing press was invented by which of these?', options:['Johannes Gutenberg','Leonardo da Vinci','Isaac Newton','Galileo Galilei'], correct:0, explain:'Johannes Gutenberg introduced the movable-type printing press in the 15th century.' },
-      { q:'Who was the first President of the United States?', options:['Thomas Jefferson','George Washington','John Adams','Abraham Lincoln'], correct:1, explain:'George Washington served as the first U.S. President from 1789 to 1797.' },
-      { q:'The Berlin Wall fell in which year?', options:['1987','1989','1991','1993'], correct:1, explain:'The Berlin Wall fell in November 1989, marking a key moment in ending the Cold War.' },
-      { q:'Which empire built the Colosseum?', options:['Greek Empire','Ottoman Empire','Roman Empire','Persian Empire'], correct:2, explain:'The Colosseum was built by the Roman Empire, completed around 80 AD.' }
+      { q:'The printing press was invented by which of these?', options:['Johannes Gutenberg','Leonardo da Vinci','Isaac Newton','Galileo Galilei'], correct:0, explain:'Johannes Gutenberg introduced the movable-type printing press in the 15th century.' }
     ]
   },
   science: {
@@ -937,10 +1029,7 @@ const QUIZZES = {
       { q:'Which force keeps planets in orbit around the sun?', options:['Magnetism','Gravity','Friction','Inertia'], correct:1, explain:'Gravity is the attractive force that keeps planets orbiting the sun.' },
       { q:'What is H2O more commonly known as?', options:['Salt','Water','Sugar','Oxygen'], correct:1, explain:'H2O is the chemical formula for water — two hydrogen atoms and one oxygen atom.' },
       { q:'How many bones are in the adult human body?', options:['196','206','216','226'], correct:1, explain:'The average adult human skeleton has 206 bones.' },
-      { q:'Which planet has the most moons in our solar system (as commonly cited)?', options:['Jupiter','Saturn','Mars','Neptune'], correct:1, explain:'Saturn is generally cited as having the most confirmed moons, closely followed by Jupiter.' },
-      { q:'What gas makes up most of Earth\'s atmosphere?', options:['Oxygen','Nitrogen','Carbon dioxide','Hydrogen'], correct:1, explain:'Nitrogen makes up about 78% of Earth\'s atmosphere.' },
-      { q:'What is the chemical formula for table salt?', options:['NaCl','KCl','CaCl2','NaOH'], correct:0, explain:'Table salt is sodium chloride, chemical formula NaCl.' },
-      { q:'Which part of the human eye controls how much light enters?', options:['Retina','Cornea','Iris','Lens'], correct:2, explain:'The iris adjusts the pupil size to control how much light enters the eye.' }
+      { q:'Which planet has the most moons in our solar system (as commonly cited)?', options:['Jupiter','Saturn','Mars','Neptune'], correct:1, explain:'Saturn is generally cited as having the most confirmed moons, closely followed by Jupiter.' }
     ]
   },
   vocab: {
@@ -950,10 +1039,7 @@ const QUIZZES = {
       { q:'What is a synonym for "Benevolent"?', options:['Cruel','Kind','Angry','Selfish'], correct:1, explain:'Benevolent means kind and well-meaning.' },
       { q:'What does "Ambiguous" mean?', options:['Very clear','Open to more than one interpretation','Extremely large','Completely false'], correct:1, explain:'Ambiguous means having more than one possible meaning.' },
       { q:'What is the meaning of "Candid"?', options:['Dishonest','Frank and open','Very shy','Angry'], correct:1, explain:'Candid means truthful and straightforward.' },
-      { q:'What does "Resilient" mean?', options:['Easily broken','Able to recover quickly from difficulty','Very slow','Extremely fragile'], correct:1, explain:'Resilient describes the ability to withstand or recover quickly from difficulties.' },
-      { q:'What does "Tenacious" mean?', options:['Weak and giving up easily','Persistent and determined','Very quiet','Extremely fast'], correct:1, explain:'Tenacious means holding firmly to a course of action; persistent.' },
-      { q:'What is a synonym for "Concise"?', options:['Lengthy','Brief','Confusing','Detailed'], correct:1, explain:'Concise means giving information clearly in few words; brief.' },
-      { q:'What does "Eloquent" mean?', options:['Fluent and persuasive in speech','Silent and withdrawn','Angry and loud','Confused'], correct:0, explain:'Eloquent describes speech or writing that is fluent and persuasive.' }
+      { q:'What does "Resilient" mean?', options:['Easily broken','Able to recover quickly from difficulty','Very slow','Extremely fragile'], correct:1, explain:'Resilient describes the ability to withstand or recover quickly from difficulties.' }
     ]
   },
   deduction: {
@@ -963,10 +1049,7 @@ const QUIZZES = {
       { q:'If it rains, the ground gets wet. The ground is wet. Can we conclude it rained?', options:['Yes, definitely','No, not necessarily','Only in summer','Only if it\'s morning'], correct:1, explain:'This is a logical fallacy (affirming the consequent) — the ground could be wet for other reasons like a sprinkler.' },
       { q:'Five people are in a race. Amy finishes before Ben. Ben finishes before Cara. Who finishes first?', options:['Ben','Cara','Amy','Cannot be determined'], correct:2, explain:'Since Amy is before Ben, and Ben is before Cara, Amy must be first among these three.' },
       { q:'A is taller than B. C is shorter than B. Who is the shortest?', options:['A','B','C','Cannot be determined'], correct:2, explain:'A > B > C in height, so C is the shortest.' },
-      { q:'If all cats are mammals, and all mammals are animals, then:', options:['All animals are cats','All cats are animals','No cats are animals','All mammals are cats'], correct:1, explain:'This follows the transitive property: cats → mammals → animals, so all cats are animals.' },
-      { q:'All squares are rectangles. This shape is a rectangle. Is it a square?', options:['Yes, definitely','Not necessarily','No, never','Only sometimes'], correct:1, explain:'Not all rectangles are squares, so we cannot conclude it is a square.' },
-      { q:'Every member of the chess club plays on Tuesdays. Maria plays chess on Tuesday. Is Maria in the chess club?', options:['Yes, definitely','Not necessarily','No, never','Cannot be a coincidence'], correct:1, explain:'Playing on Tuesday doesn\'t prove club membership — she could play for another reason.' },
-      { q:'If no fish can fly, and a salmon is a fish, can a salmon fly?', options:['Yes','No','Only underwater','Sometimes'], correct:1, explain:'Since no fish can fly and a salmon is a fish, a salmon cannot fly.' }
+      { q:'If all cats are mammals, and all mammals are animals, then:', options:['All animals are cats','All cats are animals','No cats are animals','All mammals are cats'], correct:1, explain:'This follows the transitive property: cats → mammals → animals, so all cats are animals.' }
     ]
   },
   patterns2: {
@@ -976,10 +1059,7 @@ const QUIZZES = {
       { q:'What comes next: 5, 10, 20, 40, ?', options:['60','70','80','90'], correct:2, explain:'Each number doubles: 40 × 2 = 80.' },
       { q:'Find the missing letter: B, D, F, H, ?', options:['I','J','K','L'], correct:1, explain:'The letters skip one each time (+2): H + 2 = J.' },
       { q:'What comes next: 1, 4, 9, 16, 25, ?', options:['30','32','36','40'], correct:2, explain:'These are perfect squares (1²,2²,3²,4²,5²), so next is 6² = 36.' },
-      { q:'Complete the pattern: 2, 3, 5, 7, 11, ?', options:['12','13','14','15'], correct:1, explain:'These are consecutive prime numbers — 13 is the next prime after 11.' },
-      { q:'What comes next: 3, 6, 9, 12, ?', options:['14','15','16','18'], correct:1, explain:'The pattern adds 3 each time: 12 + 3 = 15.' },
-      { q:'Find the missing letter: C, F, I, L, ?', options:['M','N','O','P'], correct:2, explain:'Each letter skips two (+3 each time): L + 3 = O.' },
-      { q:'What comes next: 1, 3, 6, 10, 15, ?', options:['18','20','21','24'], correct:2, explain:'These are triangular numbers, each adding one more than the last gap: 15 + 6 = 21.' }
+      { q:'Complete the pattern: 2, 3, 5, 7, 11, ?', options:['12','13','14','15'], correct:1, explain:'These are consecutive prime numbers — 13 is the next prime after 11.' }
     ]
   },
   brainteasers2: {
@@ -989,10 +1069,7 @@ const QUIZZES = {
       { q:'What can travel around the world while staying in a corner?', options:['A satellite','A stamp','A map','The wind'], correct:1, explain:'A postage stamp stays in the corner of an envelope while it travels around the world.' },
       { q:'A father and son are in a car accident. The father dies, and the son is rushed to the hospital. The surgeon says "I cannot operate on my son." How is this possible?', options:['The surgeon is a robot','The surgeon is the boy\'s mother','It\'s a different son','The surgeon is lying'], correct:1, explain:'The surgeon is the boy\'s mother — this riddle highlights unconscious gender assumptions.' },
       { q:'What has many keys but can\'t open a single lock?', options:['A locksmith','A piano','A keychain','A safe'], correct:1, explain:'A piano has many keys, but they play music, not open locks.' },
-      { q:'The more of this there is, the less you see. What is it?', options:['Light','Darkness','Fog','Smoke'], correct:1, explain:'The more darkness there is, the less you can see.' },
-      { q:'A man walks into a bar and asks for a glass of water. The bartender pulls out a gun. The man says "thank you" and leaves. Why?', options:['The man was thirsty','The man had hiccups and was scared away','It was a joke','The bartender was angry'], correct:1, explain:'The man had hiccups; the shock of the gun cured them, so he no longer needed water.' },
-      { q:'What goes up but never comes down?', options:['A balloon','Your age','A rocket','Smoke'], correct:1, explain:'Your age only increases — it never comes down.' },
-      { q:'The person who makes it, sells it. The person who buys it never uses it. What is it?', options:['A coffin','A gift','Medicine','A book'], correct:0, explain:'A coffin is made and sold, but the buyer (family) never personally uses it.' }
+      { q:'The more of this there is, the less you see. What is it?', options:['Light','Darkness','Fog','Smoke'], correct:1, explain:'The more darkness there is, the less you can see.' }
     ]
   }
 };
@@ -1071,9 +1148,6 @@ function runStandardQuiz(key){
           stage.querySelector(`.opt[data-idx="${q.correct}"]`).classList.add('correct');
           document.getElementById('fb').textContent = q.explain || 'Not quite.';
         }
-        stage.querySelectorAll('.opt').forEach(b=>{
-          if(!b.classList.contains('correct') && !b.classList.contains('wrong')) b.classList.add('other');
-        });
         const nextRow = document.getElementById('nextRow');
         nextRow.innerHTML = `<button class="btn btn-primary" id="nextBtn">${i+1<quiz.questions.length?'Next':'See results'}</button>`;
         document.getElementById('nextBtn').addEventListener('click', ()=>{
@@ -1129,7 +1203,6 @@ function runStyleQuiz(){
     try { localStorage.setItem('cortexTestsCompleted', testsCompleted); } catch(e) {}
     stage.innerHTML = `
       <div class="result-box">
-        <div class="result-complete">✓ Complete</div>
         <div class="result-label">Your dominant style</div>
         <div class="result-score" style="font-size:1.8rem;">${dominant[0].toUpperCase()+dominant.slice(1)}</div>
         <div class="result-verdict">${quiz.verdicts[dominant]}</div>
@@ -1207,9 +1280,6 @@ function runMemoryQuiz(){
           stage.querySelectorAll('.opt').forEach(b=>b.setAttribute('disabled','true'));
           if(idx===q.correct){ btn.classList.add('correct'); correct++; }
           else { btn.classList.add('wrong'); stage.querySelector(`.opt[data-idx="${q.correct}"]`).classList.add('correct'); }
-          stage.querySelectorAll('.opt').forEach(b=>{
-            if(!b.classList.contains('correct') && !b.classList.contains('wrong')) b.classList.add('other');
-          });
           const nextRow = document.getElementById('nextRow');
           nextRow.innerHTML = `<button class="btn btn-primary" id="nextBtn">${i+1<quiz.questions.length?'Next':'See results'}</button>`;
           document.getElementById('nextBtn').addEventListener('click', ()=>{
@@ -1249,9 +1319,6 @@ function runVisualQuiz(){
         stage.querySelectorAll('.opt').forEach(b=>b.setAttribute('disabled','true'));
         if(idx===q.oddIndex){ btn.classList.add('correct'); correct++; }
         else { btn.classList.add('wrong'); stage.querySelector(`.opt[data-idx="${q.oddIndex}"]`).classList.add('correct'); }
-        stage.querySelectorAll('.opt').forEach(b=>{
-          if(!b.classList.contains('correct') && !b.classList.contains('wrong')) b.classList.add('other');
-        });
         const nextRow = document.getElementById('nextRow');
         nextRow.innerHTML = `<button class="btn btn-primary" id="nextBtn">${i+1<quiz.questions.length?'Next round':'See results'}</button>`;
         document.getElementById('nextBtn').addEventListener('click', ()=>{
@@ -1276,7 +1343,6 @@ function showResult(title, correct, total){
 
   stage.innerHTML = `
     <div class="result-box">
-      <div class="result-complete">✓ Complete</div>
       <div class="result-label">${title} — your result</div>
       <div class="result-score">${correct}/${total}</div>
       <div class="result-verdict">${verdict}</div>
@@ -1301,56 +1367,23 @@ function showResult(title, correct, total){
 }
 
 /* ---------------- mystery case ---------------- */
-const CASES = [
-  {
-    title: 'The Sealed Study',
-    intro: 'A rare manuscript vanished from Professor Hale\'s locked study. Only three people had a key. Read each statement carefully — one of them is lying.',
-    suspects: [
-      { name:'Warden, the librarian', statement:'I was reshelving books in the east wing all evening — ask the cleaner, she saw me at 9.' },
-      { name:'Iris, the professor\'s assistant', statement:'I left at 8, before the study was even locked. I never had a key that night.' },
-      { name:'Colm, the night cleaner', statement:'I didn\'t start my rounds in the east wing until 9:30, and I never saw the librarian there.' }
-    ],
-    // Warden claims the cleaner saw her at 9; the cleaner says he wasn't in the east wing until 9:30 and never saw her.
-    // Those two accounts directly contradict — Warden is the liar.
-    liarIndex: 0,
-    explanation: 'Warden claims the cleaner saw her in the east wing at 9. But Colm states he wasn\'t in the east wing until 9:30, and never saw her at all. Their accounts can\'t both be true — Warden is the one lying.'
-  },
-  {
-    title: 'The Midnight Gallery',
-    intro: 'A priceless painting disappeared from the Ashworth Gallery overnight. The alarm never went off, so it had to be someone with access. Three staff members were on site. Find the one whose story doesn\'t add up.',
-    suspects: [
-      { name:'Nadia, the curator', statement:'I locked the gallery myself at 11 and went straight home — the night guard can confirm he saw me leave the building.' },
-      { name:'Rafiq, the night guard', statement:'I was on the front desk from 10:30 onward and didn\'t see anyone leave after that — the curator must have left earlier than she says.' },
-      { name:'Elena, the restorer', statement:'I was in the basement workshop restoring a different piece until 1 AM, nowhere near the main gallery floor.' }
-    ],
-    // Nadia claims the guard saw her leave at 11; the guard says nobody left after 10:30. Direct contradiction — Nadia is the liar.
-    liarIndex: 0,
-    explanation: 'Nadia says the night guard watched her leave at 11. But Rafiq insists no one left the building after 10:30. The two stories can\'t both be true — Nadia is the one lying.'
-  }
-];
+const CASE = {
+  suspects: [
+    { name:'Warden, the librarian', statement:'I was reshelving books in the east wing all evening — ask the cleaner, she saw me at 9.' },
+    { name:'Iris, the professor\'s assistant', statement:'I left at 8, before the study was even locked. I never had a key that night.' },
+    { name:'Colm, the night cleaner', statement:'I didn\'t start my rounds in the east wing until 9:30, and I never saw the librarian there.' }
+  ],
+  // Warden claims the cleaner saw her at 9; the cleaner says he wasn't in the east wing until 9:30 and never saw her.
+  // Those two accounts directly contradict — Warden is the liar.
+  liarIndex: 0,
+  explanation: 'Warden claims the cleaner saw her in the east wing at 9. But Colm states he wasn\'t in the east wing until 9:30, and never saw her at all. Their accounts can\'t both be true — Warden is the one lying.'
+};
 
-let currentCaseIndex = 0;
 const suspectList = document.getElementById('suspectList');
 let flagged = null;
 
-function loadCase(idx){
-  currentCaseIndex = idx;
-  flagged = null;
-  const c = CASES[idx];
-  document.getElementById('caseTitle').textContent = c.title;
-  document.getElementById('caseIntro').textContent = c.intro;
-  document.getElementById('mysteryResult').innerHTML = '';
-  document.getElementById('mysterySubmit').disabled = true;
-  document.querySelectorAll('.case-tab').forEach(btn=>{
-    const active = parseInt(btn.dataset.case) === idx;
-    btn.style.background = active ? 'var(--panel-2)' : 'transparent';
-  });
-  renderSuspects();
-}
-
 function renderSuspects(){
-  const c = CASES[currentCaseIndex];
-  suspectList.innerHTML = c.suspects.map((s,idx)=>`
+  suspectList.innerHTML = CASE.suspects.map((s,idx)=>`
     <div class="suspect" data-idx="${idx}">
       <h3>${s.name}</h3>
       <p>"${s.statement}"</p>
@@ -1368,18 +1401,13 @@ function renderSuspects(){
 }
 renderSuspects();
 
-document.querySelectorAll('.case-tab').forEach(btn=>{
-  btn.addEventListener('click', ()=> loadCase(parseInt(btn.dataset.case)));
-});
-
 document.getElementById('mysterySubmit').addEventListener('click', ()=>{
-  const c = CASES[currentCaseIndex];
   const resultEl = document.getElementById('mysteryResult');
-  const isRight = flagged === c.liarIndex;
+  const isRight = flagged === CASE.liarIndex;
   resultEl.innerHTML = `
     <div class="verdict-box ${isRight?'right':'wrong'}">
       <h3 style="margin-bottom:8px;">${isRight?'Case closed — you found the liar.':'Not quite — the trail leads elsewhere.'}</h3>
-      <p style="color:var(--muted);margin:0;">${c.explanation}</p>
+      <p style="color:var(--muted);margin:0;">${CASE.explanation}</p>
     </div>
   `;
   document.getElementById('mysterySubmit').disabled = true;
@@ -2146,6 +2174,383 @@ function shareResult(testName, score) {
     alert('Result copied!');
   }
 }
+
+/* ================= PUZZLE ARENA ================= */
+let pzPoints = 0;
+let pzProgress = {};
+try {
+  pzPoints = parseInt(localStorage.getItem('cortexPzPoints') || '0', 10);
+  pzProgress = JSON.parse(localStorage.getItem('cortexPzProgress') || '{}');
+} catch(e) {}
+
+function pzSave(){
+  try {
+    localStorage.setItem('cortexPzPoints', pzPoints);
+    localStorage.setItem('cortexPzProgress', JSON.stringify(pzProgress));
+  } catch(e) {}
+}
+function pzMindLabel(points){
+  if(points >= 1000) return 'Genius Mode 🚀';
+  if(points >= 600) return 'Puzzle Master 🎯';
+  if(points >= 300) return 'Quick Mind ⚡';
+  if(points >= 100) return 'Sharp Thinker 🧠';
+  return 'Warming Up 🧊';
+}
+function pzUpdateStats(){
+  const ptsEl = document.getElementById('pzTotalPoints');
+  const mindEl = document.getElementById('pzMindLevel');
+  if(ptsEl) ptsEl.textContent = pzPoints;
+  if(mindEl) mindEl.textContent = pzMindLabel(pzPoints);
+  document.querySelectorAll('.gprogress').forEach(el=>{
+    const key = el.dataset.progress;
+    const lvl = pzProgress[key] || 1;
+    el.textContent = 'Level ' + Math.min(lvl,10);
+  });
+}
+function pzAddPoints(n){ pzPoints += n; pzSave(); pzUpdateStats(); }
+
+let pzAudioCtx = null;
+function pzTone(freq, duration, type, delay){
+  try{
+    if(!pzAudioCtx) pzAudioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    const t0 = pzAudioCtx.currentTime + (delay||0);
+    const osc = pzAudioCtx.createOscillator();
+    const gain = pzAudioCtx.createGain();
+    osc.type = type || 'sine';
+    osc.frequency.setValueAtTime(freq, t0);
+    gain.gain.setValueAtTime(0.15, t0);
+    gain.gain.exponentialRampToValueAtTime(0.001, t0 + duration);
+    osc.connect(gain); gain.connect(pzAudioCtx.destination);
+    osc.start(t0); osc.stop(t0 + duration);
+  }catch(e){}
+}
+function pzSoundCorrect(){ pzTone(660,0.12,'sine'); }
+function pzSoundWrong(){ pzTone(160,0.25,'sawtooth'); }
+function pzSoundLevelUp(){ pzTone(523,0.1,'sine',0); pzTone(659,0.1,'sine',0.1); pzTone(784,0.18,'sine',0.2); }
+function pzSoundWin(){ pzTone(523,0.12,'sine',0); pzTone(659,0.12,'sine',0.12); pzTone(784,0.12,'sine',0.24); pzTone(1047,0.3,'sine',0.36); }
+
+const gamesPicker = document.getElementById('gamesPicker');
+const puzzleStage = document.getElementById('puzzleStage');
+const pzBoard = document.getElementById('pzBoard');
+const pzLevelBadge = document.getElementById('pzLevelBadge');
+const pzGameTitle = document.getElementById('pzGameTitle');
+let pzCurrentGame = null;
+let pzCurrentLevel = 1;
+let pzTimers = [];
+function pzClearTimers(){ pzTimers.forEach(t=>{clearInterval(t);clearTimeout(t);}); pzTimers = []; }
+
+if(gamesPicker){
+  document.querySelectorAll('.gplay').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const key = btn.dataset.game;
+      pzCurrentGame = key;
+      pzCurrentLevel = pzProgress[key] || 1;
+      gamesPicker.style.display = 'none';
+      puzzleStage.style.display = 'block';
+      pzLaunchLevel();
+    });
+  });
+  document.getElementById('pzBackBtn').addEventListener('click', ()=>{
+    pzClearTimers();
+    puzzleStage.style.display = 'none';
+    gamesPicker.style.display = 'block';
+    pzUpdateStats();
+  });
+  document.querySelectorAll('[data-nav]').forEach(el=>{
+    el.addEventListener('click', ()=>{ if(el.dataset.nav !== 'puzzle'){ pzClearTimers(); } });
+  });
+  pzUpdateStats();
+}
+
+const PZ_GAME_TITLES = {
+  memorymatch:'Memory Match', simon:'Simon Sequence', numrecall:'Number Recall',
+  sliding:'Sliding Puzzle', speedmatch:'Speed Match', wordmem:'Word Memory'
+};
+
+function pzLaunchLevel(){
+  pzClearTimers();
+  pzLevelBadge.textContent = `Level ${pzCurrentLevel} of 10`;
+  pzGameTitle.textContent = PZ_GAME_TITLES[pzCurrentGame];
+  const runners = {
+    memorymatch: pzRunMemoryMatch, simon: pzRunSimon, numrecall: pzRunNumberRecall,
+    sliding: pzRunSliding, speedmatch: pzRunSpeedMatch, wordmem: pzRunWordMemory
+  };
+  runners[pzCurrentGame](pzCurrentLevel);
+}
+
+function pzGoAllGames(){
+  puzzleStage.style.display='none'; gamesPicker.style.display='block'; pzUpdateStats();
+}
+
+function pzCompleteLevel(pointsEarned){
+  pzClearTimers();
+  pzSoundLevelUp();
+  const isFinal = pzCurrentLevel >= 10;
+  if(isFinal){
+    pzSoundWin();
+    if(!pzProgress[pzCurrentGame] || pzProgress[pzCurrentGame] < 10) pzProgress[pzCurrentGame] = 10;
+  } else {
+    if(!pzProgress[pzCurrentGame] || pzProgress[pzCurrentGame] < pzCurrentLevel+1) pzProgress[pzCurrentGame] = pzCurrentLevel + 1;
+  }
+  pzAddPoints(pointsEarned);
+  pzSave();
+  const mind = pzMindLabel(pzPoints);
+  pzBoard.innerHTML = `
+    <div class="pz-overlay ${isFinal?'win':''}">
+      <h2>${isFinal ? '🏆 You have won the game!' : '✅ Level Complete!'}</h2>
+      <div class="pz-points-earned">+${pointsEarned} pts</div>
+      ${isFinal ? `<div class="pz-mind-result">Based on your total points (${pzPoints}), your mind is currently rated: <strong>${mind}</strong>. Keep playing to level it up further.</div>` : ''}
+      <div class="result-actions" style="justify-content:center;margin-top:20px;">
+        ${isFinal
+          ? `<button class="btn btn-primary" id="pzPlayAgainBtn">Play Again</button><button class="btn btn-ghost" id="pzAllGamesBtn">All Games</button>`
+          : `<button class="btn btn-primary" id="pzNextLevelBtn">Next Level →</button><button class="btn btn-ghost" id="pzAllGamesBtn">All Games</button>`
+        }
+      </div>
+    </div>`;
+  if(isFinal){
+    document.getElementById('pzPlayAgainBtn').addEventListener('click', ()=>{ pzCurrentLevel = 1; pzLaunchLevel(); });
+  } else {
+    document.getElementById('pzNextLevelBtn').addEventListener('click', ()=>{ pzCurrentLevel++; pzLaunchLevel(); });
+  }
+  document.getElementById('pzAllGamesBtn').addEventListener('click', pzGoAllGames);
+}
+
+/* ---- 1. Memory Match ---- */
+const PZ_EMOJI = ['🍎','🍋','🍇','🍉','🍓','🍒','🥝','🍑','🍍','🥥','🍌','🥕'];
+function pzRunMemoryMatch(level){
+  const pairs = Math.min(2+level, 9);
+  const cols = pairs<=3?3:(pairs<=6?4:6);
+  const symbols = PZ_EMOJI.slice(0,pairs);
+  let deck = [...symbols, ...symbols];
+  for(let i=deck.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [deck[i],deck[j]]=[deck[j],deck[i]]; }
+  let flipped = []; let matchedCount = 0; let wrongFlips = 0; let lock=false;
+  pzBoard.innerHTML = `<div class="mm-grid" id="mmGrid" style="grid-template-columns:repeat(${cols},1fr);"></div>`;
+  const grid = document.getElementById('mmGrid');
+  deck.forEach((sym,idx)=>{
+    const card = document.createElement('div');
+    card.className='mm-card'; card.dataset.idx=idx; card.dataset.sym=sym;
+    card.addEventListener('click', ()=>{
+      if(lock || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+      card.classList.add('flipped'); card.textContent = sym; flipped.push(card);
+      if(flipped.length===2){
+        lock=true;
+        if(flipped[0].dataset.sym===flipped[1].dataset.sym){
+          pzSoundCorrect();
+          flipped.forEach(c=>c.classList.add('matched'));
+          matchedCount++; flipped=[]; lock=false;
+          if(matchedCount===pairs){
+            const pts = Math.max(100 - wrongFlips*5, 30) + level*5;
+            pzTimers.push(setTimeout(()=>pzCompleteLevel(pts),400));
+          }
+        } else {
+          pzSoundWrong(); wrongFlips++;
+          pzTimers.push(setTimeout(()=>{
+            flipped.forEach(c=>{c.classList.remove('flipped');c.textContent='';});
+            flipped=[]; lock=false;
+          },700));
+        }
+      }
+    });
+    grid.appendChild(card);
+  });
+}
+
+/* ---- 2. Simon Sequence ---- */
+function pzRunSimon(level){
+  const seqLen = level + 2;
+  const colors = ['red','blue','green','yellow'];
+  const freqs = {red:330, blue:392, green:494, yellow:587};
+  let sequence = [];
+  for(let i=0;i<seqLen;i++) sequence.push(colors[Math.floor(Math.random()*4)]);
+  let playerIdx = 0; let accepting = false;
+  pzBoard.innerHTML = `
+    <p style="text-align:center;color:var(--muted);margin-bottom:16px;" id="simonStatus">Watch the sequence...</p>
+    <div class="simon-pad">
+      <button class="simon-btn red" data-c="red"></button>
+      <button class="simon-btn blue" data-c="blue"></button>
+      <button class="simon-btn green" data-c="green"></button>
+      <button class="simon-btn yellow" data-c="yellow"></button>
+    </div>`;
+  const status = document.getElementById('simonStatus');
+  const btns = pzBoard.querySelectorAll('.simon-btn');
+  function litUp(color, cb){
+    const btn = pzBoard.querySelector(`.simon-btn[data-c="${color}"]`);
+    btn.classList.add('lit'); pzTone(freqs[color], 0.28, 'triangle');
+    pzTimers.push(setTimeout(()=>{ btn.classList.remove('lit'); if(cb) cb(); }, 320));
+  }
+  function playSequence(i){
+    if(i>=sequence.length){ accepting=true; status.textContent='Your turn — repeat it back'; return; }
+    litUp(sequence[i], ()=> pzTimers.push(setTimeout(()=>playSequence(i+1), 150)));
+  }
+  btns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(!accepting) return;
+      const c = btn.dataset.c; litUp(c);
+      if(c === sequence[playerIdx]){
+        playerIdx++;
+        if(playerIdx===sequence.length){
+          accepting=false;
+          const pts = 40 + level*8;
+          pzTimers.push(setTimeout(()=>pzCompleteLevel(pts), 400));
+        }
+      } else {
+        accepting=false; pzSoundWrong();
+        status.textContent = 'Not quite — watch again'; playerIdx=0;
+        pzTimers.push(setTimeout(()=>playSequence(0), 900));
+      }
+    });
+  });
+  pzTimers.push(setTimeout(()=>playSequence(0), 700));
+}
+
+/* ---- 3. Number Recall ---- */
+function pzRunNumberRecall(level){
+  const digits = Math.min(2+level, 10);
+  let num = ''; for(let i=0;i<digits;i++) num += Math.floor(Math.random()*10);
+  let input = '';
+  const showTime = Math.max(4000 - level*250, 1800);
+  pzBoard.innerHTML = `<div class="nr-display" id="nrDisplay">${num}</div>`;
+  pzTimers.push(setTimeout(()=>{
+    pzBoard.innerHTML = `
+      <div class="nr-input" id="nrInput"></div>
+      <div class="nr-keypad" id="nrKeypad">
+        ${[1,2,3,4,5,6,7,8,9,'⌫',0,'✓'].map(k=>`<button data-k="${k}">${k}</button>`).join('')}
+      </div>`;
+    document.getElementById('nrKeypad').querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const k = btn.dataset.k;
+        if(k==='⌫'){ input = input.slice(0,-1); }
+        else if(k==='✓'){
+          if(input===num){ pzSoundCorrect(); pzCompleteLevel(30 + level*7); }
+          else {
+            pzSoundWrong();
+            const inpEl = document.getElementById('nrInput');
+            inpEl.style.color = 'var(--wrong)';
+            pzTimers.push(setTimeout(()=>{ input=''; inpEl.textContent=''; inpEl.style.color='var(--text)'; },600));
+          }
+          return;
+        } else { input += k; }
+        document.getElementById('nrInput').textContent = input;
+      });
+    });
+  }, showTime));
+}
+
+/* ---- 4. Sliding Puzzle ---- */
+function pzRunSliding(level){
+  const size = 3;
+  let tiles = [1,2,3,4,5,6,7,8,0];
+  const shuffleMoves = 10 + level*8;
+  function idxToRC(i){ return [Math.floor(i/size), i%size]; }
+  function canSwap(i,empty){
+    const [r1,c1]=idxToRC(i), [r2,c2]=idxToRC(empty);
+    return (Math.abs(r1-r2)+Math.abs(c1-c2))===1;
+  }
+  let emptyIdx = 8;
+  for(let m=0;m<shuffleMoves;m++){
+    const neighbors = [];
+    for(let i=0;i<9;i++) if(canSwap(i,emptyIdx)) neighbors.push(i);
+    const pick = neighbors[Math.floor(Math.random()*neighbors.length)];
+    [tiles[pick],tiles[emptyIdx]] = [tiles[emptyIdx],tiles[pick]];
+    emptyIdx = pick;
+  }
+  function render(){
+    pzBoard.innerHTML = `<div class="sp-grid" style="grid-template-columns:repeat(${size},1fr);"></div>`;
+    const grid = pzBoard.querySelector('.sp-grid');
+    tiles.forEach((val,i)=>{
+      const tile = document.createElement('div');
+      tile.className = 'sp-tile' + (val===0?' empty':'');
+      tile.textContent = val===0?'':val;
+      tile.addEventListener('click', ()=>{
+        if(val===0) return;
+        if(canSwap(i,emptyIdx)){
+          [tiles[i],tiles[emptyIdx]] = [tiles[emptyIdx],tiles[i]];
+          emptyIdx = i; pzSoundCorrect(); render();
+          if(tiles.every((v,idx)=> idx===8 ? v===0 : v===idx+1)){
+            pzTimers.push(setTimeout(()=>pzCompleteLevel(50 + level*10),300));
+          }
+        }
+      });
+      grid.appendChild(tile);
+    });
+  }
+  render();
+}
+
+/* ---- 5. Speed Match ---- */
+function pzRunSpeedMatch(level){
+  const items = Math.min(5+level, 20);
+  const timeLimit = Math.max(6000 - level*450, 1800);
+  const symbols = ['●','■','▲','◆','★'];
+  const baseSym = symbols[Math.floor(Math.random()*symbols.length)];
+  const oddIdx = Math.floor(Math.random()*items);
+  let otherSym = symbols[Math.floor(Math.random()*symbols.length)];
+  while(otherSym===baseSym) otherSym = symbols[Math.floor(Math.random()*symbols.length)];
+  const cols = Math.min(Math.ceil(Math.sqrt(items*1.4)),6);
+  pzBoard.innerHTML = `
+    <div class="sm-timer"><i id="smTimerBar" style="width:100%;"></i></div>
+    <div class="sm-grid" style="grid-template-columns:repeat(${cols},1fr);" id="smGrid"></div>`;
+  const grid = document.getElementById('smGrid');
+  for(let i=0;i<items;i++){
+    const el = document.createElement('div');
+    el.className='sm-item';
+    el.textContent = i===oddIdx ? otherSym : baseSym;
+    el.addEventListener('click', ()=>{
+      if(i===oddIdx){ pzSoundCorrect(); pzCompleteLevel(25 + level*8); }
+      else { pzSoundWrong(); el.style.opacity='0.3'; }
+    });
+    grid.appendChild(el);
+  }
+  const bar = document.getElementById('smTimerBar');
+  const start = Date.now();
+  const timerInt = setInterval(()=>{
+    const elapsed = Date.now()-start;
+    const pct = Math.max(0, 100 - (elapsed/timeLimit)*100);
+    bar.style.width = pct+'%';
+    if(elapsed>=timeLimit){
+      clearInterval(timerInt); pzSoundWrong();
+      pzBoard.innerHTML = `<div class="pz-overlay"><h2>⏱ Time's up!</h2><p style="color:var(--muted);margin-top:10px;">Try level ${level} again.</p><div class="result-actions" style="justify-content:center;margin-top:20px;"><button class="btn btn-primary" id="pzRetryBtn">Retry Level</button><button class="btn btn-ghost" id="pzAllGamesBtn">All Games</button></div></div>`;
+      document.getElementById('pzRetryBtn').addEventListener('click', pzLaunchLevel);
+      document.getElementById('pzAllGamesBtn').addEventListener('click', pzGoAllGames);
+    }
+  }, 100);
+  pzTimers.push(timerInt);
+}
+
+/* ---- 6. Word Memory ---- */
+const PZ_WORD_BANK = ['River','Mountain','Guitar','Ocean','Candle','Forest','Bridge','Whisper','Compass','Lantern','Meadow','Thunder','Velvet','Horizon','Falcon','Crystal','Harbor','Ember','Willow','Echo'];
+function pzRunWordMemory(level){
+  const wordCount = Math.min(3+level, 12);
+  const shuffled = [...PZ_WORD_BANK].sort(()=>Math.random()-0.5);
+  const shown = shuffled.slice(0, wordCount);
+  const decoy = shuffled[wordCount];
+  const showTime = Math.max(5000 - level*250, 2500);
+  pzBoard.innerHTML = `<div class="wm-words">${shown.map(w=>`<span>${w}</span>`).join('')}</div>`;
+  pzTimers.push(setTimeout(()=>{
+    const opts = [decoy, ...shown.sort(()=>Math.random()-0.5).slice(0,3)].sort(()=>Math.random()-0.5);
+    pzBoard.innerHTML = `
+      <p style="text-align:center;margin-bottom:16px;font-weight:700;">Which word was NOT in the list?</p>
+      <div class="options" id="wmOptions"></div>`;
+    const optWrap = document.getElementById('wmOptions');
+    opts.forEach(w=>{
+      const btn = document.createElement('button');
+      btn.className='opt';
+      btn.innerHTML = `<span class="mk">?</span>${w}`;
+      btn.addEventListener('click', ()=>{
+        optWrap.querySelectorAll('.opt').forEach(b=>b.setAttribute('disabled','true'));
+        if(w===decoy){
+          btn.classList.add('correct'); pzSoundCorrect();
+          pzTimers.push(setTimeout(()=>pzCompleteLevel(35 + level*7),500));
+        } else {
+          btn.classList.add('wrong'); pzSoundWrong();
+          optWrap.querySelectorAll('.opt').forEach(b=>{ if(b.textContent.includes(decoy)) b.classList.add('correct'); });
+        }
+      });
+      optWrap.appendChild(btn);
+    });
+  }, showTime));
+}
+
 </script>
 </body>
 </html>
