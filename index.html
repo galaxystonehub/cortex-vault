@@ -473,8 +473,12 @@
 <!-- ================= MYSTERY ================= -->
 <section id="mystery">
   <div class="wrap">
-    <h2 style="font-size:1.6rem;">The Sealed Study</h2>
-    <p style="color:var(--muted);margin-top:8px;">A rare manuscript vanished from Professor Hale's locked study. Only three people had a key. Read each statement carefully — one of them is lying.</p>
+    <div id="caseTabs" style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;">
+      <button class="btn case-tab" data-case="0" style="padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel-2);">Case 1: The Sealed Study</button>
+      <button class="btn case-tab" data-case="1" style="padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;">Case 2: The Midnight Gallery</button>
+    </div>
+    <h2 id="caseTitle" style="font-size:1.6rem;">The Sealed Study</h2>
+    <p id="caseIntro" style="color:var(--muted);margin-top:8px;">A rare manuscript vanished from Professor Hale's locked study. Only three people had a key. Read each statement carefully — one of them is lying.</p>
     <div id="suspectList" style="margin-top:22px;"></div>
     <button class="btn btn-primary" id="mysterySubmit" style="margin-top:8px;" disabled>Accuse the liar</button>
     <div id="mysteryResult"></div>
@@ -1297,23 +1301,56 @@ function showResult(title, correct, total){
 }
 
 /* ---------------- mystery case ---------------- */
-const CASE = {
-  suspects: [
-    { name:'Warden, the librarian', statement:'I was reshelving books in the east wing all evening — ask the cleaner, she saw me at 9.' },
-    { name:'Iris, the professor\'s assistant', statement:'I left at 8, before the study was even locked. I never had a key that night.' },
-    { name:'Colm, the night cleaner', statement:'I didn\'t start my rounds in the east wing until 9:30, and I never saw the librarian there.' }
-  ],
-  // Warden claims the cleaner saw her at 9; the cleaner says he wasn't in the east wing until 9:30 and never saw her.
-  // Those two accounts directly contradict — Warden is the liar.
-  liarIndex: 0,
-  explanation: 'Warden claims the cleaner saw her in the east wing at 9. But Colm states he wasn\'t in the east wing until 9:30, and never saw her at all. Their accounts can\'t both be true — Warden is the one lying.'
-};
+const CASES = [
+  {
+    title: 'The Sealed Study',
+    intro: 'A rare manuscript vanished from Professor Hale\'s locked study. Only three people had a key. Read each statement carefully — one of them is lying.',
+    suspects: [
+      { name:'Warden, the librarian', statement:'I was reshelving books in the east wing all evening — ask the cleaner, she saw me at 9.' },
+      { name:'Iris, the professor\'s assistant', statement:'I left at 8, before the study was even locked. I never had a key that night.' },
+      { name:'Colm, the night cleaner', statement:'I didn\'t start my rounds in the east wing until 9:30, and I never saw the librarian there.' }
+    ],
+    // Warden claims the cleaner saw her at 9; the cleaner says he wasn't in the east wing until 9:30 and never saw her.
+    // Those two accounts directly contradict — Warden is the liar.
+    liarIndex: 0,
+    explanation: 'Warden claims the cleaner saw her in the east wing at 9. But Colm states he wasn\'t in the east wing until 9:30, and never saw her at all. Their accounts can\'t both be true — Warden is the one lying.'
+  },
+  {
+    title: 'The Midnight Gallery',
+    intro: 'A priceless painting disappeared from the Ashworth Gallery overnight. The alarm never went off, so it had to be someone with access. Three staff members were on site. Find the one whose story doesn\'t add up.',
+    suspects: [
+      { name:'Nadia, the curator', statement:'I locked the gallery myself at 11 and went straight home — the night guard can confirm he saw me leave the building.' },
+      { name:'Rafiq, the night guard', statement:'I was on the front desk from 10:30 onward and didn\'t see anyone leave after that — the curator must have left earlier than she says.' },
+      { name:'Elena, the restorer', statement:'I was in the basement workshop restoring a different piece until 1 AM, nowhere near the main gallery floor.' }
+    ],
+    // Nadia claims the guard saw her leave at 11; the guard says nobody left after 10:30. Direct contradiction — Nadia is the liar.
+    liarIndex: 0,
+    explanation: 'Nadia says the night guard watched her leave at 11. But Rafiq insists no one left the building after 10:30. The two stories can\'t both be true — Nadia is the one lying.'
+  }
+];
 
+let currentCaseIndex = 0;
 const suspectList = document.getElementById('suspectList');
 let flagged = null;
 
+function loadCase(idx){
+  currentCaseIndex = idx;
+  flagged = null;
+  const c = CASES[idx];
+  document.getElementById('caseTitle').textContent = c.title;
+  document.getElementById('caseIntro').textContent = c.intro;
+  document.getElementById('mysteryResult').innerHTML = '';
+  document.getElementById('mysterySubmit').disabled = true;
+  document.querySelectorAll('.case-tab').forEach(btn=>{
+    const active = parseInt(btn.dataset.case) === idx;
+    btn.style.background = active ? 'var(--panel-2)' : 'transparent';
+  });
+  renderSuspects();
+}
+
 function renderSuspects(){
-  suspectList.innerHTML = CASE.suspects.map((s,idx)=>`
+  const c = CASES[currentCaseIndex];
+  suspectList.innerHTML = c.suspects.map((s,idx)=>`
     <div class="suspect" data-idx="${idx}">
       <h3>${s.name}</h3>
       <p>"${s.statement}"</p>
@@ -1331,13 +1368,18 @@ function renderSuspects(){
 }
 renderSuspects();
 
+document.querySelectorAll('.case-tab').forEach(btn=>{
+  btn.addEventListener('click', ()=> loadCase(parseInt(btn.dataset.case)));
+});
+
 document.getElementById('mysterySubmit').addEventListener('click', ()=>{
+  const c = CASES[currentCaseIndex];
   const resultEl = document.getElementById('mysteryResult');
-  const isRight = flagged === CASE.liarIndex;
+  const isRight = flagged === c.liarIndex;
   resultEl.innerHTML = `
     <div class="verdict-box ${isRight?'right':'wrong'}">
       <h3 style="margin-bottom:8px;">${isRight?'Case closed — you found the liar.':'Not quite — the trail leads elsewhere.'}</h3>
-      <p style="color:var(--muted);margin:0;">${CASE.explanation}</p>
+      <p style="color:var(--muted);margin:0;">${c.explanation}</p>
     </div>
   `;
   document.getElementById('mysterySubmit').disabled = true;
