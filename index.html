@@ -811,8 +811,14 @@ function navigateTo(id, push){
   }
 }
 window.addEventListener('popstate', (e)=>{
-  const id = (e.state && e.state.section) ? e.state.section : (location.hash ? location.hash.slice(1) : 'home');
+  const state = e.state;
+  const id = (state && state.section) ? state.section : (location.hash ? location.hash.slice(1) : 'home');
   showSection(id);
+  if(id === 'puzzle' && typeof pzHandlePuzzleNav === 'function'){
+    pzHandlePuzzleNav(state && state.game ? state.game : null);
+  } else if(typeof pzClearTimers === 'function'){
+    pzClearTimers();
+  }
 });
 (function(){
   const initial = location.hash ? location.hash.slice(1) : 'home';
@@ -2239,6 +2245,18 @@ let pzCurrentLevel = 1;
 let pzTimers = [];
 function pzClearTimers(){ pzTimers.forEach(t=>{clearInterval(t);clearTimeout(t);}); pzTimers = []; }
 
+function pzHandlePuzzleNav(game){
+  if(game){
+    pzCurrentGame = game;
+    pzCurrentLevel = pzProgress[game] || 1;
+    gamesPicker.style.display = 'none';
+    puzzleStage.style.display = 'block';
+    pzLaunchLevel();
+  } else {
+    pzGoAllGames();
+  }
+}
+
 if(gamesPicker){
   document.querySelectorAll('.gplay').forEach(btn=>{
     btn.addEventListener('click', ()=>{
@@ -2248,13 +2266,15 @@ if(gamesPicker){
       gamesPicker.style.display = 'none';
       puzzleStage.style.display = 'block';
       pzLaunchLevel();
+      try{ history.pushState({section:'puzzle', game:key}, '', '#puzzle'); }catch(e){}
     });
   });
   document.getElementById('pzBackBtn').addEventListener('click', ()=>{
-    pzClearTimers();
-    puzzleStage.style.display = 'none';
-    gamesPicker.style.display = 'block';
-    pzUpdateStats();
+    if(history.state && history.state.section==='puzzle' && history.state.game){
+      history.back();
+    } else {
+      pzGoAllGames();
+    }
   });
   document.querySelectorAll('[data-nav]').forEach(el=>{
     el.addEventListener('click', ()=>{ if(el.dataset.nav !== 'puzzle'){ pzClearTimers(); } });
@@ -2279,7 +2299,13 @@ function pzLaunchLevel(){
 }
 
 function pzGoAllGames(){
+  pzClearTimers();
   puzzleStage.style.display='none'; gamesPicker.style.display='block'; pzUpdateStats();
+  try{
+    if(history.state && history.state.section==='puzzle' && history.state.game){
+      history.replaceState({section:'puzzle', game:null}, '', '#puzzle');
+    }
+  }catch(e){}
 }
 
 function pzCompleteLevel(pointsEarned){
